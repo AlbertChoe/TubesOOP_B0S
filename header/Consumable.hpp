@@ -1,10 +1,11 @@
-#include <iostream> 
-#include <map>
-#include "Item.hpp"
-using namespace std;
-
 #ifndef CONSUMABLE_HPP
 #define CONSUMABLE_HPP
+
+#include "Item.hpp"
+#include <iostream> 
+#include <map>
+using namespace std;
+
 
 class Consumable : public Item {
 private:

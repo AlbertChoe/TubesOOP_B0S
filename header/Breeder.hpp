@@ -1,9 +1,11 @@
-#include <iostream>
-#include "Barn.hpp"
-using namespace std;
-
 #ifndef BREEDER_HPP
 #define BREEDER_HPP
+
+#include "Barn.hpp"
+#include "Player.hpp"
+#include <iostream>
+using namespace std;
+
 
 class Breeder : public Player {
 private:

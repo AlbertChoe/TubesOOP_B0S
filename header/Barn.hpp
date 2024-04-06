@@ -1,10 +1,12 @@
-#include <iostream>
-#include "Grid.hpp"
-#include "Livestock.hpp"
-using namespace std;
-
 #ifndef BARN_HPP
 #define BARN_HPP
+
+#include "Grid.hpp"
+#include "Livestock.hpp"
+#include <iostream>
+using namespace std;
+
+
 
 
 

@@ -1,9 +1,10 @@
-#include <iostream>
-#include "Item.hpp"
-using namespace std;
-
 #ifndef CROP_HPP
 #define CROP_HPP
+
+#include "Item.hpp"
+#include <iostream>
+using namespace std;
+
 
 class Crop : public Item {
 private:
