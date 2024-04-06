@@ -3,14 +3,17 @@
 
 #include "Item.hpp"
 #include "Consumable.hpp"
-#include "iostream"
+#include "Crop.hpp"
+#include <iostream>
+#include <vector>
 using namespace std;
 
 class Livestock : public Item {
 private:
     int harvestWeight;
+    vector<Consumable> harvestResult;
 public:
-    void eat(Consumable food);
+    virtual void eat(Consumable food) = 0;
     friend ostream& operator<<(ostream& os, const Crop& livestock);
 };
 

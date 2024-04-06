@@ -8,10 +8,6 @@ using namespace std;
 
 class Building: public Item {
 private:
-    int id;
-    string code;
-    string name;
-    int price;
     map<string, int> material;
 public:
 };

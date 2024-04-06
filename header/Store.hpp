@@ -14,8 +14,7 @@ private:
     map<string, pair<Item, int>> store;
 public:
     void initStore(const CropConfig& cropConfig, const LivestockConfig& livestockConfig);
-    bool buyItem(Player& player, const string itemCode, int quantity);
-    bool sellItem(Player& player, const string itemCode, int quantity);
+    void refreshStore();
 };
 
 #endif
