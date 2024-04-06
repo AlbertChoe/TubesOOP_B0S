@@ -10,6 +10,7 @@ class Building: public Item {
 private:
     map<string, int> material;
 public:
+    int getCountMaterial(string code);
 };
 
 #endif
