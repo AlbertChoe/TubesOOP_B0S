@@ -9,9 +9,6 @@
 #include <map>
 using namespace std;
 
-
-
-
 class GameConfig {
 private:
     int guldenToWin;

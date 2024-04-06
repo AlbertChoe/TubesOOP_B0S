@@ -6,10 +6,6 @@
 #include <iostream>
 using namespace std;
 
-
-
-
-
 class Barn {
 private:
     Grid<Livestock> barn;

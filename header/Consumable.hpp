@@ -6,7 +6,6 @@
 #include <map>
 using namespace std;
 
-
 class Consumable : public Item {
 private:
     string origin;
