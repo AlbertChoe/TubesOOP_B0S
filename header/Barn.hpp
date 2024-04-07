@@ -9,11 +9,11 @@ using namespace std;
 class Barn
 {
 private:
-    Grid<Livestock> barn;
+    Grid<Livestock *> barn;
 
 public:
-    void addLivestock(Livestock livestock);
-    void feedLivestock();
+    void addLivestock(Livestock *livestock);
+    void feedLivestock(Consumable food, string location);
     void harvestLivestock();
     void display();
 };

@@ -17,6 +17,7 @@ public:
     void add(T item);
     void add(T item, string location);
     void remove(string location);
+    void remove(int row, int col);
     void print(string title);
     int countEmpty();
     int getRow();

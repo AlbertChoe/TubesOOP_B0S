@@ -42,6 +42,11 @@ void Grid<T>::remove(string location)
     grid[row][col] = empty;
 }
 template <typename T>
+void Grid<T>::remove(int row, int col)
+{
+    grid[row][col] = empty;
+}
+template <typename T>
 T *Grid<T>::get(string location)
 {
     int row, col;
