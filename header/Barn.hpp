@@ -6,9 +6,11 @@
 #include <iostream>
 using namespace std;
 
-class Barn {
+class Barn
+{
 private:
     Grid<Livestock> barn;
+
 public:
     void addLivestock(Livestock livestock);
     void feedLivestock();

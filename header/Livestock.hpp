@@ -8,13 +8,15 @@
 #include <vector>
 using namespace std;
 
-class Livestock : public Item {
+class Livestock : public Item
+{
 private:
     int harvestWeight;
     vector<Consumable> harvestResult;
+
 public:
     virtual void eat(Consumable food) = 0;
-    friend ostream& operator<<(ostream& os, const Crop& livestock);
+    friend ostream &operator<<(ostream &os, const Crop &livestock);
 };
 
 #endif
