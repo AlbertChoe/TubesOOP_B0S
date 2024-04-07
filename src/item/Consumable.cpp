@@ -1,1 +1,33 @@
 #include "header/Consumable.hpp"
+#include "header/Item.hpp"
+#include "header/Config.hpp"
+using namespace std;
+
+Consumable::Consumable(): Item(){
+    origin = "";
+    addedWeight = 0;
+}
+
+Consumable::Consumable(int id, string code, string name, string type, int price, string origin, ConsumableConfig consumableConfig)
+    : Item::Item(id, code, name, type, price), origin(origin), addedWeight(getAddedWeight(code, consumableConfig)) {}
+
+Consumable::~Consumable() {}
+
+Consumable::Consumable(const Consumable& consumable): Item(consumable), origin(consumable.origin), addedWeight(consumable.addedWeight) {}
+
+string Consumable::getOrigin(){
+    return origin;
+}
+
+int Consumable::getAddedWeight(string code, ConsumableConfig configConsumable){
+    Consumable crop = configConsumable.getConfig(code);
+    return crop.addedWeight;
+}
+
+void Consumable::setOrigin(string origin){
+    this->origin = origin;
+}
+
+void Consumable::setAddedWeight(int addedWeight){
+    this->addedWeight = addedWeight;
+}
