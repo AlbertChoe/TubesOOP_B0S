@@ -34,4 +34,34 @@ class EatMaterialException: public exception{
 	}
 };
 
+class EmptySlotInputException : public exception{
+	const char* what() const throw() {
+		return "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan slot yang berisi makanan.\n";
+	}
+};
+
+class InvalidSlotInputException : public exception{
+	const char* what() const throw() {
+		return "Apa yang kamu lakukan??" "!! Kamu mencoba untuk memakan itu?!!\nSilahkan masukan slot yang berisi makanan.\n";
+    }
+};
+
+class NotEnoughAddPlayerException : public exception{
+	const char* what() const throw() {
+		return "Uang tidak cukup!\n";
+    }
+};
+
+class WrongInputAddPlayerException : public exception{
+	const char* what() const throw() {
+		return "Masukan tidak valid\nHanya menerima input petani atau peternak saja\n";
+    }
+};
+
+class EmptySlotSellException : public exception{
+	const char* what() const throw() {
+		return "Kamu mengambil harapan kosong dari penyimpanan.\nSilahkan masukan pilihan yang valid.\n";
+	}
+};
+
 #endif
