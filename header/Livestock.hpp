@@ -25,7 +25,8 @@ public:
     // Copy Constructor
     Livestock(const Livestock& livestock);
     // Getter
-    int getHarvestWeight(string code, LivestockConfig configLivestock);
+    int getHarvestWeight();
+    int getHarvestWeightFromConfig(string code, LivestockConfig configLivestock);
     int getCurrentWeight();
     vector<Consumable> getHarvestResult();
     // Setter
@@ -33,9 +34,9 @@ public:
     void setCurrentWeight(int currentWeight);
     void setHarvestResult(vector<Consumable>& harvestResult);
     // Eat Mechanism
-    virtual void eat(Consumable food, ConsumableConfig consumableConfig) = 0;
+    void eat(Consumable food);
     // Add new harvest results
-    virtual vector<Consumable> harvest(int harvestWeight, int currentWeight, vector<Consumable> configConsumable) = 0;
+    vector<Consumable> harvest(Consumable newHarvestResult);
     // Display livestock code. Red if unfinished, Green if finished
     friend ostream& operator<<(ostream& os, const Livestock& livestock);
 };

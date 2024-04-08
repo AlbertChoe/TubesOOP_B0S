@@ -9,7 +9,7 @@ Consumable::Consumable(): Item(){
 }
 
 Consumable::Consumable(int id, string code, string name, string type, int price, string origin, ConsumableConfig consumableConfig)
-    : Item::Item(id, code, name, type, price), origin(origin), addedWeight(getAddedWeight(code, consumableConfig)) {}
+    : Item::Item(id, code, name, type, price), origin(origin), addedWeight(getAddedWeightFromConfig(code, consumableConfig)) {}
 
 Consumable::~Consumable() {}
 
@@ -19,9 +19,12 @@ string Consumable::getOrigin(){
     return origin;
 }
 
-int Consumable::getAddedWeight(string code, ConsumableConfig configConsumable){
+int Consumable::getAddedWeightFromConfig(string code, ConsumableConfig configConsumable){
     Consumable crop = configConsumable.getConfig(code);
     return crop.addedWeight;
+}
+int Consumable::getAddedWeight(){
+    return addedWeight;
 }
 
 void Consumable::setOrigin(string origin){

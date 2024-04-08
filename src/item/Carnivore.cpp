@@ -11,9 +11,9 @@ Carnivore::~Carnivore() {}
 
 Carnivore::Carnivore(const Carnivore& carnivore): Livestock::Livestock(carnivore) {}
 
-void Carnivore::eat(Consumable food, ConsumableConfig consumableConfig){
+void Carnivore::eat(Consumable food){
     if(food.getType() == "PRODUCT_ANIMAL"){
-        this->setCurrentWeight(this->getCurrentWeight() + food.getAddedWeight(food.getCode(), consumableConfig));
+        Livestock::eat(food);
     }
     else if (food.getType() == "PRODUCT_MATERIAL_PLANT"){
         throw EatMaterialException();
@@ -23,8 +23,8 @@ void Carnivore::eat(Consumable food, ConsumableConfig consumableConfig){
     }
 }
 
-vector<Consumable> Carnivore::harvest(ConsumableConfig configConsumable, LivestockConfig livestockConfig){
-    if(this->getCurrentWeight() < this->getHarvestWeight(this->getCode(), livestockConfig)){
+vector<Consumable> Carnivore::harvest(ConsumableConfig configConsumable){
+    if(this->getCurrentWeight() < this->getHarvestWeight()){
         throw HarvestNotReadyException();
     }
     else{
@@ -39,13 +39,10 @@ vector<Consumable> Carnivore::harvest(ConsumableConfig configConsumable, Livesto
             harvestType = "PRODUCT_ANIMAL";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
 
         Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
-        vector<Consumable> temp = this->getHarvestResult();
-        temp.push_back(newHarvest);
-        setHarvestResult(temp);
-        return temp;
+        return Livestock::harvest(newHarvest);
     }
 }

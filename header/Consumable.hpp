@@ -22,7 +22,8 @@ public:
     Consumable(const Consumable& consumable);
     // Getter
     string getOrigin();
-    int getAddedWeight(string code, ConsumableConfig configConsumable);
+    int getAddedWeightFromConfig(string code, ConsumableConfig configConsumable);
+    int getAddedWeight();
     // Setter
     void setOrigin(string origin);
     void setAddedWeight(int addedWeight);

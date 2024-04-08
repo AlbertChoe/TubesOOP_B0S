@@ -11,9 +11,9 @@ Herbivore::~Herbivore() {}
 
 Herbivore::Herbivore(const Herbivore& herbivore): Livestock::Livestock(herbivore) {}
 
-void Herbivore::eat(Consumable food, ConsumableConfig consumableConfig){
+void Herbivore::eat(Consumable food){
     if(food.getType() == "PRODUCT_FRUIT_PLANT"){
-        this->setCurrentWeight(this->getCurrentWeight() + food.getAddedWeight(food.getCode(), consumableConfig));
+        Livestock::eat(food);
     }
     else if (food.getType() == "PRODUCT_MATERIAL_PLANT"){
         throw EatMaterialException();
@@ -23,8 +23,8 @@ void Herbivore::eat(Consumable food, ConsumableConfig consumableConfig){
     }
 }
 
-vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable, LivestockConfig livestockConfig){
-    if(this->getCurrentWeight() < this->getHarvestWeight(this->getCode(), livestockConfig)){
+vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable){
+    if(this->getCurrentWeight() < this->getHarvestWeight()){
         throw HarvestNotReadyException();
     }
     else{
@@ -39,7 +39,7 @@ vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable, Livesto
             harvestType = "PRODUCT_ANIMAL";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "SHP"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -49,7 +49,7 @@ vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable, Livesto
             harvestType = "PRODUCT_ANIMAL";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "HRS"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -59,7 +59,7 @@ vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable, Livesto
             harvestType = "PRODUCT_ANIMAL";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "RBT"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -69,12 +69,9 @@ vector<Consumable> Herbivore::harvest(ConsumableConfig configConsumable, Livesto
             harvestType = "PRODUCT_ANIMAL";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
-        vector<Consumable> temp = this->getHarvestResult();
-        temp.push_back(newHarvest);
-        setHarvestResult(temp);
-        return temp;
+        return Livestock::harvest(newHarvest);
     }
 }

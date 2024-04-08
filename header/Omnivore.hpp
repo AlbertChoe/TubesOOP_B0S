@@ -16,9 +16,9 @@ public:
     // Copy Constructor
     Omnivore(const Omnivore& omnivore);
     // Carnivore eat mechanism
-    void eat(Consumable food, ConsumableConfig consumableConfig);
+    void eat(Consumable food);
     // Add new harvest results
-    vector<Consumable> harvest(ConsumableConfig configConsumable, LivestockConfig livestockConfig);
+    vector<Consumable> harvest(ConsumableConfig configConsumable);
 };
 
 #endif
