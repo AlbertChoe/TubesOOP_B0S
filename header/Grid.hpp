@@ -13,7 +13,7 @@ private:
     vector<vector<T>> grid;
 
 public:
-    Grid();
+    Grid(int row, int col);
     void add(T item);
     void add(T item, string location);
     void remove(string location);

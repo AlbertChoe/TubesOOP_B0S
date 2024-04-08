@@ -5,6 +5,9 @@
 #include "Livestock.hpp"
 #include "Consumable.hpp"
 #include "Building.hpp"
+#include "Herbivore.hpp"
+#include "Carnivore.hpp"
+#include "Omnivore.hpp"
 #include <iostream> 
 #include <map>
 using namespace std;
@@ -22,15 +25,15 @@ private:
 
 public:
     GameConfig();
-    GameConfig(int guldenToWin, int weighToWin, int inventoryRow, int inventoryCol, int fieldRow, int fieldCol, int barnRow, int barnCol);
-    void getGuldenToWin();
-    void getWieghToWin();
-    void getInventoryRow();
-    void getInvetoryCol();
-    void getFieldRow();
-    void getFieldCol();
-    void getBarnRow();
-    void getBarnCol();
+    int getGuldenToWin();
+    int getWieghtToWin();
+    int getInventoryRow();
+    int getInventoryCol();
+    int getFieldRow();
+    int getFieldCol();
+    int getBarnRow();
+    int getBarnCol();
+    void setGameConfig(int _guldenToWin, int _weightToWin, int _inventoryRow, int _inventoryCol, int _fieldRow, int _fieldCol, int _barnRow, int _barnCol);
 };
 
 class CropConfig {
@@ -48,7 +51,9 @@ private:
 public:
     LivestockConfig();
     ~LivestockConfig();
-    void addConfig(string code, Livestock config);
+    void addOmnivoreConfig(string code, Omnivore config);
+    void addCarnivoreConfig(string code, Carnivore config);
+    void addHerbivoreConfig(string code, Herbivore config);
     Livestock getConfig(string code);
 };
 
@@ -60,18 +65,16 @@ public:
     ~ConsumableConfig();
     void addConfig(string code, Consumable config);
     Consumable getConfig(string code);
-
 };
 
 class BuildingConfig {
 private:
-    map<string, Building> recipe;
+    map<string, Building> config;
 public:
     BuildingConfig();
     ~BuildingConfig();
     void addConfig(string code, Building config);
     Building getConfig(string code);
-
 };
 
 

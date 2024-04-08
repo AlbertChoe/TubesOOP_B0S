@@ -1,9 +1,8 @@
 #include "header/Grid.hpp"
 
 template <typename T>
-Grid<T>::Grid()
+Grid<T>::Grid(int row, int col)
 {
-    int row, col;
     grid.resize(row, vector<T>(col));
 }
 
@@ -30,7 +29,7 @@ void Grid<T>::add(T item, string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    int col = stoi(location.substr(1)) - 1;
     grid[row][col] = item;
 }
 template <typename T>
@@ -38,7 +37,7 @@ void Grid<T>::remove(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    int col = stoi(location.substr(1)) - 1;
     grid[row][col] = empty;
 }
 template <typename T>
@@ -51,7 +50,7 @@ T *Grid<T>::get(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    int col = stoi(location.substr(1)) - 1;
     return grid[row][col];
 }
 

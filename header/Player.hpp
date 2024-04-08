@@ -3,10 +3,11 @@
 
 #include "Inventory.hpp"
 #include "Store.hpp"
+#include "Taxable.hpp"
 #include <iostream>
 using namespace std;
 
-class Player {
+class Player: public Taxable {
 protected:
     string name;
     int weight;
@@ -17,7 +18,6 @@ public:
     void displayInventory();
     void buy(Store& store);
     void sell(Store& store);
-    virtual int getTaxable() = 0;
 };
 
 #endif

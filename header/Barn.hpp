@@ -12,7 +12,7 @@ private:
     Grid<Livestock *> barn;
 
 public:
-    void addLivestock(Livestock *livestock);
+    void addLivestock(Livestock *livestock, string location);
     void feedLivestock(Consumable food, string location);
     void harvestLivestock();
     void display();
