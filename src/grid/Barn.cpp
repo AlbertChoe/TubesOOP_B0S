@@ -1,8 +1,8 @@
 #include "header/Barn.hpp"
 
-void Barn::addLivestock(Livestock *livestock)
+void Barn::addLivestock(Livestock *livestock, string location)
 {
-    barn.add(livestock);
+    barn.add(livestock, location);
 }
 
 void Barn::feedLivestock(Consumable food, string location)
