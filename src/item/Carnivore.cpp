@@ -13,7 +13,7 @@ Carnivore::Carnivore(const Carnivore& carnivore): Livestock::Livestock(carnivore
 
 void Carnivore::eat(Consumable food){
     if(food.getType() == "PRODUCT_ANIMAL"){
-        Livestock::eat(food);
+        Livestock::eat(food.getAddedWeight());
     }
     else if (food.getType() == "PRODUCT_MATERIAL_PLANT"){
         throw EatMaterialException();

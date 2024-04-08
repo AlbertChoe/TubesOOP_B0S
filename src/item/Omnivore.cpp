@@ -13,7 +13,7 @@ Omnivore::Omnivore(const Omnivore& omnivore): Livestock::Livestock(omnivore) {}
 
 void Omnivore::eat(Consumable food){
     if(food.getType() == "PRODUCT_ANIMAL" || food.getType() == "PRODUCT_FRUIT_PLANT"){
-        Livestock::eat(food);
+        Livestock::eat(food.getAddedWeight());
     }
     else if (food.getType() == "PRODUCT_MATERIAL_PLANT"){
         throw EatMaterialException();

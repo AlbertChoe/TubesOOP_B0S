@@ -49,8 +49,8 @@ void Livestock::setHarvestResult(vector<Consumable>& harvestResult) {
     this->harvestResult = harvestResult;
 }
 
-void Livestock::eat(Consumable food){
-    this->setCurrentWeight(this->getCurrentWeight() + food.getAddedWeight());
+void Livestock::eat(int weight){
+    this->setCurrentWeight(this->getCurrentWeight() + weight);
 }
 
 vector<Consumable> Livestock::harvest(Consumable newHarvestResult){

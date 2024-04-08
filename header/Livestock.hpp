@@ -34,7 +34,7 @@ public:
     void setCurrentWeight(int currentWeight);
     void setHarvestResult(vector<Consumable>& harvestResult);
     // Eat Mechanism
-    void eat(Consumable food);
+    void eat(int weight);
     // Add new harvest results
     vector<Consumable> harvest(Consumable newHarvestResult);
     // Display livestock code. Red if unfinished, Green if finished
