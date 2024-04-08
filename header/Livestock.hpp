@@ -13,7 +13,7 @@ private:
     int harvestWeight;
     vector<Consumable> harvestResult;
 public:
-    virtual void eat(Consumable food) = 0;
+    virtual void eat(int weight);
     friend ostream& operator<<(ostream& os, const Crop& livestock);
 };
 
