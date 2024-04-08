@@ -53,7 +53,7 @@ void Crop::incrementDuration(){
 }
 
 vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
-    if(this->currentDuration < this->harvestDuration){
+    if(!isReadyToHarvest()){
         throw HarvestNotReadyException();
     }
     else{
@@ -68,7 +68,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_MATERIAL_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "SDT"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -78,7 +78,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_MATERIAL_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "ALT"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -88,7 +88,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_MATERIAL_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "IRN"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -98,7 +98,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_MATERIAL_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "APL"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -108,7 +108,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_FRUIT_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "ORG"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -118,7 +118,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_FRUIT_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "BNT"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -128,7 +128,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_FRUIT_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         else if (this->getCode() == "GAV"){
             harvestID = this->getHarvestResult().size() + 1;
@@ -138,7 +138,7 @@ vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
             harvestType = "PRODUCT_FRUIT_PLANT";
             harvestPrice = consumable.getPrice();
             harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight(harvestCode, configConsumable);
+            harvestAddedWeight = consumable.getAddedWeight();
         }
         Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
         vector<Consumable> temp = this->getHarvestResult();
@@ -161,4 +161,8 @@ ostream& operator<<(ostream& os, const Crop& crop) {
         }
     }
     return os;
+}
+    
+bool Crop::isReadyToHarvest(){
+    return this->currentDuration >= this->harvestDuration;
 }

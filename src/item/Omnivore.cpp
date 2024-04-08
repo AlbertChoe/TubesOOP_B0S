@@ -21,7 +21,7 @@ void Omnivore::eat(Consumable food){
 }
 
 vector<Consumable> Omnivore::harvest(ConsumableConfig configConsumable){
-    if(this->getCurrentWeight() < this->getHarvestWeight()){
+    if(!isReadyToHarvest()){
         throw HarvestNotReadyException();
     }
     else{

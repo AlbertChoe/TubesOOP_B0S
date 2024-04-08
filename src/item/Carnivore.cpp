@@ -24,7 +24,7 @@ void Carnivore::eat(Consumable food){
 }
 
 vector<Consumable> Carnivore::harvest(ConsumableConfig configConsumable){
-    if(this->getCurrentWeight() < this->getHarvestWeight()){
+    if(!isReadyToHarvest()){
         throw HarvestNotReadyException();
     }
     else{
