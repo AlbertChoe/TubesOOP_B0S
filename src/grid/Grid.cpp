@@ -30,7 +30,12 @@ void Grid<T>::add(T item, string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    col = 0;
+    for (int i = 1; i < location.size(); i++)
+    {
+        col *= 10;
+        col += location[i] - '0';
+    }
     grid[row][col] = item;
 }
 template <typename T>
@@ -38,7 +43,12 @@ void Grid<T>::remove(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    col = 0;
+    for (int i = 1; i < location.size(); i++)
+    {
+        col *= 10;
+        col += location[i] - '0';
+    }
     grid[row][col] = empty;
 }
 template <typename T>
@@ -51,7 +61,12 @@ T *Grid<T>::get(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    col = location[1] - '0';
+    col = 0;
+    for (int i = 1; i < location.size(); i++)
+    {
+        col *= 10;
+        col += location[i] - '0';
+    }
     return grid[row][col];
 }
 
