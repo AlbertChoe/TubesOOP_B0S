@@ -64,4 +64,41 @@ class EmptySlotSellException : public exception{
 	}
 };
 
+class InvalidTypeException: public exception {
+    const char* what() const throw() {
+        return "Tipe yang dipilih salah!";
+    }
+};
+
+class FullSlotException: public exception {
+    const char* what() const throw() {
+        return "Petak penuh!";
+    }
+};
+
+class WrongInputException: public exception {
+    const char* what() const throw() {
+        return "Input tidak sesuai!";
+    }
+};
+
+class NotEnoughInventoryException: public exception {
+    const char* what() const throw() {
+        return "Tidak cukup slot di penyimpanan!";
+    }
+};
+
+class NotEnoughToHarvestException: public exception {
+    const char* what() const throw() {
+        return "Tidak cukup untuk dipanen!";
+    }
+};
+
+class NothingToFeed: public exception {
+    const char* what() const throw() {
+        return "Tidak ada yang bisa diberi makan!";
+    }
+};
+
+
 #endif
