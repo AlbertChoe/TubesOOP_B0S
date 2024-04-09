@@ -16,7 +16,7 @@ void Grid<T>::add(T item)
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
+            if (grid[i][j] == nullptr)
             {
                 grid[i][j] = item;
                 return;
@@ -71,7 +71,7 @@ int Grid<T>::countEmpty()
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
+            if (grid[i][j] == nullptr)
             {
                 res++;
             }
@@ -110,7 +110,7 @@ void Grid<T>::print(string title)
     {
         for (int j = 0; j < 10; j++)
         {
-            if (!grid[i][j].isEmpty() || grid[i][j] != NULL)
+            if (grid[i][j] != nullptr)
             {
                 char r = i + 'A';
                 cout << r << endl;
@@ -141,7 +141,7 @@ bool Grid<T>::isEmpty()
     {
         for (int j = 0; j < col; j++)
         {
-            if (!grid[i][j].isEmpty() || grid[i][j] != NULL)
+            if (grid[i][j] != nullptr)
             {
                 return false;
             }
@@ -156,7 +156,7 @@ bool Grid<T>::isEmpty(string location)
     int row, col;
     row = location[0] - 'A';
     int col = stoi(location.substr(1)) - 1;
-    if (!grid[row][col].isEmpty() || grid[row][col] != NULL)
+    if (grid[row][col] != nullptr)
     {
         return false;
     }
@@ -172,7 +172,7 @@ bool Grid<T>::isFull()
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
+            if (grid[i][j] == nullptr)
             {
                 return false;
             }
