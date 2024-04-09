@@ -1,6 +1,6 @@
-#include "../../header/Mayor.hpp"
+#include "header/Mayor.hpp"
 
-void Mayor::addNewPlayer(vector<Player>& players){
+void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
     try
     {
         if (this->gulden<50)
@@ -29,10 +29,12 @@ void Mayor::addNewPlayer(vector<Player>& players){
 
         if (jenis=="petani")
         {
-            players.push_back(new Farmer(nama));
+            auto newPlayer = make_shared<Breeder>(nama);
+            players.push_back(newPlayer);
         } else if (jenis=="peternak")
         {
-            players.push_back(new Breeder(nama));
+            auto newPlayer = make_shared<Farmer>(nama);
+            players.push_back(newPlayer);
         }
         
         this->gulden-=50;
@@ -45,38 +47,85 @@ void Mayor::addNewPlayer(vector<Player>& players){
     
 }
 
-// void Mayor::collectTax(vector<Player>& players){
-//     cout<<"Cring cring cring..."<<endl<<"Pajak sudah dipungut!"<<endl<<endl;
+void Mayor::collectTax(vector<shared_ptr<Player>>& players){
+    cout<<"Cring cring cring..."<<endl<<"Pajak sudah dipungut!"<<endl<<endl;
 
-//     cout<<"Berikut adalah detil dari pemungutan pajak:"<<endl;
+    cout<<"Berikut adalah detil dari pemungutan pajak:"<<endl;
+    int i = 1;
+    int tot = 0;
+    for (auto& player : players)
+    {
+        int tax = player->getTaxable();
+        if (player->getType()==PlayerType::Farmer)
+        {
+            cout <<"   " <<i<<". " << player->getName() <<" - "<< "Petani"<<": "<<tax <<" gulden"<<endl;
+        } else if (player->getType()==PlayerType::Breeder)
+        {
+            cout <<"   " <<i<<". " << player->getName() <<" - "<< "Peternak"<<": "<<tax <<" gulden"<<endl;
+        }
+        tot+=tax;
+        i++;
+    }
 
-// }
+    cout<<endl<<"Negara mendapatkan pemasukan sebesar "<< tot <<" gulden."<<endl;
+    cout<<"Gunakan dengan baik dan jangan dikorupsi ya!"<<endl;
 
-// void Mayor::buildBuilding(const BuildingConfig& recipe){
-//     cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
-//     cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
-//     cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
-//     cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
-//     cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
-//     cout<<endl;
+}
 
-//     string tipebangunan;
+void Mayor::buildBuilding(const BuildingConfig& recipe){
+    cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
+    cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
+    cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
+    cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
+    cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
+    cout<<endl;
 
-//     bool valid=false;
+    string tipebangunan;
 
-//     while (!valid)
-//     {
-//         cout<<"Bangunan yang ingin dibangun: ";
-//         cin >> tipebangunan;
+    bool valid=false;
 
-//         if (this->inventory.getItem())
-//         {
-//             /* code */
-//         }
+    while (!valid)
+    {
+        cout<<"Bangunan yang ingin dibangun: ";
+        cin >> tipebangunan;
+
+        if (tipebangunan=="SMALL_HOUSE" || tipebangunan=="MEDIUM_HOUSE" || tipebangunan=="LARGE_HOUSE" || tipebangunan=="HOTEL")
+        {
+            valid=true;
+
+            try
+            {
+                if (tipebangunan=="SMALL_HOUSE")
+                {
+                    /* code */
+                } else if (tipebangunan=="MEDIUM_HOUSE")
+                {
+                    /* code */
+                } else if (tipebangunan=="LARGE_HOUSE")
+                {
+                    /* code */
+                } else if (tipebangunan=="HOTEL")
+                {
+                    /* code */
+                }
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+        } else {
+            cout<<"Kamu tidak punya resep bangunan tersebut!"<<endl<<endl;
+            cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
+            cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
+            cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
+            cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
+            cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
+            cout<<endl;
+        }
         
-//     }
+    }
     
-// }
+}
 
 int Mayor::getTaxable(){
     return 0;
