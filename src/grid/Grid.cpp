@@ -16,7 +16,7 @@ void Grid<T>::add(T item)
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty())
+            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
             {
                 grid[i][j] = item;
                 return;
@@ -47,7 +47,7 @@ void Grid<T>::remove(int row, int col)
     grid[row][col] = empty;
 }
 template <typename T>
-T *Grid<T>::get(string location)
+T Grid<T>::get(string location)
 {
     int row, col;
     row = location[0] - 'A';
@@ -56,7 +56,7 @@ T *Grid<T>::get(string location)
 }
 
 template <typename T>
-T *Grid<T>::get(int row, int col)
+T Grid<T>::get(int row, int col)
 {
     return grid[row][col];
 }
@@ -71,7 +71,7 @@ int Grid<T>::countEmpty()
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty())
+            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
             {
                 res++;
             }
@@ -106,6 +106,19 @@ void Grid<T>::print(string title)
         }
         cout << endl;
     }
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            if (!grid[i][j].isEmpty() || grid[i][j] != NULL)
+            {
+                char r = i + 'A';
+                cout << r << endl;
+                cout << setfill('0') << setW(2) << j;
+                cout << " : " << grid[i][j].getCode() << endl;
+            }
+        }
+    }
 }
 
 template <typename T>
@@ -128,14 +141,28 @@ bool Grid<T>::isEmpty()
     {
         for (int j = 0; j < col; j++)
         {
-            if (!grid[i][j].isEmpty())
+            if (!grid[i][j].isEmpty() || grid[i][j] != NULL)
             {
-                return false
+                return false;
             }
         }
     }
     return true;
 }
+
+template <typename T>
+bool Grid<T>::isEmpty(string location)
+{
+    int row, col;
+    row = location[0] - 'A';
+    int col = stoi(location.substr(1)) - 1;
+    if (!grid[row][col].isEmpty() || grid[row][col] != NULL)
+    {
+        return false;
+    }
+    return true;
+}
+
 template <typename T>
 bool Grid<T>::isFull()
 {
@@ -145,9 +172,9 @@ bool Grid<T>::isFull()
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].isEmpty())
+            if (grid[i][j].isEmpty() || grid[i][j] == NULL)
             {
-                return false
+                return false;
             }
         }
     }

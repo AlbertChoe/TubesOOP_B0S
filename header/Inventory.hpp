@@ -6,14 +6,17 @@
 #include <iostream>
 using namespace std;
 
-class Inventory {
+class Inventory
+{
 private:
-    Grid<Item> inventory;
+    Grid<shared_ptr<Item>> inventory;
+
 public:
-    void addItem(Item item);
-    Item getItem(string location);
+    void addItem(shared_ptr<Item> item);
+    shared_ptr<Item> getItem(string location);
     void removeItem(string location);
     void display();
+    int CountWealth();
 };
 
 #endif

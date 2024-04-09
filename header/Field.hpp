@@ -9,13 +9,15 @@ using namespace std;
 class Field
 {
 private:
-    Grid<Crop> field;
+    Grid<shared_ptr<Crop>> field;
 
 public:
     void incrementAllCropDuration();
-    void addCrop(Crop item, string location);
+    void addCrop(shared_ptr<Crop> item, string location);
     void harvestCrop(string location);
-    void countEmpty();
+    int countEmpty();
+    bool isEmpty();
+    bool isFull();
     void display();
 };
 

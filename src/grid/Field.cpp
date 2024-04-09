@@ -2,20 +2,19 @@
 
 void Field::incrementAllCropDuration()
 {
-    Crop *data;
     int row = this->field.getRow();
     int col = this->field.getCol();
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
         {
-            data = this->field.get(i, j);
+            auto data = this->field.get(i, j);
             data->incrementDuration();
         }
     }
 }
 
-void Field::addCrop(Crop item, string location)
+void Field::addCrop(shared_ptr<Crop> item, string location)
 {
     // do something? or try catch
     field.add(item, location);
@@ -27,9 +26,18 @@ void Field::harvestCrop(string location)
     field.remove(location);
 }
 
-void Field::countEmpty()
+int Field::countEmpty()
 {
-    cout << field.countEmpty() << endl;
+    return field.countEmpty();
+}
+
+bool Field::isEmpty()
+{
+    return field.isEmpty();
+}
+bool Field::isFull()
+{
+    return field.isFull();
 }
 
 void Field::display()

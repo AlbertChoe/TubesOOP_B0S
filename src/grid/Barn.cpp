@@ -1,13 +1,12 @@
 #include "header/Barn.hpp"
 
-void Barn::addLivestock(Livestock livestock, string location)
+void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
 {
     barn.add(livestock, location);
 }
 
 void Barn::feedLivestock(int food, string location)
 {
-    Livestock *data;
     int row = this->barn.getRow();
     int col = this->barn.getCol();
     int a = location[0] - 'A';
@@ -23,7 +22,7 @@ void Barn::feedLivestock(int food, string location)
         {
             if (a == i && b == j)
             {
-                data = this->barn.get(i, j);
+                auto data = this->barn.get(i, j);
                 data->eat(food);
                 return;
             }
@@ -32,14 +31,14 @@ void Barn::feedLivestock(int food, string location)
 }
 void Barn::harvestLivestock()
 {
-    Livestock *data;
+    shared_ptr<Livestock> data;
     int row = this->barn.getRow();
     int col = this->barn.getCol();
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
         {
-            data = this->barn.get(i, j);
+            auto data = this->barn.get(i, j);
             // get data harvesresult and do someting??
             this->barn.remove(i, j);
         }
@@ -48,4 +47,18 @@ void Barn::harvestLivestock()
 void Barn::display()
 {
     this->barn.print("===barn===");
+}
+
+int Barn::countEmpty()
+{
+    return barn.countEmpty();
+}
+
+bool Barn::isEmpty()
+{
+    return barn.isEmpty();
+}
+bool Barn::isFull()
+{
+    return barn.isFull();
 }

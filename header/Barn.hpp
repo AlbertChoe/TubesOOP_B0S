@@ -9,13 +9,16 @@ using namespace std;
 class Barn
 {
 private:
-    Grid<Livestock> barn;
+    Grid<shared_ptr<Livestock>> barn;
 
 public:
-    void addLivestock(Livestock livestock, string location);
+    void addLivestock(shared_ptr<Livestock> livestock, string location);
     void feedLivestock(int food, string location);
     void harvestLivestock();
     void display();
+    int countEmpty();
+    bool isEmpty();
+    bool isFull();
 };
 
 #endif

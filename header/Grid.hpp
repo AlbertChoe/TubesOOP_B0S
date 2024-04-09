@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <iostream>
+#include <memory>
+#include <iomanip>
 using namespace std;
 
 template <typename T>
@@ -22,9 +24,10 @@ public:
     int countEmpty();
     int getRow();
     int getCol();
-    T *get(string location);
-    T *get(int row, int col);
+    T get(string location);
+    T get(int row, int col);
     bool isEmpty();
+    bool isEmpty(string location);
     bool isFull();
 };
 
