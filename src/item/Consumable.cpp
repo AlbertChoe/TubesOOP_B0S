@@ -11,6 +11,9 @@ Consumable::Consumable(): Item(){
 Consumable::Consumable(int id, string code, string name, string type, int price, string origin, ConsumableConfig consumableConfig)
     : Item::Item(id, code, name, type, price), origin(origin), addedWeight(getAddedWeightFromConfig(code, consumableConfig)) {}
 
+Consumable::Consumable(int id, string code, string name, string type, int price, string origin, int addedWeight)
+    : Item::Item(id, code, name, type, price), origin(origin), addedWeight(addedWeight) {}
+
 Consumable::~Consumable() {}
 
 Consumable::Consumable(const Consumable& consumable): Item(consumable), origin(consumable.origin), addedWeight(consumable.addedWeight) {}

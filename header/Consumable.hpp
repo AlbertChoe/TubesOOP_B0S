@@ -14,8 +14,10 @@ private:
 public:
     // Constructor
     Consumable();
-    // Constructor user defined
+    // Constructor user defined config based
     Consumable(int id, string code, string name, string type, int price, string origin, ConsumableConfig consumableConfig);
+    //Constructor user defined
+    Consumable(int id, string code, string name, string type, int price, string origin, int addedWeight);
     // Destructor
     ~Consumable();
     // Copy Constructor

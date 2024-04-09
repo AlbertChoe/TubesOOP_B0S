@@ -12,25 +12,25 @@ class ExampleException: public exception {
 
 class HarvestNotReadyException: public exception{
 	const char* what() const throw() {
-		return "Not ready for harvest!";
+		return "Belum siap untuk dipanen!";
 	}
 };
 
 class HerbivoresEatMeatException: public exception {
     const char* what() const throw() {
-		return "Herbivores can only eat plants";
+		return "Herbivora hanya bisa memakan tumbuhan";
 	}
 };
 
 class CarnivoresEatPlantsException: public exception {
     const char* what() const throw() {
-		return "Carnivores can only eat meat";
+		return "Karnivora hanya bisa memakan daging";
 	}
 };
 
 class EatMaterialException: public exception{
 	const char* what() const throw() {
-		return "Material cannot be eaten!";
+		return "Tumbuhan material tidak bisa dimakan!";
 	}
 };
 

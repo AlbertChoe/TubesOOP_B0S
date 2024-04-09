@@ -7,6 +7,9 @@ Omnivore::Omnivore() : Livestock::Livestock(){}
 Omnivore::Omnivore(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig)
     : Livestock::Livestock(id, code, name, type, price, currentWeight, livestockConfig) {}
 
+Omnivore::Omnivore(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight)
+    : Livestock::Livestock(id, code, name, type, price, currentWeight, harvestWeight) {}
+
 Omnivore::~Omnivore() {}
 
 Omnivore::Omnivore(const Omnivore& omnivore): Livestock::Livestock(omnivore) {}

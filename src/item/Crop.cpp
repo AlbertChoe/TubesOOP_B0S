@@ -15,6 +15,9 @@ Crop::Crop() : Item::Item(){
 Crop::Crop(int id, string code, string name, string type, int price, int currentDuration, CropConfig cropConfig) 
     : Item::Item(id, code, name, type, price), currentDuration(0), harvestDuration(getHarvestDuration(code, cropConfig)) {}
 
+Crop::Crop(int id, string code, string name, string type, int price, int currentDuration, int harvestDuration) 
+    : Item::Item(id, code, name, type, price), currentDuration(0), harvestDuration(harvestDuration) {}
+
 Crop::~Crop() {}
 
 Crop::Crop(const Crop& other) : Item(other), currentDuration(other.currentDuration), harvestDuration(other.harvestDuration) {

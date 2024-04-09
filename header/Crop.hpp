@@ -16,8 +16,10 @@ private:
 public:
     // Constructor default
     Crop();
-    // Constructor user defined
+    // Constructor user defined from config
     Crop(int id, string code, string name, string type, int price, int currentDuration, CropConfig cropConfig);
+    // Constructor user defined
+    Crop(int id, string code, string name, string type, int price, int currentDuration, int harvestDuration);
     // Destructor
     ~Crop();
     // Copy constructor

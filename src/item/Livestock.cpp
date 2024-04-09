@@ -13,6 +13,9 @@ Livestock::Livestock() : Item::Item(){
 Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig) 
     : Item::Item(id, code, name, type, price), harvestWeight(getHarvestWeightFromConfig(code, livestockConfig)), currentWeight(0) {}
 
+Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight) 
+    : Item::Item(id, code, name, type, price), harvestWeight(harvestWeight), currentWeight(0) {}
+
 Livestock::~Livestock() {}
 
 Livestock::Livestock(const Livestock& other): Item(other), currentWeight(other.currentWeight), harvestWeight(other.harvestWeight) {

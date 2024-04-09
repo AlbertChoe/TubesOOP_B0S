@@ -18,8 +18,10 @@ private:
 public:
     // Constructor default
     Livestock();
-    // Constructor user defined
+    // Constructor user defined from config
     Livestock(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig);
+    // Constructor user defined
+    Livestock(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight);
     // Destructor
     ~Livestock();
     // Copy Constructor
