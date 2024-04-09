@@ -4,6 +4,7 @@
 #include "Barn.hpp"
 #include "Player.hpp"
 #include <iostream>
+#include <map>
 using namespace std;
 
 class Breeder : public Player {
@@ -15,6 +16,7 @@ public:
     void harvestLivestock();
     void displayBarn();
     int getTaxable();
+    // map<string, int> countReadyToHarvest();
 };
 
 #endif
