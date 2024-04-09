@@ -1,31 +1,31 @@
 #include "header/Breeder.hpp"
 #include "header/Exception.hpp"
 
+
+
 void Breeder::addLivestock() {
     try {
-        inventory.display();// INI DICEK LAGI 
-
+        if (inventory.isEmpty()){
+            throw EmptySlotInputException();
+        }
         string selectedLocation;
         cout << "Pilih hewan dari penyimpanan : ";
+        inventory.display();// INI DICEK LAGI 
         cin >> selectedLocation;
-        Item* selectedAnimal = inventory.getItem(selectedLocation); //INI HARUS RETURN POINTER DI BOS
+        auto selectedAnimal = inventory.getItem(selectedLocation);
 
-        if (selectedAnimal == nullptr || (selectedAnimal->getType() != "HERBIVORE" && selectedAnimal->getType() != "CARNIVORE" && selectedAnimal->getType() != "OMNIVORE")) {
+        auto livestock = dynamic_pointer_cast<Livestock>(selectedAnimal);
+        if (!livestock) {
             throw InvalidTypeException();
         }
-
+        
         cout << "Pilih petak tanah yang akan ditinggali : ";
         barn.display();
         string barnLocation;
         cin >> barnLocation;
 
-        if (barn.get(barnLocation) != nullptr) { //INI HARUS RETURN POINTER DI BOS
+        if ( !barn.isEmpty(barnLocation) ) { 
             throw FullSlotException();
-        }
-
-        Livestock* livestock = dynamic_cast<Livestock*>(selectedAnimal); // INI JUGA HARUS DICEK
-        if (livestock == nullptr) {
-            throw InvalidTypeException();
         }
 
         barn.addLivestock(livestock, barnLocation);
@@ -38,17 +38,17 @@ void Breeder::addLivestock() {
 
 void Breeder::feedLivestock() {
     try {
-        if (barn.countEmpty() == barn.getRow() * barn.getCol()) {
-            throw NothingToFeed();
+        if (barn.isEmpty()) {
+            throw NothingToFeedException();
         }
 
         barn.display();
         string location;
         cout << "Pilih petak kandang yang akan ditinggali: ";
         cin >> location;
-        Livestock* livestock = dynamic_cast<Livestock*>(barn.get(location));
+        auto livestock = dynamic_pointer_cast<Livestock>(barn.get(location));
 
-        if (livestock == nullptr) {
+        if (!livestock) {
             throw InvalidTypeException();
         }
         cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\nPilih pangan yang akan diberikan: ";
@@ -56,14 +56,14 @@ void Breeder::feedLivestock() {
         displayInventory();
         string slot;
         cin >> slot;
-        Consumable* food = dynamic_cast<Consumable*>(inventory.getItem(slot));
+        auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
 
-        if (food == nullptr) {
+        if (!food) {
             throw InvalidTypeException();
         }
 
         livestock->eat(food->getAddedWeight());
-        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getWeight() << endl;
+        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
         inventory.removeItem(slot);
     } catch (const exception& e) {
         cout << e.what() << endl;
@@ -91,7 +91,7 @@ void Breeder::harvestLivestock() {
     try {
         displayBarn();
 
-        map<string, int> readyToHarvest = countReadyToHarvest();
+        auto readyToHarvest = countReadyToHarvest();
         if (readyToHarvest.empty()) {
             throw HarvestNotReadyException();
         }
@@ -99,10 +99,9 @@ void Breeder::harvestLivestock() {
         int count = 1;
         map<int, string> harvestOptions;
         cout << "Pilih hewan siap panen yang kamu miliki: ";
-        for (auto& pair : readyToHarvest) {
+        for (const auto& pair : readyToHarvest) {
             cout << count << ". " << pair.first << " (" << pair.second << " petak siap panen)" << endl;
-            harvestOptions[count] = pair.first;
-            count++;
+            harvestOptions[count++] = pair.first;
         }
 
         int choice;
@@ -132,10 +131,10 @@ void Breeder::harvestLivestock() {
             string location;
             cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
             cin >> location;
-            Livestock* livestock = barn.get(location);
-            if (livestock != nullptr && livestock->getCode() == selectedType && livestock->isReadyToHarvest()) {
-                vector<Consumable> harvestResult = livestock->harvest();
-                for (const Consumable& item : harvestResult) {
+            auto livestock = barn.get(location);
+            if (livestock && livestock->getCode() == selectedType && livestock->isReadyToHarvest()) {
+                auto harvestResult = livestock->harvest();
+                for (const auto& item : harvestResult) {
                     inventory.addItem(item);
                 }
                 barn.remove(location);
@@ -172,7 +171,7 @@ int Breeder::getTaxable() {
     // Menghitung nilai dari hewan yang ada di peternakan
     for (int i = 0; i < barn.getRow(); i++) {
         for (int j = 0; j < barn.getCol(); j++) {
-            Livestock* livestock = barn.get(i, j);
+            auto livestock = barn.get(i, j);
             if (livestock != nullptr) {
                 netWealth += livestock->getPrice();
             }
@@ -182,7 +181,7 @@ int Breeder::getTaxable() {
     // Menghitung nilai dari barang yang ada di penyimpanan
     for (int i = 0; i < inventory.getRow(); i++) {
         for (int j = 0; j < inventory.getCol(); j++) {
-            Item* item = inventory.get(i, j);
+            auto item = inventory.get(i, j);
             if (item != nullptr) {
                 netWealth += item->getPrice();
             }
