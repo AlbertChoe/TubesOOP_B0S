@@ -11,11 +11,12 @@ void Grid<T>::add(T item)
 {
     int row = grid.size();
     int col = grid[0].size();
+
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].is_empty)
+            if (grid[i][j].isEmpty())
             {
                 grid[i][j] = item;
                 return;
@@ -70,7 +71,7 @@ int Grid<T>::countEmpty()
     {
         for (int j = 0; j < col; j++)
         {
-            if (grid[i][j].is_empty)
+            if (grid[i][j].isEmpty())
             {
                 res++;
             }
@@ -116,4 +117,39 @@ template <typename T>
 int Grid<T>::getRow()
 {
     return this->grid.size();
+}
+
+template <typename T>
+bool Grid<T>::isEmpty()
+{
+    int row = grid.size();
+    int col = grid[0].size();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (!grid[i][j].isEmpty())
+            {
+                return false
+            }
+        }
+    }
+    return true;
+}
+template <typename T>
+bool Grid<T>::isFull()
+{
+    int row = grid.size();
+    int col = grid[0].size();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (grid[i][j].isEmpty())
+            {
+                return false
+            }
+        }
+    }
+    return true;
 }

@@ -24,6 +24,8 @@ public:
     int getCol();
     T *get(string location);
     T *get(int row, int col);
+    bool isEmpty();
+    bool isFull();
 };
 
 #endif
