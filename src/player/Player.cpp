@@ -1,6 +1,6 @@
-#include "header/Player.hpp"
+#include "../../header/Player.hpp"
 
-Player::Player(string name){
+Player::Player(string name) {
     this->name=name;
     this->weight=40;
     this->gulden=50;
@@ -115,6 +115,18 @@ void Player::displayInventory(){
 //     }
 // }
 
-int Player::getTaxable(){
+int Player::getGulden() {
     return this->gulden;
+}
+
+int Player::getWeight() {
+    return this->weight;
+}
+
+string Player::getName() {
+    return this->name;
+}
+
+void Player::setName(string _name) {
+    this->name = _name;
 }

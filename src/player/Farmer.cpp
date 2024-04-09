@@ -1,5 +1,5 @@
-#include "header/Farmer.hpp"
-#include "header/Exception.hpp"
+#include "../../header/Farmer.hpp"
+#include "../../header/Exception.hpp"
 
 // INI SEMUA ERRORNYA SAMA KEK BREEDER HARUS CEK ULANG PAS UDH GANTI SM PAS UDH TAMBAH FUNGSI DI BOS
 
@@ -182,4 +182,8 @@ int Farmer::getTaxable() {
     tax = min(tax, gulden);
 
     return tax;
+}
+
+PlayerType Farmer::getType() {
+    return PlayerType::Farmer;
 }

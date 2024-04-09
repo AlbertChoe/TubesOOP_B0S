@@ -1,6 +1,6 @@
-#include "header/Consumable.hpp"
-#include "header/Item.hpp"
-#include "header/Config.hpp"
+#include "../../header/Consumable.hpp"
+#include "../../header/Item.hpp"
+#include "../../header/Config.hpp"
 using namespace std;
 
 Consumable::Consumable(): Item(){

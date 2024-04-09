@@ -14,6 +14,7 @@ public:
     void displayField();
     void harvestCrop();
     int getTaxable();
+    PlayerType getType();
     // map<string, int> countReadyToHarvest();
 };
 

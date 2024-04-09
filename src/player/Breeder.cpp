@@ -1,5 +1,5 @@
-#include "header/Breeder.hpp"
-#include "header/Exception.hpp"
+#include "../../header/Breeder.hpp"
+#include "../../header/Exception.hpp"
 
 void Breeder::addLivestock() {
     try {
@@ -217,7 +217,6 @@ int Breeder::getTaxable() {
     return tax;
 }
 
-
-
-
-
+PlayerType Breeder::getType() {
+    return PlayerType::Breeder;
+}

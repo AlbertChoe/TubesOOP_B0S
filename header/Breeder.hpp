@@ -16,6 +16,7 @@ public:
     void harvestLivestock();
     void displayBarn();
     int getTaxable();
+    PlayerType getType();
     // map<string, int> countReadyToHarvest();
 };
 

@@ -1,4 +1,4 @@
-#include "header/Grid.hpp"
+#include "../../header/Grid.hpp"
 
 template <typename T>
 Grid<T>::Grid(int row, int col)

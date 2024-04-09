@@ -1,4 +1,4 @@
-#include "header/Mayor.hpp"
+#include "../../header/Mayor.hpp"
 
 void Mayor::addNewPlayer(vector<Player>& players){
     try
@@ -79,5 +79,9 @@ void Mayor::addNewPlayer(vector<Player>& players){
 // }
 
 int Mayor::getTaxable(){
-    return this->gulden;
+    return 0;
+}
+
+PlayerType Mayor::getType() {
+    return PlayerType::Mayor;
 }

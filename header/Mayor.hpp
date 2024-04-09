@@ -12,6 +12,7 @@ public:
     void collectTax(vector<Player>& players);
     void buildBuilding(const BuildingConfig& recipe);
     int getTaxable();
+    PlayerType getType();
 };
 
 #endif

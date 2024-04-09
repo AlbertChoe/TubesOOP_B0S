@@ -1,15 +1,14 @@
-#include "header/Crop.hpp"
-#include "header/Config.hpp"
-#include "pcolor/pcolor.h"
-#include "header/Exception.hpp"
-#include "header/Consumable.hpp"
+#include "../../header/Crop.hpp"
+#include "../../header/Config.hpp"
+#include "../pcolor/pcolor.h"
+#include "../../header/Exception.hpp"
+#include "../../header/Consumable.hpp"
 
 using namespace std;
 
 Crop::Crop() : Item::Item(){
     currentDuration = 0;
     harvestDuration = 0;
-    harvestResult = {};
 }
 
 Crop::Crop(int id, string code, string name, string type, int price, int currentDuration, CropConfig cropConfig) 
@@ -49,6 +48,10 @@ void Crop::setHarvestDuration(int harvestDuration){
 
 void Crop::setHarvestResult(vector<Consumable>& harvestResult) {
     this->harvestResult = harvestResult;
+}
+
+void Crop::addHarvestResult(Consumable result) {
+    this->harvestResult.push_back(result);
 }
 
 void Crop::incrementDuration(){

@@ -35,6 +35,7 @@ public:
     void setHarvestWeight(int harvestWeight);
     void setCurrentWeight(int currentWeight);
     void setHarvestResult(vector<Consumable>& harvestResult);
+    void addHarvestResult(Consumable result);
     // Eat Mechanism
     void eat(int weight);
     // Add new harvest results
