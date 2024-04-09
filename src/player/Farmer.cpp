@@ -1,13 +1,12 @@
 #include "header/Farmer.hpp"
 #include "header/Exception.hpp"
-
-// INI SEMUA ERRORNYA SAMA KEK BREEDER HARUS CEK ULANG PAS UDH GANTI SM PAS UDH TAMBAH FUNGSI DI BOS
+using namespace std;
 
 void Farmer::plantCrop() {
     try {
-        if (inventory.countEmpty() == inventory.getRow() * inventory.getCol()) {
+        if (inventory.isEmpty()){
             throw EmptySlotInputException();
-        } 
+        }
 
         cout << "Pilih Tanaman di penyimpanan:" << endl;
         inventory.display();
@@ -15,7 +14,7 @@ void Farmer::plantCrop() {
         string locationInventory;
         cout << "Slot: ";
         cin >> locationInventory;
-        Item* item = inventory.getItem(locationInventory);
+        auto item = inventory.getItem(locationInventory);
 
         if (item == nullptr || (item->getType() != "MATERIAL_PLANT" && item->getType() != "FRUIT_PLANT")) {
             throw InvalidTypeException();
@@ -28,10 +27,10 @@ void Farmer::plantCrop() {
         cout << "Petak tanah: ";
         cin >> location;
 
-        if (!field.isEmptyLocation(location)) {
+        if (!field.isEmpty(location)) {
             throw FullSlotException();
         }
-        field.plantCrop(dynamic_cast<Crop*>(item), location);
+        field.addCrop(dynamic_pointer_cast<Crop>(item), location);
         inventory.removeItem(locationInventory);
 
         cout << "Tanaman berhasil ditanam di " << location << "." << endl;
@@ -40,19 +39,19 @@ void Farmer::plantCrop() {
     }
 }
 
-//INI DI TEMPAT BOS 
-// map<string, int> Farmer::countReadyToHarvest() {
-//     map<string, int> readyToHarvest;
-//     for (int i = 0; i < field.getRow(); i++) {
-//         for (int j = 0; j < field.getCol(); j++) {
-//             Crop* crop = field.get(i, j);
-//             if (crop != nullptr && crop->isReadyToHarvest()) {
-//                 readyToHarvest[crop->getCode()]++;
-//             }
-//         }
-//     }
-//     return readyToHarvest;
-// }
+// INI DI TEMPAT BOS 
+map<string, int> Farmer::countReadyToHarvest() {
+    map<string, int> readyToHarvest;
+    for (int i = 0; i < field.getRow(); i++) {
+        for (int j = 0; j < field.getCol(); j++) {
+            Crop* crop = field.get(i, j);
+            if (crop != nullptr && crop->isReadyToHarvest()) {
+                readyToHarvest[crop->getCode()]++;
+            }
+        }
+    }
+    return readyToHarvest;
+}
 
 void Farmer::displayField() {
     field.display();
@@ -61,7 +60,7 @@ void Farmer::harvestCrop() {
     try {
         displayField();
 
-        map<string, int> readyToHarvest = countReadyToHarvest();
+        auto readyToHarvest = countReadyToHarvest();
         if (readyToHarvest.empty()) {
             throw HarvestNotReadyException();
         }
@@ -100,10 +99,10 @@ void Farmer::harvestCrop() {
             string location;
             cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
             cin >> location;
-            Crop* crop = field.get(location);
+            auto crop = field.get(location);
             if (crop != nullptr && crop->getCode() == selectedType && crop->isReadyToHarvest()) {
-                vector<Consumable> harvestResult = crop->harvest();
-                for (const Consumable& item : harvestResult) {
+                auto harvestResult = crop->harvest();
+                for (const auto& item : harvestResult) {
                     inventory.addItem(item);
                 }
                 field.remove(location);
@@ -139,7 +138,7 @@ int Farmer::getTaxable() {
     // Menghitung nilai dari tanaman yang ada di lahan
     for (int i = 0; i < field.getRow(); i++) {
         for (int j = 0; j < field.getCol(); j++) {
-            Crop* crop = field.get(i, j);
+            auto crop = field.get(i, j);
             if (crop != nullptr) {
                 netWealth += crop->getPrice();
             }
@@ -149,7 +148,7 @@ int Farmer::getTaxable() {
     // Menghitung nilai dari barang yang ada di penyimpanan
     for (int i = 0; i < inventory.getRow(); i++) {
         for (int j = 0; j < inventory.getCol(); j++) {
-            Item* item = inventory.get(i, j);
+            auto item = inventory.get(i, j);
             if (item != nullptr) {
                 netWealth += item->getPrice();
             }

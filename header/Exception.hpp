@@ -94,11 +94,13 @@ class NotEnoughToHarvestException: public exception {
     }
 };
 
-class NothingToFeed: public exception {
+class NothingToFeedException: public exception {
     const char* what() const throw() {
         return "Tidak ada yang bisa diberi makan!";
     }
 };
+
+
 
 
 #endif
