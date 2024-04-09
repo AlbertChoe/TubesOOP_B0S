@@ -1,13 +1,12 @@
-#include "header/Livestock.hpp"
-#include "header/Item.hpp"
-#include "header/Config.hpp"
-#include "pcolor/pcolor.h"
+#include "../../header/Livestock.hpp"
+#include "../../header/Item.hpp"
+#include "../../header/Config.hpp"
+#include "../pcolor/pcolor.h"
 using namespace std;
 
 Livestock::Livestock() : Item::Item(){
     currentWeight = 0;
     harvestWeight = 0;
-    harvestResult = {};
 }
 
 Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig) 
@@ -33,7 +32,7 @@ int Livestock::getHarvestWeight(){
 }
 
 int Livestock::getHarvestWeightFromConfig(string code, LivestockConfig configLivestock){
-    return configLivestock.getConfig(code).harvestWeight;
+    return configLivestock.getConfig(code)->harvestWeight;
 }
 
 vector<Consumable> Livestock::getHarvestResult(){
@@ -50,6 +49,10 @@ void Livestock::setHarvestWeight(int harvestWeight){
 
 void Livestock::setHarvestResult(vector<Consumable>& harvestResult) {
     this->harvestResult = harvestResult;
+}
+
+void Livestock::addHarvestResult(Consumable result) {
+    this->harvestResult.push_back(result);
 }
 
 void Livestock::eat(int weight){

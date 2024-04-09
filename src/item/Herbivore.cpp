@@ -1,5 +1,5 @@
-#include "header/Herbivore.hpp"
-#include "header/Exception.hpp"
+#include "../../header/Herbivore.hpp"
+#include "../../header/Exception.hpp"
 using namespace std;
 
 Herbivore::Herbivore() : Livestock::Livestock(){}

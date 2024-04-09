@@ -100,6 +100,23 @@ class NothingToFeedException: public exception {
     }
 };
 
+class FailToLoadException: public exception {
+private:
+    string fileName;
+public:
+    FailToLoadException(string _fileName): fileName(_fileName) {}
+    const char* what() const throw() {
+        static string message;
+        message = "Load file " + fileName + " gagal!";
+        return message.c_str();
+    }
+};
+
+class WrongUserInputException: public exception {
+	const char* what() const throw() {
+        return "Player tidak dapat melakukan input tersebut!";
+    }
+};
 
 
 

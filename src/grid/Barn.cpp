@@ -1,4 +1,4 @@
-#include "header/Barn.hpp"
+#include "../../header/Barn.hpp"
 
 void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
 {

@@ -1,6 +1,7 @@
-#include "header/Farmer.hpp"
-#include "header/Exception.hpp"
+#include "../../header/Farmer.hpp"
+#include "../../header/Exception.hpp"
 using namespace std;
+// INI SEMUA ERRORNYA SAMA KEK BREEDER HARUS CEK ULANG PAS UDH GANTI SM PAS UDH TAMBAH FUNGSI DI BOS
 
 void Farmer::plantCrop() {
     try {
@@ -181,4 +182,8 @@ int Farmer::getTaxable() {
     tax = min(tax, gulden);
 
     return tax;
+}
+
+PlayerType Farmer::getType() {
+    return PlayerType::Farmer;
 }

@@ -1,4 +1,4 @@
-#include "header/Inventory.hpp"
+#include "../../header/Inventory.hpp"
 
 void Inventory::addItem(shared_ptr<Item> item)
 {

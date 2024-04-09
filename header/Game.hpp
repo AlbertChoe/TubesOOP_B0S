@@ -7,32 +7,44 @@
 #include "Mayor.hpp"
 #include "Farmer.hpp"
 #include "Breeder.hpp"
+#include "Exception.hpp"
+#include "Utils.hpp"
+#include <fstream>
+#include <memory>
 #include <iostream>
 #include <vector>
 using namespace std;
 
 class Game {
 private:
-    static GameConfig gameConfig;
-    static CropConfig cropConfig;
-    static LivestockConfig livestockConfig;
-    static ConsumableConfig consumableConfig;
-    static BuildingConfig buildingConfig;
+    GameConfig gameConfig;
+    CropConfig cropConfig;
+    LivestockConfig livestockConfig;
+    ConsumableConfig consumableConfig;
+    BuildingConfig buildingConfig;
     Store store;
-    vector<Player> players;
-    int currentIndex;
+    vector<shared_ptr<Player>> players;
+    int currentPlayer;
+    int previousPlayer;
 public:
     Game();
     ~Game();
+    void nextPlayer();
+    bool isWinCondition();
     void loadGameConfig();
     void loadCropConfig();
-    void loadLiveStockConfig();
-    void loadComsumableConfig();
-    void load();
+    void loadLivestockConfig();
+    void loadConsumableConfig();
+    void loadBuildingConfig();
+    void loadHarvestConfig();
+    void loadConfig();
+    void loadGameState(string fileLocation);
+    void saveGameState();
     void newGame();
-    void save();
     void handleInput();
+    void start();
     void run();
+    void debugPrint();
 };
 
 #endif
