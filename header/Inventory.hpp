@@ -17,6 +17,10 @@ public:
     void removeItem(string location);
     void display();
     int CountWealth();
+    int countEmpty();
+    bool isEmpty();
+    bool isEmpty(string location);
+    bool isFull();
 };
 
 #endif

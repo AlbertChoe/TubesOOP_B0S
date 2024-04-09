@@ -35,6 +35,10 @@ bool Field::isEmpty()
 {
     return field.isEmpty();
 }
+bool Field::isEmpty(string location)
+{
+    return field.isEmpty(location);
+}
 bool Field::isFull()
 {
     return field.isFull();

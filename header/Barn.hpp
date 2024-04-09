@@ -18,6 +18,7 @@ public:
     void display();
     int countEmpty();
     bool isEmpty();
+    bool isEmpty(string location);
     bool isFull();
 };
 

@@ -39,3 +39,20 @@ int Inventory::CountWealth()
     }
     return netWealth;
 }
+
+int Inventory::countEmpty()
+{
+    return inventory.countEmpty();
+}
+bool Inventory::isEmpty()
+{
+    return inventory.isEmpty();
+}
+bool Inventory::isEmpty(string location)
+{
+    return inventory.isEmpty(location);
+}
+bool Inventory::isFull()
+{
+    return inventory.isFull();
+}

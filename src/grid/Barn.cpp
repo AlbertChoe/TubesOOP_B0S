@@ -58,6 +58,10 @@ bool Barn::isEmpty()
 {
     return barn.isEmpty();
 }
+bool Barn::isEmpty(string location)
+{
+    return barn.isEmpty(location);
+}
 bool Barn::isFull()
 {
     return barn.isFull();
