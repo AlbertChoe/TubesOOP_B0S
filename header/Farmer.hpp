@@ -11,9 +11,10 @@ private:
     Field field;
 public:
     void plantCrop();
-    void harvestCrop();
     void displayField();
+    void harvestCrop();
     int getTaxable();
+    // map<string, int> countReadyToHarvest();
 };
 
 #endif
