@@ -14,6 +14,7 @@ private:
 public:
     Inventory(int row, int col);
     void addItem(shared_ptr<Item> item);
+    void addItem(shared_ptr<Item> item, string location);
     shared_ptr<Item> getItem(string location);
     void removeItem(string location);
     void display();
@@ -24,6 +25,9 @@ public:
     bool isFull();
     shared_ptr<Item> getElement(string location);
     void remove(string location);
+    int getCountNonBuilding(); //TODO: return jumlah item yang bukan building
+    int getCountItem(); //TODO: return jumlah semua item
+    int getCountBuilding(); //TODO: return getCountItem() - getCountNonBuilding()
 };
 
 #endif

@@ -24,11 +24,11 @@ public:
     string getName();
     int getWeight();
     int getGulden();
+    Inventory& getRefInventory();
     void setName(string _name);
+    void setGulden(int gulden);
     void eat();
     void displayInventory();
-    void buy(Store& store);
-    void sell(Store& store);
     virtual PlayerType getType() = 0;
     virtual int getTaxable() = 0;
 };

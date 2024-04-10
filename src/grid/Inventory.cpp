@@ -9,6 +9,11 @@ void Inventory::addItem(shared_ptr<Item> item)
     this->inventory.add(item);
 }
 
+void Inventory::addItem(shared_ptr<Item> item, string location)
+{
+    this->inventory.add(item, location);
+}
+
 shared_ptr<Item> Inventory::getItem(string location)
 {
     auto data = this->inventory.get(location);

@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-#define UNLIMITED 999999;
+#define UNLIMITED 999999
 
 class Store {
 private:
@@ -16,13 +16,17 @@ private:
 public:
     Store();
     ~Store();
-    void initStore(const CropConfig& cropConfig, const LivestockConfig& livestockConfig);
+    void initStore(CropConfig& cropConfig, LivestockConfig& livestockConfig);
     void refreshStore();
-    void addItem(shared_ptr<Item> item, int quantity);
-    void removeItem(string code, int quantity);
-    shared_ptr<Item> getItem(string code);
-    int getQuantity(string code);
+    void buyTransaction(shared_ptr<Player> player);
+    void sellTransaction(shared_ptr<Player> player);
     void display();
+    int getQuantity(string code);
+    int getNumItem();
+    int getPrice(string code);
+    shared_ptr<Item> getItem(string code);
+    string getCodeByOrderNum(int num);
+    void addItem(shared_ptr<Item> item);
 };
 
 #endif

@@ -280,6 +280,11 @@ void Game::run() {
 void Game::handleInput() {
     auto current = players[currentPlayer];
     PlayerType type = current->getType();
+
+    auto farmer = (type == PlayerType::Farmer) ? dynamic_cast<Farmer*>(current.get()) : nullptr;
+    auto breeder = (type == PlayerType::Breeder) ? dynamic_cast<Breeder*>(current.get()) : nullptr;
+    auto mayor = (type == PlayerType::Mayor) ? dynamic_cast<Mayor*>(current.get()) : nullptr;
+
     bool reach_win = false;
     string input;
     while (true) {
@@ -289,33 +294,37 @@ void Game::handleInput() {
             if (input == "NEXT") {
                 nextPlayer();
             } else if (input == "CETAK_PENYIMPANAN") {
-
+                current->displayInventory();
             } else if (input == "MAKAN") {
-            
+                current->eat();
             } else if (input == "BELI") {
-            
+                store.buyTransaction(current);
             } else if (input == "JUAL") {
-            
+                store.sellTransaction(current);
             } else if (input == "SIMPAN") {
-            
-            } else if (input == "CETAK_LADANG" && type == PlayerType::Farmer) {
-
-            } else if (input == "TANAM" && type == PlayerType::Farmer) {
-
-            } else if (input == "TERNAK" && type == PlayerType::Breeder) {
-
-            } else if (input == "CETAK_PETERNAKAN" && type == PlayerType::Breeder) {
-
-            } else if (input == "KASIH_MAKAN" && type == PlayerType::Breeder) {
-
-            } else if (input == "PANEN" && (type == PlayerType::Farmer || type == PlayerType::Breeder)) {
-
-            } else if (input == "BANGUN" && type == PlayerType::Mayor) {
-            
-            } else if (input == "PUNGUT_PAJAK" && type == PlayerType::Mayor) {
-
-            } else if (input == "TAMBAH_PEMAIN" && type == PlayerType::Mayor) {
-
+                saveGameState();
+            } else if (input == "CETAK_LADANG" && farmer) {
+                farmer->displayField();
+            } else if (input == "TANAM" && farmer) {
+                farmer->plantCrop();
+            } else if (input == "TERNAK" && breeder) {
+                breeder->addLivestock();
+            } else if (input == "CETAK_PETERNAKAN" && breeder) {
+                breeder->displayBarn();
+            } else if (input == "KASIH_MAKAN" && breeder) {
+                breeder->feedLivestock();
+            } else if (input == "PANEN" && (farmer || breeder)) {
+                if (farmer) {
+                    farmer->harvestCrop();
+                } else {
+                    breeder->harvestLivestock();
+                }
+            } else if (input == "BANGUN" && mayor) {
+                mayor->buildBuilding(buildingConfig);
+            } else if (input == "PUNGUT_PAJAK" && mayor) {
+                mayor->collectTax(players);
+            } else if (input == "TAMBAH_PEMAIN" && mayor) {
+                mayor->addNewPlayer(players);
             } else {
                 throw WrongUserInputException();
             }

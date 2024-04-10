@@ -49,21 +49,6 @@ void Player::displayInventory(){
     this->inventory.display();
 }
 
-void Player::buy(Store& store){
-    
-    cout<<"Uang anda: "<<this->gulden;
-    // cout<<"Slot penyimpanan tersedia: "<<this->inventory.sakd
-
-    try
-    {
-        
-    }
-    catch(const exception& e)
-    {
-        cerr << e.what() << '\n';
-    }
-}
-
 string Player::getName(){
     return this->name;
 }
@@ -102,49 +87,6 @@ vector<string> parseAndTrimInput(const string& input) {
     return tokens;
 }
 
-void Player::sell(Store& store){
-    cout<<"Berikut merupakan penyimpanan Anda"<<endl;
-    this->displayInventory();
-    bool valid=false;
-
-    while (!valid)
-    {
-        string input;
-        int tempgulden=0;
-        cout<<"Silahkan pilih petak yang ingin Anda jual!"<<endl;
-        cout << "Petak: ";
-        getline(cin, input);
-
-        vector<string> parsedInput = parseAndTrimInput(input);
-
-        cout<<endl;
-
-        try
-        {
-            shared_ptr<Item> search=this->inventory.getItem(input);
-
-            if (search->getID()==0 && search->getCode()=="")
-            {
-                throw EmptySlotSellException();
-            }
-
-            tempgulden+=this->inventory.getItem(input)->getPrice();
-            this->gulden+=tempgulden;
-            
-            this->inventory.removeItem(input);
-
-            cout<<endl<<"Barang Anda berhasil dijual! Uang Anda bertambah"<<tempgulden<<"gulden!"<<endl;
-
-            valid=true;
-            
-        }
-        catch(const exception& e)
-        {
-            cerr << e.what() << '\n';
-        }
-    }
-}
-
 int Player::getGulden() {
     return this->gulden;
 }
@@ -159,4 +101,12 @@ string Player::getName() {
 
 void Player::setName(string _name) {
     this->name = _name;
+}
+
+void Player::setGulden(int gulden) {
+    this->gulden = gulden;
+}
+
+Inventory& Player::getRefInventory() {
+    return this->inventory;
 }
