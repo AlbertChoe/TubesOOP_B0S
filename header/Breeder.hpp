@@ -13,14 +13,12 @@ private:
 public:
     Breeder(string name, int barnRow, int barnCol): Player(name), barn(barnRow, barnCol) {}
     Breeder(string name, int weight, int gulden, int barnRow, int barnCol): Player(name, weight, gulden), barn(barnRow, barnCol) {}
-    string getType() const override { return "Peternak"; }
     void addLivestock();
     void feedLivestock();
     void harvestLivestock();
     void displayBarn();
     int getTaxable();
     PlayerType getType();
-    // map<string, int> countReadyToHarvest();
 };
 
 #endif

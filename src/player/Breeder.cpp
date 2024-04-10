@@ -1,7 +1,7 @@
 #include "../../header/Breeder.hpp"
 #include "../../header/Exception.hpp"
-
-
+#include <vector>
+#include <map>
 
 void Breeder::addLivestock() {
     try {
@@ -10,7 +10,7 @@ void Breeder::addLivestock() {
         }
         string selectedLocation;
         cout << "Pilih hewan dari penyimpanan : ";
-        inventory.display();// INI DICEK LAGI 
+        inventory.display();
         cin >> selectedLocation;
         auto selectedAnimal = inventory.getItem(selectedLocation);
 
@@ -46,7 +46,7 @@ void Breeder::feedLivestock() {
         string location;
         cout << "Pilih petak kandang yang akan ditinggali: ";
         cin >> location;
-        auto livestock = dynamic_pointer_cast<Livestock>(barn.get(location));
+        auto livestock = dynamic_pointer_cast<Livestock>(barn.getElement(location));
 
         if (!livestock) {
             throw InvalidTypeException();
@@ -70,19 +70,6 @@ void Breeder::feedLivestock() {
     }
 }
 
-// map<string, int> Breeder::countReadyToHarvest() {
-//     map<string, int> readyToHarvest;
-//     for (int i = 0; i < barn.getRow(); i++) {
-//         for (int j = 0; j < barn.getCol(); j++) {
-//             Livestock* livestock = barn.get(i, j);
-//             if (livestock != nullptr && livestock->isReadyToHarvest()) {
-//                 readyToHarvest[livestock->getCode()]++;
-//             }
-//         }
-//     }
-//     return readyToHarvest;
-// }
-
 
 void Breeder::displayBarn() {
     barn.display();
@@ -91,7 +78,7 @@ void Breeder::harvestLivestock() {
     try {
         displayBarn();
 
-        auto readyToHarvest = countReadyToHarvest();
+        auto readyToHarvest = barn.countReadyToHarvest();
         if (readyToHarvest.empty()) {
             throw HarvestNotReadyException();
         }
@@ -131,17 +118,18 @@ void Breeder::harvestLivestock() {
             string location;
             cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
             cin >> location;
-            auto livestock = barn.get(location);
+            auto livestock = barn.getElement(location);
             if (livestock && livestock->getCode() == selectedType && livestock->isReadyToHarvest()) {
-                auto harvestResult = livestock->harvest();
-                for (const auto& item : harvestResult) {
-                    inventory.addItem(item);
+                vector<Consumable> harvestResult = livestock->getHarvestResult();
+                for (const Consumable& item : harvestResult) {
+                    auto itemPtr = std::make_shared<Consumable>(item);
+                    inventory.addItem(itemPtr);
                 }
                 barn.remove(location);
                 harvestedLocations[selectedType].push_back(location);
                 numToHarvest--;
             } else {
-                 cout << "Petak " << location << " tidak valid atau tidak siap dipanen." << endl;
+                cout << "Petak " << location << " tidak valid atau tidak siap dipanen." << endl;
             }
         }
 
@@ -162,39 +150,20 @@ void Breeder::harvestLivestock() {
 }
 
 
-
-
-// INI TINGGAL UBBAH FUNGIS DAIR BOS
 int Breeder::getTaxable() {
     int netWealth = 0;
 
-    // Menghitung nilai dari hewan yang ada di peternakan
-    for (int i = 0; i < barn.getRow(); i++) {
-        for (int j = 0; j < barn.getCol(); j++) {
-            auto livestock = barn.get(i, j);
-            if (livestock != nullptr) {
-                netWealth += livestock->getPrice();
-            }
-        }
-    }
+    // Menghitung nilai dari hewan yang ada di peternakan dan inventory
+    int barnWealth = barn.countWealth();
+    int inventoryWealth = inventory.countWealth();
+    netWealth += barnWealth + inventoryWealth;
 
-    // Menghitung nilai dari barang yang ada di penyimpanan
-    for (int i = 0; i < inventory.getRow(); i++) {
-        for (int j = 0; j < inventory.getCol(); j++) {
-            auto item = inventory.get(i, j);
-            if (item != nullptr) {
-                netWealth += item->getPrice();
-            }
-        }
-    }
 
-    // Menambahkan jumlah uang saat ini
     netWealth += gulden;
 
-    // Menghitung Kekayaan Kena Pajak (KKP)
-    int KKP = netWealth - 11; // KTKP untuk peternak adalah 11 gulden
+    
+    int KKP = netWealth - 11; 
 
-    // Menghitung pajak berdasarkan KKP
     int tax = 0;
     if (KKP > 0) {
         if (KKP <= 6) {
