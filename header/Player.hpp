@@ -4,6 +4,7 @@
 #include "Inventory.hpp"
 #include "Store.hpp"
 #include "Exception.hpp"
+#include "Config.hpp"
 #include <iostream>
 using namespace std;
 
@@ -20,7 +21,8 @@ protected:
     int gulden;
     Inventory inventory;
 public:
-    Player(string name);
+    Player(string name, int InventoryRow, int InventoryCol): name(name), gulden(50), weight(40), inventory(InventoryRow,InventoryCol){}
+    Player(string name, int gulden,int weight, int InventoryRow, int InventoryCol): name(name), gulden(gulden), weight(weight), inventory(InventoryRow,InventoryCol){}
     string getName();
     int getWeight();
     int getGulden();

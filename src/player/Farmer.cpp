@@ -1,7 +1,7 @@
 #include "../../header/Farmer.hpp"
 #include "../../header/Exception.hpp"
-using namespace std;
-// INI SEMUA ERRORNYA SAMA KEK BREEDER HARUS CEK ULANG PAS UDH GANTI SM PAS UDH TAMBAH FUNGSI DI BOS
+#include <vector>
+#include <map>
 
 void Farmer::plantCrop() {
     try {
@@ -40,20 +40,6 @@ void Farmer::plantCrop() {
     }
 }
 
-// INI DI TEMPAT BOS 
-map<string, int> Farmer::countReadyToHarvest() {
-    map<string, int> readyToHarvest;
-    for (int i = 0; i < field.getRow(); i++) {
-        for (int j = 0; j < field.getCol(); j++) {
-            Crop* crop = field.get(i, j);
-            if (crop != nullptr && crop->isReadyToHarvest()) {
-                readyToHarvest[crop->getCode()]++;
-            }
-        }
-    }
-    return readyToHarvest;
-}
-
 void Farmer::displayField() {
     field.display();
 }
@@ -61,7 +47,7 @@ void Farmer::harvestCrop() {
     try {
         displayField();
 
-        auto readyToHarvest = countReadyToHarvest();
+        map<string, int> readyToHarvest = field.countReadyToHarvest();
         if (readyToHarvest.empty()) {
             throw HarvestNotReadyException();
         }
@@ -100,11 +86,12 @@ void Farmer::harvestCrop() {
             string location;
             cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
             cin >> location;
-            auto crop = field.get(location);
+            auto crop = field.getElement(location);
             if (crop != nullptr && crop->getCode() == selectedType && crop->isReadyToHarvest()) {
-                auto harvestResult = crop->harvest();
+                vector<Consumable> harvestResult = crop->getHarvestResult();
                 for (const auto& item : harvestResult) {
-                    inventory.addItem(item);
+                    auto itemPtr = make_shared<Consumable>(item);
+                    inventory.addItem(itemPtr);
                 }
                 field.remove(location);
                 harvestedLocations[selectedType].push_back(location);
@@ -131,38 +118,19 @@ void Farmer::harvestCrop() {
 }
 
 
-
-// INI TINGGAL UBBAH FUNGIS DAIR BOS
 int Farmer::getTaxable() {
     int netWealth = 0;
 
-    // Menghitung nilai dari tanaman yang ada di lahan
-    for (int i = 0; i < field.getRow(); i++) {
-        for (int j = 0; j < field.getCol(); j++) {
-            auto crop = field.get(i, j);
-            if (crop != nullptr) {
-                netWealth += crop->getPrice();
-            }
-        }
-    }
+    // Menghitung nilai dari hewan yang ada di peternakan dan inventory
+    int fieldWealth = field.countWealth();
+    int inventoryWealth = inventory.countWealth();
+    netWealth += fieldWealth + inventoryWealth;
 
-    // Menghitung nilai dari barang yang ada di penyimpanan
-    for (int i = 0; i < inventory.getRow(); i++) {
-        for (int j = 0; j < inventory.getCol(); j++) {
-            auto item = inventory.get(i, j);
-            if (item != nullptr) {
-                netWealth += item->getPrice();
-            }
-        }
-    }
-
-    // Menambahkan jumlah uang saat ini
     netWealth += gulden;
 
-    // Menghitung Kekayaan Kena Pajak (KKP)
-    int KKP = netWealth - 13; // KTKP untuk petani adalah 13 gulden
+  
+    int KKP = netWealth - 13; 
 
-    // Menghitung pajak berdasarkan KKP
     int tax = 0;
     if (KKP > 0) {
         if (KKP <= 6) {

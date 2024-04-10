@@ -10,15 +10,14 @@ class Farmer : public Player {
 private:
     Field field;
 public:
-    Farmer( string name, int fieldRow, int fieldCol): Player(name), field(fieldRow, fieldCol) {}
-    Farmer( string name, int weight, int gulden, int fieldRow, int fieldCol): Player(name, weight, gulden), field(fieldRow, fieldCol) {}
-    string getType() const override { return "Petani"; }
+    Farmer( string name, int InventoryRow, int InventoryCol, int fieldRow, int fieldCol): Player(name,InventoryRow,InventoryCol), field(fieldRow, fieldCol) {}
+    Farmer( string name, int weight, int gulden, int InventoryRow, int InventoryCol, int fieldRow, int fieldCol): Player(name, weight, gulden, InventoryRow, InventoryCol), field(fieldRow, fieldCol) {}
+    PlayerType getType();
     void plantCrop();
     void displayField();
     void harvestCrop();
     int getTaxable();
     PlayerType getType();
-    // map<string, int> countReadyToHarvest();
 };
 
 #endif
