@@ -11,8 +11,8 @@ class Breeder : public Player {
 private:
     Barn barn;
 public:
-    Breeder(string name, int barnRow, int barnCol): Player(name), barn(barnRow, barnCol) {}
-    Breeder(string name, int weight, int gulden, int barnRow, int barnCol): Player(name, weight, gulden), barn(barnRow, barnCol) {}
+    Breeder(string name, int InventoryRow, int InventoryCol, int barnRow, int barnCol): Player(name,InventoryRow,InventoryCol), barn(barnRow, barnCol) {}
+    Breeder(string name, int weight, int gulden, int InventoryRow, int InventoryCol, int barnRow, int barnCol): Player(name, weight, gulden, InventoryRow, InventoryCol), barn(barnRow, barnCol) {}
     void addLivestock();
     void feedLivestock();
     void harvestLivestock();
