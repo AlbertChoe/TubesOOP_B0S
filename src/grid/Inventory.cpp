@@ -65,3 +65,8 @@ shared_ptr<Item> Inventory::getElement(string location)
 {
     return this->inventory.get(location);
 }
+
+void Inventory::remove(string location)
+{
+    this->inventory.remove(location);
+}

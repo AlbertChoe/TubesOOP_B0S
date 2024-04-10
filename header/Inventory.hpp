@@ -23,6 +23,7 @@ public:
     bool isEmpty(string location);
     bool isFull();
     shared_ptr<Item> getElement(string location);
+    void remove(string location);
 };
 
 #endif

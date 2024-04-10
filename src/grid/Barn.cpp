@@ -111,3 +111,8 @@ int Barn::countWealth()
     }
     return netWealth;
 }
+
+void Barn::remove(string location)
+{
+    this->barn.remove(location)
+}

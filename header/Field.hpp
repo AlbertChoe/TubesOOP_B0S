@@ -24,6 +24,7 @@ public:
     void display();
     shared_ptr<Crop> getElement(string location);
     map<string, int> countReadyToHarvest();
+    void remove(string location);
 };
 
 #endif

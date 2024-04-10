@@ -93,3 +93,8 @@ int Field::countWealth()
     }
     return netWealth;
 }
+
+void Field::remove(string location)
+{
+    this->field.remove(location);
+}
