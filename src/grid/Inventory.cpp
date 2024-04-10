@@ -75,3 +75,33 @@ void Inventory::remove(string location)
 {
     this->inventory.remove(location);
 }
+
+int Inventory::getCountItem()
+{
+    return this->inventory.getCol() * this->inventory.getRow() - countEmpty();
+}
+
+int Inventory::getCountNonBuilding()
+{
+    int res = 0;
+    int row = this->inventory.getRow();
+    int col = this->inventory.getCol();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto item = this->inventory.get(i, j);
+            ItemType itemtype = item->getItemType();
+            if (itemtype != ItemType::Building)
+            {
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+int Inventory::getCountBuilding()
+{
+    return getCountItem() - getCountNonBuilding();
+}
