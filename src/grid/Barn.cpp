@@ -1,5 +1,9 @@
 #include "../../header/Barn.hpp"
 
+Barn::Barn(int row, int col) : barn(row, col)
+{
+}
+
 void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
 {
     barn.add(livestock, location);
@@ -65,4 +69,45 @@ bool Barn::isEmpty(string location)
 bool Barn::isFull()
 {
     return barn.isFull();
+}
+
+shared_ptr<Livestock> Barn::getElement(string location)
+{
+    return this->barn.get(location);
+}
+
+map<string, int> Barn::countReadyToHarvest()
+{
+    map<string, int> readyToHarvest;
+    for (int i = 0; i < barn.getRow(); i++)
+    {
+        for (int j = 0; j < barn.getCol(); j++)
+        {
+            auto livestock = barn.get(i, j);
+            if (livestock != nullptr && livestock->isReadyToHarvest())
+            {
+                readyToHarvest[livestock->getCode()]++;
+            }
+        }
+    }
+    return readyToHarvest;
+}
+
+int Barn::countWealth()
+{
+    int netWealth = 0;
+    int row = this->barn.getRow();
+    int col = this->barn.getCol();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto item = this->barn.get(i, j);
+            if (item != nullptr)
+            {
+                netWealth += item->getPrice();
+            }
+        }
+    }
+    return netWealth;
 }

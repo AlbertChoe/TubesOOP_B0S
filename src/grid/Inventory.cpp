@@ -1,5 +1,9 @@
 #include "../../header/Inventory.hpp"
 
+Inventory::Inventory(int row, int col) : inventory(row, col)
+{
+}
+
 void Inventory::addItem(shared_ptr<Item> item)
 {
     this->inventory.add(item);
@@ -21,7 +25,7 @@ void Inventory::display()
     this->inventory.print("===inventory===");
 }
 
-int Inventory::CountWealth()
+int Inventory::countWealth()
 {
     int netWealth = 0;
     int row = this->inventory.getRow();
@@ -55,4 +59,9 @@ bool Inventory::isEmpty(string location)
 bool Inventory::isFull()
 {
     return inventory.isFull();
+}
+
+shared_ptr<Item> Inventory::getElement(string location)
+{
+    return this->inventory.get(location);
 }

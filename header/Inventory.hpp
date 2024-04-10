@@ -12,15 +12,17 @@ private:
     Grid<shared_ptr<Item>> inventory;
 
 public:
+    Inventory(int row, int col);
     void addItem(shared_ptr<Item> item);
     shared_ptr<Item> getItem(string location);
     void removeItem(string location);
     void display();
-    int CountWealth();
+    int countWealth();
     int countEmpty();
     bool isEmpty();
     bool isEmpty(string location);
     bool isFull();
+    shared_ptr<Item> getElement(string location);
 };
 
 #endif

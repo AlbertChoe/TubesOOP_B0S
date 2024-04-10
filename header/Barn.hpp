@@ -12,14 +12,18 @@ private:
     Grid<shared_ptr<Livestock>> barn;
 
 public:
+    Barn(int row, int col);
     void addLivestock(shared_ptr<Livestock> livestock, string location);
     void feedLivestock(int food, string location);
     void harvestLivestock();
+    int countWealth();
     void display();
     int countEmpty();
     bool isEmpty();
     bool isEmpty(string location);
     bool isFull();
+    shared_ptr<Livestock> getElement(string location);
+    map<string, int> countReadyToHarvest();
 };
 
 #endif
