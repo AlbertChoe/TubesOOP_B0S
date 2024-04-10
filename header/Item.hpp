@@ -4,6 +4,13 @@
 #include <iostream>
 using namespace std;
 
+enum class ItemType {
+    Building,
+    Consumable,
+    Crop,
+    Livestock
+};
+
 class Item {
 protected:
     int id;
@@ -34,6 +41,8 @@ public:
     void setName(string name);
     void setType(string type);
     void setPrice(int price);
+    virtual shared_ptr<Item> clone();
+    virtual ItemType getItemType() = 0;
     // Display item code in black
     friend ostream& operator<<(ostream& os, const Item& item);
 };

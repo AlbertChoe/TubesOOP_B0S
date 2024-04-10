@@ -44,6 +44,7 @@ public:
     friend ostream& operator<<(ostream& os, const Livestock& livestock);
     // Checking if livestock is ready to harvest
     bool isReadyToHarvest();
+    ItemType getItemType();
 };
 
 #endif

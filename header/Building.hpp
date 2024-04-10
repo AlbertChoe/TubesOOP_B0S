@@ -25,6 +25,7 @@ public:
     // Add material
     void addMaterial(string code, int count);
     int getCountMaterial(string code);
+    ItemType getItemType();
 };
 
 #endif

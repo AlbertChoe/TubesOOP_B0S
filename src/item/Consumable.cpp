@@ -37,3 +37,7 @@ void Consumable::setOrigin(string origin){
 void Consumable::setAddedWeight(int addedWeight){
     this->addedWeight = addedWeight;
 }
+
+ItemType Consumable::getItemType() {
+    return ItemType::Consumable;
+}

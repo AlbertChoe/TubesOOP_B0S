@@ -84,3 +84,7 @@ ostream& operator<<(ostream& os, const Livestock& livestock) {
 bool Livestock::isReadyToHarvest(){
     return this->currentWeight >= this->harvestWeight;
 }
+
+ItemType Livestock::getItemType() {
+    return ItemType::Livestock;
+}

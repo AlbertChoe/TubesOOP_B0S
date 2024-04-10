@@ -217,6 +217,8 @@ void Game::newGame() {
     }
     Utils::addNewPlayer(players, newFarmer);
 
+    store.initStore(cropConfig, livestockConfig);
+
     cout << "Seluruh player telah berhasil terdaftar, selamat bermain!" << endl;
 }
 

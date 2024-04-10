@@ -29,6 +29,7 @@ public:
     // Setter
     void setOrigin(string origin);
     void setAddedWeight(int addedWeight);
+    ItemType getItemType();
 };
 
 

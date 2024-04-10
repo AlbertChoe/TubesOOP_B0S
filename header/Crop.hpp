@@ -32,6 +32,7 @@ public:
     void setCurrentDuration(int currentDuration);
     void setHarvestDuration(int harvestDuration);
     void setHarvestResult(vector<Consumable>& harvestResult);
+    void addHarvestResult(Consumable result);
     // Increment current duration
     void incrementDuration();
     // Add new harvest results
@@ -40,6 +41,7 @@ public:
     friend ostream& operator<<(ostream& os, const Crop& crop);
     // Checking if livestock is ready to harvest
     bool isReadyToHarvest();
+    ItemType getItemType();
 };
 
 #endif

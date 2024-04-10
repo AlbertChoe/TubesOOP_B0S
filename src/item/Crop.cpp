@@ -172,3 +172,7 @@ ostream& operator<<(ostream& os, const Crop& crop) {
 bool Crop::isReadyToHarvest(){
     return this->currentDuration >= this->harvestDuration;
 }
+
+ItemType Crop::getItemType() {
+    return ItemType::Crop;
+}

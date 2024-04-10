@@ -32,3 +32,7 @@ int Building::getCountMaterial(string code) {
     }
     return 0;
 }
+
+ItemType Building::getItemType() {
+    return ItemType::Building;
+}
