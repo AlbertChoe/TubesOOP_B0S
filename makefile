@@ -1,36 +1,32 @@
-# Define compiler
-CC = g++
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -g
 
-# Define flags
-CFLAGS = -Wall -std=c++11
+SRC = $(wildcard src/*.cpp) \
+      $(wildcard src/game/*.cpp) \
+      $(wildcard src/grid/*.cpp) \
+      $(wildcard src/item/*.cpp) \
+      $(wildcard src/pcolor/*.c) \
+      $(wildcard src/player/*.cpp) \
+      $(wildcard src/utils/*.cpp)
 
-# Define the source files
-SRC = src/main.cpp src/game/Game.cpp src/game/Config.cpp
-
-# Define the object files
 OBJ = $(SRC:.cpp=.o)
+OBJ := $(OBJ:.c=.o)
 
-# Define the executable name
-EXE = game.exe
+EXEC = game
 
-# Default target
-all: $(EXE)
+all: $(EXEC)
 
-# Compile and link the program
-$(EXE): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
+$(EXEC): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compile source files to object files
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-# Clean up
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 clean:
-	del /f /q $(OBJ) $(EXE)
+	rm -f $(OBJ) $(EXEC)
 
-# Run the program
-run: $(EXE)
-	$(EXE)
-
-# Phony targets
-.PHONY: all clean run
+run: $(EXEC)
+	./$(EXEC)
