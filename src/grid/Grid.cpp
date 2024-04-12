@@ -56,6 +56,33 @@ T Grid<T>::get(string location)
 }
 
 template <typename T>
+bool Grid<T>::isValid(string location)
+{
+    if (location.size != 3)
+    {
+        int row = location[0] - 'A';
+        if (row < 0 || row > 26)
+        {
+            throw InvalidRow();
+        }
+        int col = stoi(location.substr(1)) - 1;
+        if (col < 0)
+        {
+            throw InvalidCol();
+        }
+        if (row >= grid.size() || col >= grid[0].size())
+        {
+            throw InvalidIndex();
+        }
+        return true;
+    }
+    else
+    {
+        throw InvalidCode();
+    }
+}
+
+template <typename T>
 T Grid<T>::get(int row, int col)
 {
     return grid[row][col];

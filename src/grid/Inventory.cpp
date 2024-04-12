@@ -11,17 +11,29 @@ void Inventory::addItem(shared_ptr<Item> item)
 
 void Inventory::addItem(shared_ptr<Item> item, string location)
 {
+    if (inventory.isValid(location))
+    {
+        return;
+    }
     this->inventory.add(item, location);
 }
 
 shared_ptr<Item> Inventory::getItem(string location)
 {
+    if (inventory.isValid(location))
+    {
+        return nullptr;
+    }
     auto data = this->inventory.get(location);
     return data;
 }
 
 void Inventory::removeItem(string location)
 {
+    if (inventory.isValid(location))
+    {
+        return;
+    }
     this->inventory.remove(location);
 }
 
@@ -59,6 +71,10 @@ bool Inventory::isEmpty()
 }
 bool Inventory::isEmpty(string location)
 {
+    if (inventory.isValid(location))
+    {
+        return false;
+    }
     return inventory.isEmpty(location);
 }
 bool Inventory::isFull()
@@ -68,11 +84,20 @@ bool Inventory::isFull()
 
 shared_ptr<Item> Inventory::getElement(string location)
 {
+    if (inventory.isValid(location))
+    {
+        return nullptr;
+    }
     return this->inventory.get(location);
 }
 
 void Inventory::remove(string location)
 {
+
+    if (inventory.isValid(location))
+    {
+        return;
+    }
     this->inventory.remove(location);
 }
 

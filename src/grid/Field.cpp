@@ -21,12 +21,21 @@ void Field::incrementAllCropDuration()
 void Field::addCrop(shared_ptr<Crop> item, string location)
 {
     // do something? or try catch
+
+    if (field.isValid(location))
+    {
+        return;
+    }
     field.add(item, location);
 }
 
 void Field::harvestCrop(string location)
 {
     // masih blm pasti
+    if (field.isValid(location))
+    {
+        return;
+    }
     field.remove(location);
 }
 
@@ -41,6 +50,11 @@ bool Field::isEmpty()
 }
 bool Field::isEmpty(string location)
 {
+
+    if (field.isValid(location))
+    {
+        return false;
+    }
     return field.isEmpty(location);
 }
 bool Field::isFull()
@@ -55,6 +69,11 @@ void Field::display()
 
 shared_ptr<Crop> Field::getElement(string location)
 {
+
+    if (field.isValid(location))
+    {
+        return nullptr;
+    }
     return this->field.get(location);
 }
 
@@ -96,5 +115,9 @@ int Field::countWealth()
 
 void Field::remove(string location)
 {
+    if (field.isValid(location))
+    {
+        return;
+    }
     this->field.remove(location);
 }

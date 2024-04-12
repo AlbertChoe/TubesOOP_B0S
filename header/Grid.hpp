@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <iomanip>
+#include "Exception.hpp"
 using namespace std;
 
 template <typename T>
@@ -29,6 +30,7 @@ public:
     bool isEmpty();
     bool isEmpty(string location);
     bool isFull();
+    bool isValid(string location);
 };
 
 #endif

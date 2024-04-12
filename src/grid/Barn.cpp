@@ -6,6 +6,10 @@ Barn::Barn(int row, int col) : barn(row, col)
 
 void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
 {
+    if (barn.isValid(location))
+    {
+        return;
+    }
     barn.add(livestock, location);
 }
 
@@ -64,6 +68,10 @@ bool Barn::isEmpty()
 }
 bool Barn::isEmpty(string location)
 {
+    if (barn.isValid(location))
+    {
+        return false;
+    }
     return barn.isEmpty(location);
 }
 bool Barn::isFull()
@@ -73,6 +81,10 @@ bool Barn::isFull()
 
 shared_ptr<Livestock> Barn::getElement(string location)
 {
+    if (barn.isValid(location))
+    {
+        return nullptr;
+    }
     return this->barn.get(location);
 }
 
@@ -114,5 +126,10 @@ int Barn::countWealth()
 
 void Barn::remove(string location)
 {
-    this->barn.remove(location)
+
+    if (barn.isValid(location))
+    {
+        return;
+    }
+    this->barn.remove(location);
 }
