@@ -45,6 +45,9 @@ public:
     // Checking if livestock is ready to harvest
     bool isReadyToHarvest();
     ItemType getItemType();
+    bool isOmnivore() const {
+        return type == "OMNIVORE";
+    }
 };
 
 #endif

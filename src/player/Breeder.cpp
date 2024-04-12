@@ -2,6 +2,7 @@
 #include "../../header/Exception.hpp"
 #include <vector>
 #include <map>
+#include <cmath> 
 
 void Breeder::addLivestock() {
     try {
@@ -44,7 +45,7 @@ void Breeder::feedLivestock() {
 
         barn.display();
         string location;
-        cout << "Pilih petak kandang yang akan ditinggali: ";
+        cout << "Pilih petak kandang: ";
         cin >> location;
         auto livestock = dynamic_pointer_cast<Livestock>(barn.getElement(location));
 
@@ -52,6 +53,7 @@ void Breeder::feedLivestock() {
             throw InvalidTypeException();
         }
         cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\nPilih pangan yang akan diberikan: ";
+        cout << "Pilih pangan yang akan diberikan: ";
 
         displayInventory();
         string slot;
@@ -108,7 +110,8 @@ void Breeder::harvestLivestock() {
             throw NotEnoughToHarvestException();
         }
 
-        int requiredSpace = (selectedType == "OMNIVORE") ? 2 * numToHarvest : numToHarvest;
+        auto livestock = barn.getElement(selectedType);
+        int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
         if (requiredSpace > inventory.countEmpty()) {
             throw NotEnoughInventoryException();
         }
@@ -162,9 +165,9 @@ int Breeder::getTaxable() {
     netWealth += gulden;
 
     
-    int KKP = netWealth - 11; 
+    int KKP = netWealth - 11;
 
-    int tax = 0;
+    double tax = 0;
     if (KKP > 0) {
         if (KKP <= 6) {
             tax = 0.05 * KKP;
@@ -178,9 +181,10 @@ int Breeder::getTaxable() {
             tax = 0.35 * KKP;
         }
     }
+    int roundedTax = round(tax);
 
     // Jika uang tidak cukup untuk membayar pajak, gunakan uang yang dimiliki saat ini
-    tax = min(tax, gulden);
+    tax = min(roundedTax, gulden);
 
     return tax;
 }

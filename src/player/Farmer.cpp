@@ -2,6 +2,7 @@
 #include "../../header/Exception.hpp"
 #include <vector>
 #include <map>
+#include <cmath>
 
 void Farmer::plantCrop() {
     try {
@@ -84,7 +85,7 @@ void Farmer::harvestCrop() {
         map<string, vector<string>> harvestedLocations;
         while (numToHarvest > 0) {
             string location;
-            cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
+            cout << "Pilih petak yang akan dipanen (misal: A1): ";
             cin >> location;
             auto crop = field.getElement(location);
             if (crop != nullptr && crop->getCode() == selectedType && crop->isReadyToHarvest()) {
@@ -131,7 +132,7 @@ int Farmer::getTaxable() {
   
     int KKP = netWealth - 13; 
 
-    int tax = 0;
+    double tax = 0;
     if (KKP > 0) {
         if (KKP <= 6) {
             tax = 0.05 * KKP;
@@ -145,9 +146,10 @@ int Farmer::getTaxable() {
             tax = 0.35 * KKP;
         }
     }
+    int roundedTax = round(tax);
 
     // Jika uang tidak cukup untuk membayar pajak, gunakan uang yang dimiliki saat ini
-    tax = min(tax, gulden);
+    tax = min(roundedTax, gulden);
 
     return tax;
 }
