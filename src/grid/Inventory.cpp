@@ -13,28 +13,27 @@ void Inventory::addItem(shared_ptr<Item> item, string location)
 {
     if (inventory.isValid(location))
     {
-        return;
+        this->inventory.add(item, location);
     }
-    this->inventory.add(item, location);
+    return;
 }
 
 shared_ptr<Item> Inventory::getItem(string location)
 {
     if (inventory.isValid(location))
     {
-        return nullptr;
+        return this->inventory.get(location);
     }
-    auto data = this->inventory.get(location);
-    return data;
+    return nullptr;
 }
 
 void Inventory::removeItem(string location)
 {
     if (inventory.isValid(location))
     {
-        return;
+        this->inventory.remove(location);
     }
-    this->inventory.remove(location);
+    return;
 }
 
 void Inventory::display()
@@ -73,9 +72,9 @@ bool Inventory::isEmpty(string location)
 {
     if (inventory.isValid(location))
     {
-        return false;
+        return inventory.isEmpty(location);
     }
-    return inventory.isEmpty(location);
+    return false;
 }
 bool Inventory::isFull()
 {
@@ -86,19 +85,19 @@ shared_ptr<Item> Inventory::getElement(string location)
 {
     if (inventory.isValid(location))
     {
-        return nullptr;
+        return this->inventory.get(location);
     }
-    return this->inventory.get(location);
+    return nullptr;
+    
 }
 
 void Inventory::remove(string location)
 {
-
     if (inventory.isValid(location))
     {
-        return;
+        this->inventory.remove(location);
     }
-    this->inventory.remove(location);
+    return;
 }
 
 int Inventory::getCountItem()
@@ -116,10 +115,12 @@ int Inventory::getCountNonBuilding()
         for (int j = 0; j < col; j++)
         {
             auto item = this->inventory.get(i, j);
-            ItemType itemtype = item->getItemType();
-            if (itemtype != ItemType::Building)
-            {
-                res++;
+            if (item != nullptr) {
+                ItemType itemtype = item->getItemType();
+                if (itemtype != ItemType::Building)
+                {
+                    res++;
+                }
             }
         }
     }

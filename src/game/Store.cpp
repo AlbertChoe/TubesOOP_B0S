@@ -135,14 +135,19 @@ void Store::buyTransaction(shared_ptr<Player> player) {
     string slot;
     int success = 0;
     while (success < quantity) {
-        cout << "Pilihan petak " << success + 1 << ": ";
-        cin >> slot;
-        if (!inven.isEmpty(slot)) { //TODO: belum ada pengecekan apakah slot format valid
-            cout << "Petak tidak dapat dipilih!" << endl;
-            continue;
+        try {
+            cout << "Pilihan petak " << success + 1 << ": ";
+            cin >> slot;
+            if (!inven.isEmpty(slot)) {
+                cout << "Petak tidak dapat dipilih!" << endl;
+                continue;
+            }
+            inven.addItem(getItem(code), slot);
+            success++;
+        } catch (const exception& e) {
+            cout << e.what() << endl;
         }
-        inven.addItem(getItem(code), slot);
-        success++;
+
     }
     refreshStore();
     cout << getItem(code)->getName() << " berhasil disimpan dalam penyimpanan!" << endl;
@@ -170,7 +175,7 @@ void Store::sellTransaction(shared_ptr<Player> player) {
             ((playerType == PlayerType::Breeder || playerType == PlayerType::Farmer) && n > inven.getCountNonBuilding()) ||
             (playerType == PlayerType::Mayor && n > inven.getCountItem()) ||
             n < 0) {
-            cout << "Masukan tidak valid atau jumlah barang yang bisa dijual lebih sedikit" << endl;
+            cout << "Masukan tidak valid atau jumlah barang yang bisa dijual lebih sedikit!" << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
@@ -188,21 +193,26 @@ void Store::sellTransaction(shared_ptr<Player> player) {
     string slot;
     int success = 0;
     while (success < n) {
-        cout << "Pilihan petak " << success + 1 << ": ";
-        cin >> slot;
-        if (inven.isEmpty(slot)) { //TODO: belum ada pengecekan apakah slot format valid
-            cout << "Petak tidak dapat dipilih!" << endl;
-            continue;
+        try {
+            cout << "Pilihan petak " << success + 1 << ": ";
+            cin >> slot;
+            if (inven.isEmpty(slot)) {
+                cout << "Petak tidak dapat dipilih!" << endl;
+                continue;
+            }
+            if (inven.getItem(slot)->getItemType() == ItemType::Building &&
+                (playerType == PlayerType::Farmer || playerType == PlayerType::Breeder)) {
+                cout << "Tidak dapat menjual bangunan!" << endl;
+                continue;
+            }
+            addItem(inven.getItem(slot));
+            gulden += inven.getItem(slot)->getPrice();
+            inven.remove(slot);
+            success++;
+        } catch (const exception& e) {
+            cout << e.what() << endl;
         }
-        if (inven.getItem(slot)->getItemType() == ItemType::Building &&
-            (playerType == PlayerType::Farmer || playerType == PlayerType::Breeder)) {
-            cout << "Tidak dapat menjual bangunan!" << endl;
-            continue;
-        }
-        addItem(inven.getItem(slot));
-        gulden += inven.getItem(slot)->getPrice();
-        inven.remove(slot);
-        success++;
+        
     }
     refreshStore();
     player->setGulden(player->getGulden() + gulden);

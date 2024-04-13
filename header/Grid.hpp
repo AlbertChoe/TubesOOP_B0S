@@ -72,7 +72,7 @@ public:
 
     bool isValid(string location)
     {
-        if (location.size() != 3)
+        if (location.size() >= 3)
         {
             int row = location[0] - 'A';
             if (row < 0 || row > 26)
@@ -119,32 +119,51 @@ public:
         return res;
     }
 
-    void print(string title)
+void print(string title)
+{
+    int row = grid.size();
+    int col = grid[0].size();
+    cout << title << endl;
+    for (int i = 0; i < row; i++)
     {
-        int row = grid.size();
-        int col = grid[0].size();
-        cout << title << endl;
-        for (int i = 0; i < 10; i++)
+        for (int j = 0; j < col; j++)
         {
-            for (int j = 0; j < 10; j++)
-            {
-                cout << "+-----+";
-            }
+            cout << "+-----+";
+        }
 
-            cout << endl;
-            for (int j = 0; j < 10; j++)
-            {
-                cout << "| " << grid[i][j] << " |";
+        cout << endl;
+        for (int j = 0; j < col; j++) {
+            cout << "| ";
+            if (grid[i][j] != nullptr) {
+                cout << *grid[i][j];
+            } else {
+                cout << "   ";
             }
-            cout << endl;
+            cout << " |";
+        }
+        cout << endl;
 
-            for (int j = 0; j < 10; j++)
+        for (int j = 0; j < col; j++)
+        {
+            cout << "+-----+";
+        }
+        cout << endl;
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < col; j++)
             {
-                cout << "+-----+";
+                if (grid[i][j] != nullptr)
+                {
+                    char r = i + 'A';
+                    cout << r;
+                    cout << setfill('0') << setw(2) << j;
+                    cout << " : " << *grid[i][j] << endl;
+                }
             }
-            cout << endl;
         }
     }
+}
+
     void printElemenetLoc()
     {
         for (int i = 0; i < 10; i++)
@@ -156,21 +175,22 @@ public:
                     char r = i + 'A';
                     cout << r << endl;
                     cout << setfill('0') << setw(2) << j;
-                    cout << " : " << grid[i][j].name << endl;
+                    cout << " : " << grid[i][j]->name << endl;
                 }
             }
         }
     }
+
     void printElementType()
     {
         int row = grid.size();
         int col = grid[0].size();
-        map<string, string> mp;
+        map<string, string> map;
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                map[grid[i][j].code] = grid[i][j].name;
+                map[grid[i][j]->code] = grid[i][j]->name;
             }
         }
 
