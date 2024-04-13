@@ -10,7 +10,7 @@ void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
     {
         barn.add(livestock, location);
     }
-        return;
+    return;
 }
 
 void Barn::feedLivestock(int food, string location)
@@ -47,15 +47,36 @@ void Barn::harvestLivestock()
         for (int j = 0; j < col; j++)
         {
             auto data = this->barn.get(i, j);
-            // get data harvesresult and do someting??
-            this->barn.remove(i, j);
+            if (data != nullptr)
+            {
+                // get data harvesresult and do someting??
+                this->barn.remove(i, j);
+            }
         }
     }
 }
 void Barn::display()
 {
     this->barn.print("===barn===");
-    barn.printElemenetLoc();
+    // barn.printElemenetLoc();
+    // print element location
+    int row = barn.getCol();
+    int col = barn.getRow();
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto data = this->barn.get(i, j);
+            if (data != nullptr)
+            {
+                char r = i + 'A';
+                cout << r << endl;
+                cout << setfill('0') << setw(2) << j;
+                cout << " : " << data->getName() << endl;
+            }
+        }
+    }
 }
 
 int Barn::countEmpty()

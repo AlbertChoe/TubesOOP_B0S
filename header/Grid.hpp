@@ -72,6 +72,8 @@ public:
 
     bool isValid(string location)
     {
+        int gRow = grid.size();
+        int gCol = grid[0].size();
         if (location.size() >= 3)
         {
             int row = location[0] - 'A';
@@ -84,7 +86,7 @@ public:
             {
                 throw InvalidCol();
             }
-            if (row >= grid.size() || col >= grid[0].size())
+            if (row >= gRow || col >= gCol)
             {
                 throw InvalidIndex();
             }
@@ -119,86 +121,31 @@ public:
         return res;
     }
 
-void print(string title)
-{
-    int row = grid.size();
-    int col = grid[0].size();
-    cout << title << endl;
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            cout << "+-----+";
-        }
-
-        cout << endl;
-        for (int j = 0; j < col; j++) {
-            cout << "| ";
-            if (grid[i][j] != nullptr) {
-                cout << *grid[i][j];
-            } else {
-                cout << "   ";
-            }
-            cout << " |";
-        }
-        cout << endl;
-
-        for (int j = 0; j < col; j++)
-        {
-            cout << "+-----+";
-        }
-        cout << endl;
-        for (int i = 0; i < row; i++)
-        {
-            for (int j = 0; j < col; j++)
-            {
-                if (grid[i][j] != nullptr)
-                {
-                    char r = i + 'A';
-                    cout << r;
-                    cout << setfill('0') << setw(2) << j;
-                    cout << " : " << *grid[i][j] << endl;
-                }
-            }
-        }
-    }
-}
-
-    void printElemenetLoc()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                if (grid[i][j] != nullptr)
-                {
-                    char r = i + 'A';
-                    cout << r << endl;
-                    cout << setfill('0') << setw(2) << j;
-                    cout << " : " << grid[i][j]->name << endl;
-                }
-            }
-        }
-    }
-
-    void printElementType()
+    void print(string title)
     {
         int row = grid.size();
         int col = grid[0].size();
-        map<string, string> map;
+
+        cout << title << endl;
         for (int i = 0; i < row; i++)
         {
             for (int j = 0; j < col; j++)
             {
-                map[grid[i][j]->code] = grid[i][j]->name;
+                cout << "+-----+";
             }
-        }
 
-        while (it != mp.end())
-        {
-            cout << it->first << ": "
-                 << it->second << endl;
-            ++it;
+            cout << endl;
+            for (int j = 0; j < col; j++)
+            {
+                cout << "| " << grid[i][j] << " |";
+            }
+            cout << endl;
+
+            for (int j = 0; j < col; j++)
+            {
+                cout << "+-----+";
+            }
+            cout << endl;
         }
     }
 

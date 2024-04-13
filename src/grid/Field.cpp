@@ -65,8 +65,45 @@ bool Field::isFull()
 void Field::display()
 {
     field.print("===LADANG===");
-    field.printElemenetLoc();
-    field.printElementType();
+    // print element location
+    int row = field.getCol();
+    int col = field.getRow();
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto data = this->field.get(i, j);
+            if (data != nullptr)
+            {
+                char r = i + 'A';
+                cout << r << endl;
+                cout << setfill('0') << setw(2) << j;
+                cout << " : " << data->getName() << endl;
+            }
+        }
+    }
+    // print element type
+
+    map<string, string> mp;
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto data = this->field.get(i, j);
+            if (data != nullptr)
+            {
+                mp[data->getCode()] = data->getName();
+            }
+        }
+    }
+    map<string, string>::iterator it = mp.begin();
+    while (it != mp.end())
+    {
+        cout << it->first << ": "
+             << it->second << endl;
+        ++it;
+    }
 }
 
 shared_ptr<Crop> Field::getElement(string location)
