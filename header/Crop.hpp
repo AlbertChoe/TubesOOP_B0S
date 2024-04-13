@@ -24,7 +24,7 @@ public:
     Crop(const Crop& other);
     // Getter
     int getCurrentDuration();
-    int getHarvestDuration(string code, CropConfig configCrop);
+    int getHarvestDuration();
     vector<Consumable> getHarvestResult();
     // Setter
     void setCurrentDuration(int currentDuration);
