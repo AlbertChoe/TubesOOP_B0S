@@ -24,9 +24,9 @@ void Field::addCrop(shared_ptr<Crop> item, string location)
 
     if (field.isValid(location))
     {
-        return;
+        field.add(item, location);
     }
-    field.add(item, location);
+    return;
 }
 
 void Field::harvestCrop(string location)
@@ -34,9 +34,9 @@ void Field::harvestCrop(string location)
     // masih blm pasti
     if (field.isValid(location))
     {
-        return;
+        field.remove(location);
     }
-    field.remove(location);
+    return;
 }
 
 int Field::countEmpty()
@@ -53,9 +53,9 @@ bool Field::isEmpty(string location)
 
     if (field.isValid(location))
     {
-        return false;
+        return field.isEmpty(location);
     }
-    return field.isEmpty(location);
+    return false;
 }
 bool Field::isFull()
 {
@@ -73,9 +73,9 @@ shared_ptr<Crop> Field::getElement(string location)
 
     if (field.isValid(location))
     {
-        return nullptr;
+        return this->field.get(location);
     }
-    return this->field.get(location);
+    return nullptr;
 }
 
 map<string, int> Field::countReadyToHarvest()
@@ -118,7 +118,7 @@ void Field::remove(string location)
 {
     if (field.isValid(location))
     {
-        return;
+        this->field.remove(location);
     }
-    this->field.remove(location);
+    return;
 }
