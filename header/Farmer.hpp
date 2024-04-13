@@ -17,6 +17,7 @@ public:
     void harvestCrop();
     int getTaxable();
     PlayerType getType();
+    Field& getRefField();
 };
 
 #endif

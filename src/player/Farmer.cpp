@@ -175,3 +175,7 @@ int Farmer::getTaxable() {
 PlayerType Farmer::getType() {
     return PlayerType::Farmer;
 }
+
+Field& Farmer::getRefField() {
+    return this->field;
+}

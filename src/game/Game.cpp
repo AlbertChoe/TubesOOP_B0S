@@ -241,6 +241,13 @@ void Game::nextPlayer() {
             currentPlayer = (currentPlayer + 1) % players.size();
         }
     }
+    for (auto& player : players) {
+        if (player->getType() == PlayerType::Farmer) {
+            auto farmer = dynamic_cast<Farmer*>(player.get());
+            farmer->getRefField().incrementAllCropDuration();
+        }
+    }
+    cout << "Giliran " << players[currentPlayer]->getName() << "!";
 }
 
 void Game::start() {

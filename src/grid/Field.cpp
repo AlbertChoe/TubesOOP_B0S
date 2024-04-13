@@ -13,7 +13,9 @@ void Field::incrementAllCropDuration()
         for (int j = 0; j < col; j++)
         {
             auto data = this->field.get(i, j);
-            data->incrementDuration();
+            if (data != nullptr) {
+                data->incrementDuration();
+            }
         }
     }
 }
