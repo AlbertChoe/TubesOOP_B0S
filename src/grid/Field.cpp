@@ -65,6 +65,7 @@ bool Field::isFull()
 void Field::display()
 {
     field.print("===LADANG===");
+    field.printElemenetLoc();
     field.printElementType();
 }
 
