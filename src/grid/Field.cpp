@@ -65,6 +65,7 @@ bool Field::isFull()
 void Field::display()
 {
     field.print("===LADANG===");
+    field.printElementType();
 }
 
 shared_ptr<Crop> Field::getElement(string location)
