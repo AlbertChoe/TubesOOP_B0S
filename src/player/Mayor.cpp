@@ -1,6 +1,6 @@
 #include "../../header/Mayor.hpp"
 
-void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
+void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, GameConfig gameConfig){
     try
     {
         if (this->gulden<50)
@@ -26,7 +26,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
 
         if (jenis=="peternak")
         {
-            auto newBreeder = make_shared<Breeder>("", 10, 10, 10, 10);
+            auto newBreeder = make_shared<Breeder>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
             while (true) {
                 cout << "Masukkan nama pemain: ";
                 cin >> nama;
@@ -40,7 +40,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
             Utils::addNewPlayer(players, newBreeder);
         } else if (jenis=="petani")
         {
-            auto newFarmer = make_shared<Farmer>("", 10, 10, 10, 10);
+            auto newFarmer = make_shared<Farmer>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
             while (true) {
                 cout << "Masukkan username untuk player Petani baru: ";
                 cin >> nama;

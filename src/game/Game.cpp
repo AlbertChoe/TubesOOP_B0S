@@ -323,7 +323,7 @@ void Game::handleInput() {
             } else if (input == "PUNGUT_PAJAK" && mayor) {
                 mayor->collectTax(players);
             } else if (input == "TAMBAH_PEMAIN" && mayor) {
-                mayor->addNewPlayer(players);
+                mayor->addNewPlayer(players, gameConfig);
             } else {
                 throw WrongUserInputException();
             }
