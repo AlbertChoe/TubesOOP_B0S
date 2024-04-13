@@ -137,7 +137,13 @@ public:
             cout << endl;
             for (int j = 0; j < col; j++)
             {
-                cout << "| " << grid[i][j] << " |";
+                cout << "| ";
+                if (grid[i][j] != nullptr) {
+                    cout << *grid[i][j];
+                } else {
+                    cout << "   ";
+                }
+                cout << " |";
             }
             cout << endl;
 
