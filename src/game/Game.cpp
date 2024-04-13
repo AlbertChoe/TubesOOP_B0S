@@ -66,7 +66,7 @@ void Game::loadBuildingConfig() {
         std::istringstream lineStream(line);
 
         int id, price;
-        std::string code, name, materialCode;
+        std::string code, name, materialName;
         int materialQuantity;
 
         if (!(lineStream >> id >> code >> name >> price)) {
@@ -77,8 +77,8 @@ void Game::loadBuildingConfig() {
         Building building(id, code, name, "BUILDING", price);
         std::map<std::string, int> materials;
 
-        while (lineStream >> materialCode >> materialQuantity) {
-            materials[materialCode] = materialQuantity;
+        while (lineStream >> materialName >> materialQuantity) {
+            materials[materialName] = materialQuantity;
         }
 
         if (lineStream.fail() && !lineStream.eof()) {
