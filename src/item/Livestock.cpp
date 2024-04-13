@@ -1,7 +1,7 @@
 #include "../../header/Livestock.hpp"
 #include "../../header/Item.hpp"
 #include "../../header/Config.hpp"
-#include "../pcolor/pcolor.h"
+
 using namespace std;
 
 Livestock::Livestock() : Item::Item(){

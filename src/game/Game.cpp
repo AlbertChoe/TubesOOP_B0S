@@ -341,3 +341,6 @@ void Game::debugPrint() {
     cout << "Field Size: " << gameConfig.getFieldRow() << " x " << gameConfig.getFieldCol() << endl;
     cout << "Barn Size: " << gameConfig.getBarnRow() << " x " << gameConfig.getBarnCol() << endl;
 }
+
+void Game::loadGameState(string filelocation){}
+void Game::saveGameState(){}

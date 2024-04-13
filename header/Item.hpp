@@ -1,7 +1,7 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
-#include "../src/pcolor/pcolor.h"
+#include "../src/pcolor/pcolor.hpp"
 #include <iostream>
 #include <memory>
 using namespace std;

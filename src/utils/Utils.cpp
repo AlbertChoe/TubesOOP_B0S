@@ -17,7 +17,7 @@ string Utils::stringToLower(string str) {
     return str;
 }
 
-bool isNameInPlayers(const vector<shared_ptr<Player>>& players, string name) {
+bool Utils::isNameInPlayers(const vector<shared_ptr<Player>>& players, string name) {
     for (const auto& player : players) {
         if (Utils::stringToLower(player->getName()) == Utils::stringToLower(name)) {
             return true;
