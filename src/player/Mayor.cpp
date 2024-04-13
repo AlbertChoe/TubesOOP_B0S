@@ -86,59 +86,79 @@ void Mayor::collectTax(vector<shared_ptr<Player>>& players){
 
 }
 
-void Mayor::buildBuilding(const BuildingConfig& recipe){
-    cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
-    cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
-    cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
-    cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
-    cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
-    cout<<endl;
-
-    string tipebangunan;
+void Mayor::buildBuilding(BuildingConfig recipe){
 
     bool valid=false;
 
     while (!valid)
     {
+        string tipebangunan;
+        cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
+        cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
+        cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
+        cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
+        cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
+        cout<<endl;
         cout<<"Bangunan yang ingin dibangun: ";
         cin >> tipebangunan;
 
-        if (tipebangunan=="SMALL_HOUSE" || tipebangunan=="MEDIUM_HOUSE" || tipebangunan=="LARGE_HOUSE" || tipebangunan=="HOTEL")
+        try
         {
+            Building foundbuilding=recipe.getConfig(tipebangunan);
             valid=true;
+            int kuranggulden=0;
 
-            try
+            if (this->getGulden()<foundbuilding.getPrice())
             {
-                if (tipebangunan=="SMALL_HOUSE")
+                kuranggulden=foundbuilding.getPrice()-this->getGulden();
+            }
+
+            map<string, int> material= recipe.getConfig(tipebangunan).getMaterial();
+            bool accepted = true;
+            for (auto &pair : material)
+            {
+                if (inventory.getItemCountByName(pair.first) < pair.second)
                 {
-                    /* code */
-                } else if (tipebangunan=="MEDIUM_HOUSE")
-                {
-                    /* code */
-                } else if (tipebangunan=="LARGE_HOUSE")
-                {
-                    /* code */
-                } else if (tipebangunan=="HOTEL")
-                {
-                    /* code */
+                    pair.second -= inventory.getItemCountByName(pair.first);
+                    accepted = false;
                 }
             }
-            catch(const std::exception& e)
+
+            if (accepted)
             {
-                std::cerr << e.what() << '\n';
+                gulden-=foundbuilding.getPrice();
+                auto newBuilding = make_shared<Building>(foundbuilding);
+                inventory.addItem(newBuilding);
+                cout<<tipebangunan<<" berhasil dibangun dan telah menjadi hak milik walikota!"<<endl;
+            } else {
+                bool printfirst=false;
+                cout<<"Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
+                if (kuranggulden>0)
+                {
+                    printfirst=true;
+                    cout<<kuranggulden<<" gulden";
+                }
+
+                for (auto &pair : material)
+                {
+                    if (pair.second>0)
+                    {
+                        if (printfirst)
+                        {
+                            cout<< ", "<<pair.second<<" "<<pair.first;
+                        } else {
+                            cout<<pair.second<<" "<<pair.first;
+                        }
+                    }
+                }
+                cout<<"!"<<endl;
             }
-        } else {
-            cout<<"Kamu tidak punya resep bangunan tersebut!"<<endl<<endl;
-            cout<<"Resep bangunan yang ada adalah sebagai berikut."<<endl;
-            cout<<"   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)"<<endl;
-            cout<<"   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)"<<endl;
-            cout<<"   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)"<<endl;
-            cout<<"   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)"<<endl;
-            cout<<endl;
         }
-        
+        catch(const exception& e)
+        {
+            cout << "Kamu tidak punya resep bangunan tersebut!"<< endl;
+        }
     }
-    
 }
 
 int Mayor::getTaxable(){
