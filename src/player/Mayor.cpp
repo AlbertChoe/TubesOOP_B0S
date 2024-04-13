@@ -147,6 +147,7 @@ void Mayor::buildBuilding(BuildingConfig recipe){
                         {
                             cout<< ", "<<pair.second<<" "<<pair.first;
                         } else {
+                            printfirst=true;
                             cout<<pair.second<<" "<<pair.first;
                         }
                     }
