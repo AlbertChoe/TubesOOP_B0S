@@ -1,4 +1,4 @@
-#include "header/Mayor.hpp"
+#include "../../header/Mayor.hpp"
 
 void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
     try
@@ -26,7 +26,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
 
         if (jenis=="peternak")
         {
-            auto newBreeder = make_shared<Breeder>();
+            auto newBreeder = make_shared<Breeder>("", 10, 10, 10, 10);
             while (true) {
                 cout << "Masukkan nama pemain: ";
                 cin >> nama;
@@ -40,7 +40,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
             Utils::addNewPlayer(players, newBreeder);
         } else if (jenis=="petani")
         {
-            auto newFarmer = make_shared<Farmer>();
+            auto newFarmer = make_shared<Farmer>("", 10, 10, 10, 10);
             while (true) {
                 cout << "Masukkan username untuk player Petani baru: ";
                 cin >> nama;

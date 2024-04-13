@@ -2,7 +2,6 @@
 #define OMNIVORE_HPP
 
 #include "Livestock.hpp"
-#include "Config.hpp"
 using namespace std;
 
 class Omnivore : public Livestock {

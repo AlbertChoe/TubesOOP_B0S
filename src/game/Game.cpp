@@ -184,9 +184,9 @@ void Game::newGame() {
     string username;
     cout << "Permainan baru telah dimulai!" << endl;
 
-    auto newMayor = make_shared<Mayor>(); //belum ctor player yang benar
-    auto newBreeder = make_shared<Breeder>();
-    auto newFarmer = make_shared<Farmer>();
+    auto newMayor = make_shared<Mayor>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol());
+    auto newBreeder = make_shared<Breeder>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
+    auto newFarmer = make_shared<Farmer>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
     
     cout << "Masukkan username untuk player Walikota baru: ";
     cin >> username;
@@ -285,7 +285,6 @@ void Game::handleInput() {
     auto breeder = (type == PlayerType::Breeder) ? dynamic_cast<Breeder*>(current.get()) : nullptr;
     auto mayor = (type == PlayerType::Mayor) ? dynamic_cast<Mayor*>(current.get()) : nullptr;
 
-    bool reach_win = false;
     string input;
     while (true) {
         try {

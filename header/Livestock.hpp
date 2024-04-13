@@ -3,7 +3,6 @@
 
 #include "Item.hpp"
 #include "Consumable.hpp"
-#include "Config.hpp"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -11,8 +10,8 @@ using namespace std;
 class Livestock : public Item
 {
 private:
-    int harvestWeight;
     int currentWeight;
+    int harvestWeight;
     vector<Consumable> harvestResult;
 
 public:

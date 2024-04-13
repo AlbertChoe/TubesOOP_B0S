@@ -1,7 +1,9 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
+#include "../src/pcolor/pcolor.h"
 #include <iostream>
+#include <memory>
 using namespace std;
 
 enum class ItemType {
@@ -41,7 +43,6 @@ public:
     void setName(string name);
     void setType(string type);
     void setPrice(int price);
-    virtual shared_ptr<Item> clone();
     virtual ItemType getItemType() = 0;
     // Display item code in black
     friend ostream& operator<<(ostream& os, const Item& item);

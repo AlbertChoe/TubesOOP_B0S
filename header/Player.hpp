@@ -2,7 +2,6 @@
 #define PLAYER_HPP
 
 #include "Inventory.hpp"
-#include "Store.hpp"
 #include "Exception.hpp"
 #include "Config.hpp"
 #include <iostream>
@@ -17,12 +16,12 @@ enum class PlayerType {
 class Player {
 protected:
     string name;
-    int weight;
     int gulden;
+    int weight;
     Inventory inventory;
 public:
-    Player(string name, int InventoryRow, int InventoryCol): name(name), gulden(50), weight(40), inventory(InventoryRow,InventoryCol){}
-    Player(string name, int gulden,int weight, int InventoryRow, int InventoryCol): name(name), gulden(gulden), weight(weight), inventory(InventoryRow,InventoryCol){}
+    Player(string name, int InventoryRow, int InventoryCol): name(name), gulden(50), weight(40), inventory(InventoryRow, InventoryCol) {}
+    Player(string name, int gulden,int weight, int InventoryRow, int InventoryCol): name(name), gulden(gulden), weight(weight), inventory(InventoryRow, InventoryCol) {}
     string getName();
     int getWeight();
     int getGulden();

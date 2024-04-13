@@ -19,7 +19,7 @@ void Barn::feedLivestock(int food, string location)
     int col = this->barn.getCol();
     int a = location[0] - 'A';
     int b = 0;
-    for (int i = 1; i < location.size(); i++)
+    for (int i = 1; i < (int) location.size(); i++)
     {
         b *= 10;
         b += location[i] - '0';

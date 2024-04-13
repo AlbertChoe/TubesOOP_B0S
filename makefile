@@ -1,13 +1,14 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -g
 
-SRC = $(wildcard src/*.cpp) \
-      $(wildcard src/game/*.cpp) \
-      $(wildcard src/grid/*.cpp) \
+SRC = $(wildcard src/pcolor/*.c) \
       $(wildcard src/item/*.cpp) \
-      $(wildcard src/pcolor/*.c) \
+      $(wildcard src/grid/*.cpp) \
       $(wildcard src/player/*.cpp) \
-      $(wildcard src/utils/*.cpp)
+      $(wildcard src/utils/*.cpp) \
+      $(wildcard src/*.cpp) \
+      $(wildcard src/game/*.cpp) \
+      
 
 OBJ = $(SRC:.cpp=.o)
 OBJ := $(OBJ:.c=.o)

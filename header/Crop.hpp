@@ -3,7 +3,6 @@
 
 #include "Item.hpp"
 #include "Consumable.hpp"
-#include "Config.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;

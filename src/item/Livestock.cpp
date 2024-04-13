@@ -10,7 +10,7 @@ Livestock::Livestock() : Item::Item(){
 }
 
 Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight) 
-    : Item::Item(id, code, name, type, price), harvestWeight(harvestWeight), currentWeight(0) {}
+    : Item::Item(id, code, name, type, price),  currentWeight(0), harvestWeight(harvestWeight) {}
 
 Livestock::~Livestock() {}
 
@@ -62,12 +62,12 @@ void Livestock::eat(int weight){
 ostream& operator<<(ostream& os, const Livestock& livestock) {
     if (livestock.currentWeight < livestock.harvestWeight) {
         string str = livestock.code;
-        for(int i = 0; i < str.length(); i++){
+        for(int i = 0; i < (int) str.length(); i++){
             print_red(str[i]);
         }
     } else {
         string str = livestock.code;
-        for(int i = 0; i < str.length(); i++){
+        for(int i = 0; i < (int) str.length(); i++){
             print_green(str[i]);
         }
     }

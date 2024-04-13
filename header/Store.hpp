@@ -1,9 +1,10 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
-#include "Item.hpp"
 #include "Player.hpp"
+#include "Item.hpp"
 #include "Config.hpp"
+#include <limits>
 #include <map>
 #include <iostream>
 using namespace std;

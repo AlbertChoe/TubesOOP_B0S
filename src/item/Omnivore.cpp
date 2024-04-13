@@ -1,5 +1,5 @@
-#include "header/Omnivore.hpp"
-#include "header/Exception.hpp"
+#include "../../header/Omnivore.hpp"
+#include "../../header/Exception.hpp"
 using namespace std;
 
 Omnivore::Omnivore() : Livestock::Livestock(){}

@@ -2,7 +2,6 @@
 #define CONSUMABLE_HPP
 
 #include "Item.hpp"
-#include "Config.hpp"
 #include <iostream> 
 #include <map>
 using namespace std;

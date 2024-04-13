@@ -73,7 +73,7 @@ void Farmer::harvestCrop() {
         int choice;
         cout << "Nomor tanaman yang ingin dipanen: ";
         cin >> choice;
-        if (cin.fail() || choice < 1 || choice > harvestOptions.size()) {
+        if (cin.fail() || choice < 1 || choice > (int) harvestOptions.size()) {
             cin.clear(); 
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
             throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");

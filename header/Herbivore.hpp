@@ -2,7 +2,6 @@
 #define HERBIVORE_HPP
 
 #include "Livestock.hpp"
-#include "Config.hpp"
 using namespace std;
 
 class Herbivore : public Livestock {

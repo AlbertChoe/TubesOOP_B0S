@@ -1,6 +1,5 @@
 #include "../../header/Crop.hpp"
 #include "../../header/Config.hpp"
-#include "../pcolor/pcolor.h"
 #include "../../header/Exception.hpp"
 #include "../../header/Consumable.hpp"
 
@@ -154,12 +153,12 @@ void Crop::incrementDuration(){
 ostream& operator<<(ostream& os, const Crop& crop) {
     if (crop.currentDuration < crop.harvestDuration) {
         string str = crop.code;
-        for(int i = 0; i < str.length(); i++){
+        for(int i = 0; i < (int) str.length(); i++){
             print_red(str[i]);
         }
     } else {
         string str = crop.code;
-        for(int i = 0; i < str.length(); i++){
+        for(int i = 0; i < (int) str.length(); i++){
             print_green(str[i]);
         }
     }

@@ -30,7 +30,7 @@ void Grid<T>::add(T item, string location)
 {
     int row, col;
     row = location[0] - 'A';
-    int col = stoi(location.substr(1)) - 1;
+    col = stoi(location.substr(1)) - 1;
     grid[row][col] = item;
 }
 template <typename T>
@@ -38,7 +38,7 @@ void Grid<T>::remove(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    int col = stoi(location.substr(1)) - 1;
+    col = stoi(location.substr(1)) - 1;
     grid[row][col] = empty;
 }
 template <typename T>
@@ -51,14 +51,14 @@ T Grid<T>::get(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    int col = stoi(location.substr(1)) - 1;
+    col = stoi(location.substr(1)) - 1;
     return grid[row][col];
 }
 
 template <typename T>
 bool Grid<T>::isValid(string location)
 {
-    if (location.size != 3)
+    if (location.size() != 3)
     {
         int row = location[0] - 'A';
         if (row < 0 || row > 26)
@@ -141,7 +141,7 @@ void Grid<T>::print(string title)
             {
                 char r = i + 'A';
                 cout << r << endl;
-                cout << setfill('0') << setW(2) << j;
+                cout << setfill('0') << setw(2) << j;
                 cout << " : " << grid[i][j].getCode() << endl;
             }
         }
@@ -182,7 +182,7 @@ bool Grid<T>::isEmpty(string location)
 {
     int row, col;
     row = location[0] - 'A';
-    int col = stoi(location.substr(1)) - 1;
+    col = stoi(location.substr(1)) - 1;
     if (grid[row][col] != nullptr)
     {
         return false;

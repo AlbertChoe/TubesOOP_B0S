@@ -42,6 +42,7 @@ private:
     map<string, Crop> config;
 public:
     CropConfig();
+    ~CropConfig();
     void addCropConfig(string code, Crop config);
     map<string, Crop>& getRefConfigMap();
     Crop getConfig(string code);

@@ -1,4 +1,4 @@
-#include "header/Player.hpp"
+#include "../../header/Player.hpp"
 
 void Player::eat(){
     this->displayInventory();
@@ -92,10 +92,6 @@ int Player::getGulden() {
 
 int Player::getWeight() {
     return this->weight;
-}
-
-string Player::getName() {
-    return this->name;
 }
 
 void Player::setName(string _name) {
