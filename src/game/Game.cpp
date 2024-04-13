@@ -247,7 +247,7 @@ void Game::nextPlayer() {
             farmer->getRefField().incrementAllCropDuration();
         }
     }
-    cout << "Giliran " << players[currentPlayer]->getName() << "!";
+    cout << "Giliran " << players[currentPlayer]->getName() << "!"<<endl;
 }
 
 void Game::start() {

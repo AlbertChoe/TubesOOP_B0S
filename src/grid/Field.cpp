@@ -79,7 +79,7 @@ void Field::display()
             if (data != nullptr)
             {
                 char r = i + 'A';
-                cout << r << endl;
+                cout << r;
                 cout << setfill('0') << setw(2) << j+1;
                 cout << " : " << data->getName() << endl;
             }

@@ -43,7 +43,7 @@ void Farmer::plantCrop() {
         field.addCrop(clonedCrop, location);
         inventory.removeItem(locationInventory);
 
-        cout << "Cangkul, cangkul, cangkul yang dalam~!\n" <<clonedCrop->getName()<<"berhasil ditanam!"<< endl;
+        cout << "Cangkul, cangkul, cangkul yang dalam~!\n" <<clonedCrop->getName()<<" berhasil ditanam!"<< endl;
     
     } catch (const exception& e) {
         cout << e.what() << endl;
@@ -64,7 +64,7 @@ void Farmer::harvestCrop() {
 
         int count = 1;
         map<int, string> harvestOptions;
-        cout << "Pilih nomor tanaman yang ingin dipanen: ";
+        cout << "Pilih nomor tanaman yang ingin dipanen: "<<endl;
         for (auto& pair : readyToHarvest) {
             cout << count << ". " << pair.first << " (" << pair.second << " petak siap panen)" << endl;
             harvestOptions[count] = pair.first;
