@@ -10,6 +10,7 @@
 #include "Exception.hpp"
 #include "Utils.hpp"
 #include <fstream>
+#include <sstream>
 #include <memory>
 #include <iostream>
 #include <vector>

@@ -1,7 +1,7 @@
 #include "../../header/Game.hpp"
 
 Game::Game() {
-    currentPlayer = -1;
+    currentPlayer = 0;
     previousPlayer = -1;
 }
 
@@ -56,32 +56,44 @@ void Game::loadConsumableConfig() {
 }
 
 void Game::loadBuildingConfig() {
-    ifstream configFile("config/recipe.txt");
+    std::ifstream configFile("config/recipe.txt");
     if (!configFile) {
         throw FailToLoadException("recipe.txt");
     }
 
-    int id, price;
-    string code, name, materialCode;
-    int materialQuantity;
+    std::string line;
+    while (getline(configFile, line)) {
+        std::istringstream lineStream(line);
 
-    while (configFile >> id >> code >> name >> price) {
+        int id, price;
+        std::string code, name, materialCode;
+        int materialQuantity;
+
+        if (!(lineStream >> id >> code >> name >> price)) {
+            configFile.close();
+            throw FailToLoadException("recipe.txt");
+        }
+
         Building building(id, code, name, "BUILDING", price);
-        map<string, int> materials;
+        std::map<std::string, int> materials;
 
-        while (configFile.peek() != '\n' && configFile >> materialCode >> materialQuantity) {
+        while (lineStream >> materialCode >> materialQuantity) {
             materials[materialCode] = materialQuantity;
+        }
+
+        if (lineStream.fail() && !lineStream.eof()) {
+            configFile.close();
+            throw FailToLoadException("recipe.txt");
         }
 
         building.setMaterial(materials);
         buildingConfig.addBuildingConfig(code, building);
     }
 
-    if (configFile.bad() || !configFile.eof()) {
+    if (configFile.bad()) {
         configFile.close();
         throw FailToLoadException("recipe.txt");
     }
-
     configFile.close();
 }
 
@@ -179,7 +191,6 @@ void Game::loadConfig() {
     }
 }
 
-//TODO: ctor mayor etc.
 void Game::newGame() {
     string username;
     cout << "Permainan baru telah dimulai!" << endl;
