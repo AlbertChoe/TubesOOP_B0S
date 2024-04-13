@@ -8,9 +8,9 @@ void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
 {
     if (barn.isValid(location))
     {
-        return;
+        barn.add(livestock, location);
     }
-    barn.add(livestock, location);
+        return;
 }
 
 void Barn::feedLivestock(int food, string location)
@@ -71,9 +71,9 @@ bool Barn::isEmpty(string location)
 {
     if (barn.isValid(location))
     {
-        return false;
+        return barn.isEmpty(location);
     }
-    return barn.isEmpty(location);
+    return false;
 }
 bool Barn::isFull()
 {
@@ -84,9 +84,9 @@ shared_ptr<Livestock> Barn::getElement(string location)
 {
     if (barn.isValid(location))
     {
-        return nullptr;
+        return this->barn.get(location);
     }
-    return this->barn.get(location);
+    return nullptr;
 }
 
 map<string, int> Barn::countReadyToHarvest()
@@ -130,7 +130,7 @@ void Barn::remove(string location)
 
     if (barn.isValid(location))
     {
-        return;
+        this->barn.remove(location);
     }
-    this->barn.remove(location);
+    return;
 }
