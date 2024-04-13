@@ -36,7 +36,7 @@ public:
     // Eat Mechanism
     void eat(int weight);
     // Add new harvest results
-    vector<Consumable> harvest(Consumable newHarvestResult);
+    // vector<Consumable> harvest(Consumable newHarvestResult);
     // Display livestock code. Red if unfinished, Green if finished
     friend ostream& operator<<(ostream& os, const Livestock& livestock);
     // Checking if livestock is ready to harvest

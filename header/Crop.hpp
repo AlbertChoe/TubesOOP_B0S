@@ -34,7 +34,7 @@ public:
     // Increment current duration
     void incrementDuration();
     // Add new harvest results
-    vector<Consumable> harvest(ConsumableConfig consumableConfig);
+    // vector<Consumable> harvest(ConsumableConfig consumableConfig);
     // Display code. Red for unfinished, Green for finisihed
     friend ostream& operator<<(ostream& os, const Crop& crop);
     // Checking if livestock is ready to harvest

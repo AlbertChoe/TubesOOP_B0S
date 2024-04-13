@@ -27,9 +27,8 @@ int Crop::getCurrentDuration(){
     return currentDuration;
 }
 
-int Crop::getHarvestDuration(string code, CropConfig configCrop){
-    Crop crop = configCrop.getConfig(code);
-    return crop.harvestDuration;
+int Crop::getHarvestDuration(){
+    return harvestDuration;
 }
 
 vector<Consumable> Crop::getHarvestResult(){
@@ -56,101 +55,101 @@ void Crop::incrementDuration(){
     this->currentDuration += 1;
 }
 
-vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
-    if(!isReadyToHarvest()){
-        throw HarvestNotReadyException();
-    }
-    else{
-        int harvestID, harvestPrice, harvestAddedWeight;
-        string harvestCode, harvestName, harvestType, harvestOrigin;
+// vector<Consumable> Crop::harvest(ConsumableConfig configConsumable){
+//     if(!isReadyToHarvest()){
+//         throw HarvestNotReadyException();
+//     }
+//     else{
+//         int harvestID, harvestPrice, harvestAddedWeight;
+//         string harvestCode, harvestName, harvestType, harvestOrigin;
 
-        if (this->getCode() == "TEK"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "TAW";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "TEAK_WOOD";
-            harvestType = "PRODUCT_MATERIAL_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "SDT"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "SAW";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "SANDALWOOD_WOOD";
-            harvestType = "PRODUCT_MATERIAL_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "ALT"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "ALW";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "ALOE_WOOD";
-            harvestType = "PRODUCT_MATERIAL_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "IRN"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "IRW";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "IRONWOOD_WOOD";
-            harvestType = "PRODUCT_MATERIAL_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "APL"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "APP";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "APPLE";
-            harvestType = "PRODUCT_FRUIT_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "ORG"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "ORG";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "ORANGE";
-            harvestType = "PRODUCT_FRUIT_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "BNT"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "BNP";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "BANANA";
-            harvestType = "PRODUCT_FRUIT_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        else if (this->getCode() == "GAV"){
-            harvestID = this->getHarvestResult().size() + 1;
-            harvestCode = "GAP";
-            Consumable consumable = configConsumable.getConfig(harvestCode);
-            harvestName = "GUAVA";
-            harvestType = "PRODUCT_FRUIT_PLANT";
-            harvestPrice = consumable.getPrice();
-            harvestOrigin = consumable.getOrigin();
-            harvestAddedWeight = consumable.getAddedWeight();
-        }
-        Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
-        vector<Consumable> temp = this->getHarvestResult();
-        temp.push_back(newHarvest);
-        setHarvestResult(temp);
-        return temp;
-    }
-}
+//         if (this->getCode() == "TEK"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "TAW";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "TEAK_WOOD";
+//             harvestType = "PRODUCT_MATERIAL_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "SDT"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "SAW";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "SANDALWOOD_WOOD";
+//             harvestType = "PRODUCT_MATERIAL_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "ALT"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "ALW";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "ALOE_WOOD";
+//             harvestType = "PRODUCT_MATERIAL_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "IRN"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "IRW";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "IRONWOOD_WOOD";
+//             harvestType = "PRODUCT_MATERIAL_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "APL"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "APP";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "APPLE";
+//             harvestType = "PRODUCT_FRUIT_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "ORG"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "ORG";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "ORANGE";
+//             harvestType = "PRODUCT_FRUIT_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "BNT"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "BNP";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "BANANA";
+//             harvestType = "PRODUCT_FRUIT_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         else if (this->getCode() == "GAV"){
+//             harvestID = this->getHarvestResult().size() + 1;
+//             harvestCode = "GAP";
+//             Consumable consumable = configConsumable.getConfig(harvestCode);
+//             harvestName = "GUAVA";
+//             harvestType = "PRODUCT_FRUIT_PLANT";
+//             harvestPrice = consumable.getPrice();
+//             harvestOrigin = consumable.getOrigin();
+//             harvestAddedWeight = consumable.getAddedWeight();
+//         }
+//         Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
+//         vector<Consumable> temp = this->getHarvestResult();
+//         temp.push_back(newHarvest);
+//         setHarvestResult(temp);
+//         return temp;
+//     }
+// }
 
 ostream& operator<<(ostream& os, const Crop& crop) {
     if (crop.currentDuration < crop.harvestDuration) {
