@@ -87,7 +87,7 @@ void Game::loadBuildingConfig() {
         }
 
         building.setMaterial(materials);
-        buildingConfig.addBuildingConfig(code, building);
+        buildingConfig.addBuildingConfig(name, building);
     }
 
     if (configFile.bad()) {
