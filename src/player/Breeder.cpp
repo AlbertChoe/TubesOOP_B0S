@@ -12,8 +12,8 @@ void Breeder::addLivestock() {
             throw EmptySlotInputException();
         }
         string selectedLocation;
-        cout << "Pilih hewan dari penyimpanan : ";
         inventory.display();
+        cout << "Pilih hewan dari penyimpanan : ";
         cin >> selectedLocation;
         auto selectedAnimal = inventory.getItem(selectedLocation);
 
@@ -22,8 +22,8 @@ void Breeder::addLivestock() {
             throw InvalidTypeException();
         }
         
-        cout << "Pilih petak tanah yang akan ditinggali : ";
         barn.display();
+        cout << "Pilih petak tanah yang akan ditinggali : ";
         string barnLocation;
         cin >> barnLocation;
 

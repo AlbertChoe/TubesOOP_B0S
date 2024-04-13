@@ -12,8 +12,8 @@ void Farmer::plantCrop() {
             throw EmptySlotInputException();
         }
 
-        cout << "Pilih Tanaman di penyimpanan:" << endl;
         inventory.display();
+        cout << "Pilih Tanaman di penyimpanan:" << endl;
 
         string locationInventory;
         cout << "Slot: ";
