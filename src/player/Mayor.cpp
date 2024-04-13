@@ -23,28 +23,42 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players){
                 valid=true;
             }
         }
-        
-        cout<<"Masukkan nama pemain: ";
-        cin >> nama;
 
-        if (jenis=="petani")
+        if (jenis=="peternak")
         {
-            auto newPlayer = make_shared<Breeder>(nama);
-            players.push_back(newPlayer);
-        } else if (jenis=="peternak")
+            auto newBreeder = make_shared<Breeder>();
+            while (true) {
+                cout << "Masukkan nama pemain: ";
+                cin >> nama;
+                if (Utils::isNameInPlayers(players, nama)) {
+                    cout << "Nama sudah diambil, pilih nama lain!" << endl;
+                } else {
+                    newBreeder->setName(nama);
+                    break;
+                };
+            }
+            Utils::addNewPlayer(players, newBreeder);
+        } else if (jenis=="petani")
         {
-            auto newPlayer = make_shared<Farmer>(nama);
-            players.push_back(newPlayer);
+            auto newFarmer = make_shared<Farmer>();
+            while (true) {
+                cout << "Masukkan username untuk player Petani baru: ";
+                cin >> nama;
+                if (Utils::isNameInPlayers(players, nama)) {
+                    cout << "Nama sudah diambil, pilih nama lain!" << endl;
+                } else {
+                    newFarmer->setName(nama);
+                    break;
+                };
+            }
+        Utils::addNewPlayer(players, newFarmer);
         }
-        
         this->gulden-=50;
-
     }
     catch(const exception& e)
     {
         cerr << e.what() << '\n';
     }
-    
 }
 
 void Mayor::collectTax(vector<shared_ptr<Player>>& players){
