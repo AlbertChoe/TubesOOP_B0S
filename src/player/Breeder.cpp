@@ -12,8 +12,8 @@ void Breeder::addLivestock() {
             throw EmptySlotInputException();
         }
         string selectedLocation;
-        cout << "Pilih hewan dari penyimpanan : ";
         inventory.display();
+        cout << "Pilih hewan dari penyimpanan : ";
         cin >> selectedLocation;
         auto selectedAnimal = inventory.getItem(selectedLocation);
 
@@ -22,8 +22,8 @@ void Breeder::addLivestock() {
             throw InvalidTypeException();
         }
         
-        cout << "Pilih petak tanah yang akan ditinggali : ";
         barn.display();
+        cout << "Pilih petak tanah yang akan ditinggali : ";
         string barnLocation;
         cin >> barnLocation;
 
@@ -36,6 +36,7 @@ void Breeder::addLivestock() {
         barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
         cout << "Dengan hati-hati, kamu meletakkan seekor " << livestock->getName() << " di kandang." << endl;
+        cout <<livestock->getName()<< "telah menjadi peliharaanmu sekarang!" << endl;
     } catch (const exception& e) {
         cout << e.what() << endl;
     }

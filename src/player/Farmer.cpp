@@ -12,8 +12,8 @@ void Farmer::plantCrop() {
             throw EmptySlotInputException();
         }
 
-        cout << "Pilih Tanaman di penyimpanan:" << endl;
         inventory.display();
+        cout << "Pilih Tanaman di penyimpanan:" << endl;
 
         string locationInventory;
         cout << "Slot: ";
@@ -25,8 +25,8 @@ void Farmer::plantCrop() {
         }
         cout <<"Kamu memilih "<< item->getName() <<"."<< endl;
 
-        cout << "Pilih petak tanah yang akan ditanami:" << endl;
         field.display();
+        cout << "Pilih petak tanah yang akan ditanami:" << endl;
         string location;
         cout << "Petak tanah: ";
         cin >> location;
@@ -43,7 +43,8 @@ void Farmer::plantCrop() {
         field.addCrop(clonedCrop, location);
         inventory.removeItem(locationInventory);
 
-        cout << "Tanaman berhasil ditanam di " << location << "." << endl;
+        cout << "Cangkul, cangkul, cangkul yang dalam~!\n" <<clonedCrop->getName()<<"berhasil ditanam!"<< endl;
+    
     } catch (const exception& e) {
         cout << e.what() << endl;
     }

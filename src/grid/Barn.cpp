@@ -60,9 +60,9 @@ void Barn::display()
     this->barn.print("===barn===");
     // barn.printElemenetLoc();
     // print element location
-    int row = barn.getCol();
-    int col = barn.getRow();
-
+    int row = barn.getRow();
+    int col = barn.getCol();
+    
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
@@ -71,8 +71,8 @@ void Barn::display()
             if (data != nullptr)
             {
                 char r = i + 'A';
-                cout << r << endl;
-                cout << setfill('0') << setw(2) << j;
+                cout << r ;
+                cout << setfill('0') << setw(2) << j+1;
                 cout << " : " << data->getName() << endl;
             }
         }
