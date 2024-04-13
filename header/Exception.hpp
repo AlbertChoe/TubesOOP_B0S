@@ -155,6 +155,7 @@ class WrongUserInputException : public exception
         return "Player tidak dapat melakukan input tersebut!";
     }
 };
+
 class InvalidCode : public exception
 {
     const char *what() const throw()
@@ -162,6 +163,7 @@ class InvalidCode : public exception
         return "Kode yang anda masukkan tidak valid!";
     }
 };
+
 class InvalidRow : public exception
 {
     const char *what() const throw()
@@ -169,6 +171,7 @@ class InvalidRow : public exception
         return "Kode baris yang anda masukkan tidak valid!";
     }
 };
+
 class InvalidCol : public exception
 {
     const char *what() const throw()
@@ -176,11 +179,18 @@ class InvalidCol : public exception
         return "Kode kolom yang anda masukkan tidak valid!";
     }
 };
+
 class InvalidIndex : public exception
 {
     const char *what() const throw()
     {
         return "Kode index yang anda masukkan tidak valid (out of range)!";
+    }
+};
+
+class ConfigNotFound: public exception {
+    const char *what() const throw() {
+        return "Konfig tidak ditemukan!";
     }
 };
 

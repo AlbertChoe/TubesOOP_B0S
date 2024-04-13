@@ -8,6 +8,7 @@
 #include "Herbivore.hpp"
 #include "Carnivore.hpp"
 #include "Omnivore.hpp"
+#include "Exception.hpp"
 #include <memory>
 #include <iostream> 
 #include <map>

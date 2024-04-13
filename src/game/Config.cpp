@@ -41,7 +41,11 @@ map<string, Crop>& CropConfig::getRefConfigMap() {
     return this->config;
 }
 Crop CropConfig::getConfig(string code) {
-    return this->config.at(code);
+    try {
+        return this->config.at(code);
+    } catch (const exception&) {
+        throw ConfigNotFound();
+    }
 }
 
 
@@ -61,7 +65,11 @@ map<string, shared_ptr<Livestock>>& LivestockConfig::getRefConfigMap() {
     return this->config;
 }
 shared_ptr<Livestock> LivestockConfig::getConfig(string code) {
-    return this->config.at(code);
+    try {
+        return this->config.at(code);
+    } catch (const exception&) {
+        throw ConfigNotFound();
+    }
 }
 
 
@@ -75,7 +83,11 @@ map<string, Consumable>& ConsumableConfig::getRefConfigMap() {
     return this->config;
 };
 Consumable ConsumableConfig::getConfig(string code) {
-    return this->config.at(code);
+    try {
+        return this->config.at(code);
+    } catch (const exception&) {
+        throw ConfigNotFound();
+    }
 }
 
 
@@ -85,6 +97,10 @@ BuildingConfig::~BuildingConfig() {}
 void BuildingConfig::addBuildingConfig(string code, Building config) {
     this->config.insert(make_pair(code, config));
 }
-Building BuildingConfig::getConfig(string code) {
-    return this->config.at(code);
+Building BuildingConfig::getConfig(string name) {
+    try {
+        return this->config.at(name);
+    } catch (const exception&) {
+        throw ConfigNotFound();
+    }
 }

@@ -75,7 +75,7 @@ void Game::loadBuildingConfig() {
         }
 
         Building building(id, code, name, "BUILDING", price);
-        std::map<std::string, int> materials;
+        map<string, int> materials;
 
         while (lineStream >> materialName >> materialQuantity) {
             materials[materialName] = materialQuantity;
