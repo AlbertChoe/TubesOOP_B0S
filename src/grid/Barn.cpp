@@ -71,8 +71,8 @@ void Barn::display()
             if (data != nullptr)
             {
                 char r = i + 'A';
-                cout << r << endl;
-                cout << setfill('0') << setw(2) << j;
+                cout << r ;
+                cout << setfill('0') << setw(2) << j+1;
                 cout << " : " << data->getName() << endl;
             }
         }

@@ -36,6 +36,7 @@ void Breeder::addLivestock() {
         barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
         cout << "Dengan hati-hati, kamu meletakkan seekor " << livestock->getName() << " di kandang." << endl;
+        cout <<livestock->getName()<< "telah menjadi peliharaanmu sekarang!" << endl;
     } catch (const exception& e) {
         cout << e.what() << endl;
     }

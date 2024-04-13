@@ -66,8 +66,8 @@ void Field::display()
 {
     field.print("===LADANG===");
     // print element location
-    int row = field.getCol();
-    int col = field.getRow();
+    int row = field.getRow();
+    int col = field.getCol();
 
     for (int i = 0; i < row; i++)
     {
@@ -78,7 +78,7 @@ void Field::display()
             {
                 char r = i + 'A';
                 cout << r << endl;
-                cout << setfill('0') << setw(2) << j;
+                cout << setfill('0') << setw(2) << j+1;
                 cout << " : " << data->getName() << endl;
             }
         }
