@@ -56,17 +56,17 @@ void Game::loadConsumableConfig() {
 }
 
 void Game::loadBuildingConfig() {
-    std::ifstream configFile("config/recipe.txt");
+    ifstream configFile("config/recipe.txt");
     if (!configFile) {
         throw FailToLoadException("recipe.txt");
     }
 
-    std::string line;
+    string line;
     while (getline(configFile, line)) {
-        std::istringstream lineStream(line);
+        istringstream lineStream(line);
 
         int id, price;
-        std::string code, name, materialName;
+        string code, name, materialName;
         int materialQuantity;
 
         if (!(lineStream >> id >> code >> name >> price)) {
