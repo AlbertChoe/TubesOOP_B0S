@@ -1,5 +1,7 @@
 #include "../../header/Breeder.hpp"
 #include "../../header/Exception.hpp"
+#include <stdexcept> 
+#include <limits>
 #include <vector>
 #include <map>
 #include <cmath> 
@@ -29,7 +31,9 @@ void Breeder::addLivestock() {
             throw FullSlotException();
         }
 
-        barn.addLivestock(livestock, barnLocation);
+        auto livestockClone = make_shared<Livestock>(*livestock);
+
+        barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
         cout << "Dengan hati-hati, kamu meletakkan seekor " << livestock->getName() << " di kandang." << endl;
     } catch (const exception& e) {
@@ -96,6 +100,11 @@ void Breeder::harvestLivestock() {
         int choice;
         cout << "Pilih Nomor hewan yang ingin dipanen: ";
         cin >> choice;
+        if (cin.fail() || choice < 1 || choice > harvestOptions.size()) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
+        }
 
         if (harvestOptions.find(choice) == harvestOptions.end()) {
             throw WrongInputException();
@@ -105,7 +114,11 @@ void Breeder::harvestLivestock() {
         int numToHarvest;
         cout << "Berapa petak yang ingin dipanen: ";
         cin >> numToHarvest;
-
+        if (cin.fail() || choice < 1 ) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
+        }
         if (numToHarvest > readyToHarvest[selectedType]) {
             throw NotEnoughToHarvestException();
         }

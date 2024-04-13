@@ -1,5 +1,7 @@
 #include "../../header/Farmer.hpp"
 #include "../../header/Exception.hpp"
+#include <stdexcept> 
+#include <limits>
 #include <vector>
 #include <map>
 #include <cmath>
@@ -32,7 +34,13 @@ void Farmer::plantCrop() {
         if (!field.isEmpty(location)) {
             throw FullSlotException();
         }
-        field.addCrop(dynamic_pointer_cast<Crop>(item), location);
+        auto cropItem = dynamic_pointer_cast<Crop>(item);
+        if (!cropItem) {
+            throw InvalidTypeException();  
+        }
+
+        auto clonedCrop = make_shared<Crop>(*cropItem);
+        field.addCrop(clonedCrop, location);
         inventory.removeItem(locationInventory);
 
         cout << "Tanaman berhasil ditanam di " << location << "." << endl;
@@ -65,6 +73,11 @@ void Farmer::harvestCrop() {
         int choice;
         cout << "Nomor tanaman yang ingin dipanen: ";
         cin >> choice;
+        if (cin.fail() || choice < 1 || choice > harvestOptions.size()) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
+        }
 
         if (harvestOptions.find(choice) == harvestOptions.end()) {
             throw WrongInputException();
@@ -74,6 +87,11 @@ void Farmer::harvestCrop() {
         int numToHarvest;
         cout << "Berapa petak yang ingin dipanen: ";
         cin >> numToHarvest;
+        if (cin.fail() || choice < 1 ) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
+        }
 
         if (numToHarvest > readyToHarvest[selectedType]) {
             throw NotEnoughToHarvestException();
