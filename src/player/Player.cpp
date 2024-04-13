@@ -10,20 +10,26 @@ void Player::eat(){
         cout << "Slot: ";
         cin >> input;
 
+        if (input=="0")
+        {
+            break;
+        }
+
         cout<<endl;
 
         try
         {
             shared_ptr<Item> search=this->inventory.getItem(input);
 
-            if (search->getID()==0 && search->getCode()=="" )
+            if (search==nullptr)
             {
                 throw EmptySlotInputException();
             } else if (search->getType()!="PRODUCT_ANIMAL" ||search->getType()!="PRODUCT_FOOD_PLANT")
             {
                 throw InvalidSlotInputException();
             }
-            
+
+            cout<<"kntl2"<<endl;
             shared_ptr<Consumable> consumable = dynamic_pointer_cast<Consumable>(search);
             if (consumable)
             {
