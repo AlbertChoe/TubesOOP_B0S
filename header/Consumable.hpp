@@ -14,8 +14,6 @@ private:
 public:
     // Constructor
     Consumable();
-    // Constructor user defined config based
-    Consumable(int id, string code, string name, string type, int price, string origin, ConsumableConfig consumableConfig);
     //Constructor user defined
     Consumable(int id, string code, string name, string type, int price, string origin, int addedWeight);
     // Destructor
@@ -24,7 +22,6 @@ public:
     Consumable(const Consumable& consumable);
     // Getter
     string getOrigin();
-    int getAddedWeightFromConfig(string code, ConsumableConfig configConsumable);
     int getAddedWeight();
     // Setter
     void setOrigin(string origin);

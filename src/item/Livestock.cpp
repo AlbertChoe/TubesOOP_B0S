@@ -9,9 +9,6 @@ Livestock::Livestock() : Item::Item(){
     harvestWeight = 0;
 }
 
-Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig) 
-    : Item::Item(id, code, name, type, price), harvestWeight(getHarvestWeightFromConfig(code, livestockConfig)), currentWeight(0) {}
-
 Livestock::Livestock(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight) 
     : Item::Item(id, code, name, type, price), harvestWeight(harvestWeight), currentWeight(0) {}
 
@@ -29,10 +26,6 @@ int Livestock::getCurrentWeight(){
 
 int Livestock::getHarvestWeight(){
     return harvestWeight;
-}
-
-int Livestock::getHarvestWeightFromConfig(string code, LivestockConfig configLivestock){
-    return configLivestock.getConfig(code)->harvestWeight;
 }
 
 vector<Consumable> Livestock::getHarvestResult(){

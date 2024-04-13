@@ -9,8 +9,6 @@ class Carnivore : public Livestock {
 public:
     // Constructor default
     Carnivore();
-    // Constructor user defined from config
-    Carnivore(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig);
     // Constructor user defined
     Carnivore(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight);
     // Destructor

@@ -4,9 +4,6 @@ using namespace std;
 
 Carnivore::Carnivore() : Livestock::Livestock(){}
 
-Carnivore::Carnivore(int id, string code, string name, string type, int price, int currentWeight, LivestockConfig livestockConfig)
-    : Livestock::Livestock(id, code, name, type, price, currentWeight, livestockConfig) {}
-
 Carnivore::Carnivore(int id, string code, string name, string type, int price, int currentWeight, int harvestWeight)
     : Livestock::Livestock(id, code, name, type, price, currentWeight, harvestWeight) {}
 
