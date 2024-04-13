@@ -1,11 +1,5 @@
 #include "header/Player.hpp"
 
-Player::Player(string name){
-    this->name=name;
-    this->gulden=50;
-    this->weight=40;
-}
-
 void Player::eat(){
     this->displayInventory();
     bool valid=false;
@@ -30,13 +24,18 @@ void Player::eat(){
                 throw InvalidSlotInputException();
             }
             
-            int addedWeight = search->getAddedWeight();
-            this->weight+=addedWeight;
-            cout << "Dengan lahapnya, kamu memakan hidangan itu"<<endl;
-            cout<<"Alhasil, berat badan kamu naik menjadi "<<this->weight<<endl;
+            shared_ptr<Consumable> consumable = dynamic_pointer_cast<Consumable>(search);
+            if (consumable)
+            {
+                int addedWeight = consumable->getAddedWeight();
+                this->weight+=addedWeight;
+                cout << "Dengan lahapnya, kamu memakan hidangan itu"<<endl;
+                cout<<"Alhasil, berat badan kamu naik menjadi "<<this->weight<<endl;
 
-            valid=true;
-            
+                valid=true;
+            } else {
+                throw InvalidSlotInputException();
+            }
         }
         catch(const exception& e)
         {
