@@ -25,9 +25,10 @@ public:
     bool isFull();
     shared_ptr<Item> getElement(string location);
     void remove(string location);
-    int getCountNonBuilding(); //TODO: return jumlah item yang bukan building
-    int getCountItem(); //TODO: return jumlah semua item
-    int getCountBuilding(); //TODO: return getCountItem() - getCountNonBuilding()
+    int getCountNonBuilding();
+    int getCountItem();
+    int getCountBuilding();
+    int getItemCountByName(string name);
 };
 
 #endif

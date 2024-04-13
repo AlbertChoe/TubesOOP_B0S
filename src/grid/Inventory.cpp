@@ -130,3 +130,21 @@ int Inventory::getCountBuilding()
 {
     return getCountItem() - getCountNonBuilding();
 }
+
+int Inventory::getItemCountByName(string name){
+    int count = 0;
+    int row = this->inventory.getRow();
+    int col = this->inventory.getCol();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto item = this->inventory.get(i, j);
+            if (item->getName()==name)
+            {
+                count++;
+            }
+        }
+    }
+    return count;
+}
