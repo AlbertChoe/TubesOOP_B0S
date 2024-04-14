@@ -99,6 +99,15 @@ public:
             int col;
             try
             {
+                string temp = location.substr(1);
+                int len = temp.size();
+                for (int x = 0; x < len; x++)
+                {
+                    if (temp[x] < '0' || temp[x] > '9')
+                    {
+                        throw InvalidCode();
+                    }
+                }
                 col = stoi(location.substr(1)) - 1;
             }
             catch (const std::invalid_argument &e)
@@ -158,10 +167,11 @@ public:
         {
             if (i == 0)
             {
-                cout << "  ";
+                cout << "   ";
                 for (int j = 0; j < col; j++)
                 {
-                    cout << "   " << j + 1 << "  ";
+                    cout << "  ";
+                    cout << setfill('0') << setw(2) << j + 1 << "  ";
                 }
                 cout << endl;
                 cout << "  ";
