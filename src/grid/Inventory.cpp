@@ -38,7 +38,7 @@ void Inventory::removeItem(string location)
 
 void Inventory::display()
 {
-    this->inventory.print("===inventory===");
+    this->inventory.print("===INVENTORY===");
 }
 
 int Inventory::countWealth()

@@ -13,30 +13,6 @@ void Barn::addLivestock(shared_ptr<Livestock> livestock, string location)
     return;
 }
 
-// void Barn::feedLivestock(int food, string location)
-// {
-//     int row = this->barn.getRow();
-//     int col = this->barn.getCol();
-//     int a = location[0] - 'A';
-//     int b = 0;
-//     for (int i = 1; i < (int)location.size(); i++)
-//     {
-//         b *= 10;
-//         b += location[i] - '0';
-//     }
-//     for (int i = 0; i < row; i++)
-//     {
-//         for (int j = 0; j < col; j++)
-//         {
-//             if (a == i && b == j)
-//             {
-//                 auto data = this->barn.get(i, j);
-//                 data->eat(food);
-//                 return;
-//             }
-//         }
-//     }
-// }
 void Barn::harvestLivestock()
 {
     shared_ptr<Livestock> data;
@@ -57,9 +33,7 @@ void Barn::harvestLivestock()
 }
 void Barn::display()
 {
-    this->barn.print("===barn===");
-    // barn.printElemenetLoc();
-    // print element location
+    this->barn.print("===BARN===");
     int row = barn.getRow();
     int col = barn.getCol();
 
@@ -73,7 +47,7 @@ void Barn::display()
                 char r = i + 'A';
                 cout << r;
                 cout << setfill('0') << setw(2) << j + 1;
-                cout << " : " << data->getName() << endl;
+                cout << " : " << data->getName()<<"  | Berat: "<< data->getCurrentWeight() <<"/" <<data->getHarvestWeight() << endl;
             }
         }
     }

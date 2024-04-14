@@ -37,9 +37,6 @@ public:
         this->setCurrentWeight(this->getCurrentWeight() + weight);
     }
     virtual void eat(Consumable food) = 0;
-    // virtual std::shared_ptr<Livestock> clone() const = 0;
-    // Add new harvest results
-    // vector<Consumable> harvest(Consumable newHarvestResult);
     // Display livestock code. Red if unfinished, Green if finished
     friend ostream& operator<<(ostream& os, const Livestock& livestock);
     // Checking if livestock is ready to harvest

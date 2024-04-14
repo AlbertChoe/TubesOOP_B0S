@@ -82,7 +82,7 @@ void Field::display()
                 char r = i + 'A';
                 cout << r;
                 cout << setfill('0') << setw(2) << j + 1;
-                cout << " : " << data->getName() << endl;
+                cout << " : " << data->getName() <<"  | Umur: "<< data->getCurrentDuration() <<"/" <<data->getHarvestDuration() << endl;
             }
         }
     }

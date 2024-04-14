@@ -140,7 +140,7 @@ void Mayor::buildBuilding(BuildingConfig recipe)
             idx++;
         }
 
-        cout <<endl<< "Bangunan yang ingin dibangun: ";
+        cout <<endl<< "Nama bangunan yang ingin dibangun: ";
         cin >> tipebangunan;
 
         try
@@ -165,7 +165,7 @@ void Mayor::buildBuilding(BuildingConfig recipe)
                 }
             }
 
-            if (accepted)
+            if (accepted && kuranggulden == 0)
             {
                 gulden -= foundbuilding.getPrice();
                 auto newBuilding = make_shared<Building>(foundbuilding);

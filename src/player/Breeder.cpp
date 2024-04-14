@@ -64,8 +64,6 @@ void Breeder::addLivestock()
         } else {
             throw InvalidTypeException();
         }
-        // auto livestockClone = livestock->clone();
-        // barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
         cout << "Dengan hati-hati, kamu meletakkan seekor " << selectedAnimal->getName() << " di kandang." << endl;
         cout << selectedAnimal->getName() << " telah menjadi peliharaanmu sekarang!" << endl;
@@ -122,14 +120,12 @@ void Breeder::feedLivestock()
                 if (food)
                 {
                     if (livestock->getType() == "HERBIVORE") {
-                        cout << "Masuk sini 1  "<<livestock->getType()<<"   \n ";
                         auto herb = dynamic_pointer_cast<Herbivore>(livestock);
                         if (!herb) {
                             cout << "Casting ke Herbivore gagal, objek bukan Herbivore!\n";
                             continue;
                         }
                         livestock->eat(*food);
-                        cout << "Masuk sini 2\n";
                         cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
                         inventory.removeItem(slot);
                         break;
@@ -249,6 +245,7 @@ void Breeder::harvestLivestock()
                     if (requiredSpace > inventory.countEmpty())
                     {
                         cout << "Tidak cukup slot di penyimpanan!" << endl;
+                        return;
                     }
                     else
                     {

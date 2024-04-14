@@ -15,7 +15,6 @@ private:
 public:
     Barn(int row, int col);
     void addLivestock(shared_ptr<Livestock> livestock, string location);
-    // void feedLivestock(int food, string location);
     void harvestLivestock();
     int countWealth();
     void display();

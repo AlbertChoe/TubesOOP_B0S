@@ -16,8 +16,6 @@ public:
     Omnivore(const Omnivore& omnivore);
     // Carnivore eat mechanism
     void eat(Consumable food);
-    // Add new harvest results
-    // vector<Consumable> harvest(ConsumableConfig configConsumable);
 };
 
 #endif

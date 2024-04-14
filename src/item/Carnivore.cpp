@@ -22,27 +22,3 @@ void Carnivore::eat(Consumable food){
         throw CarnivoresEatPlantsException();
     }
 }
-
-// vector<Consumable> Carnivore::harvest(ConsumableConfig configConsumable){
-//     if(!isReadyToHarvest()){
-//         throw HarvestNotReadyException();
-//     }
-//     else{
-//         int harvestID, harvestPrice, harvestAddedWeight;
-//         string harvestCode, harvestName, harvestType, harvestOrigin;
-
-//         if (this->getCode() == "SNK"){
-//             harvestID = this->getHarvestResult().size() + 1;
-//             harvestCode = "SNM";
-//             Consumable consumable = configConsumable.getConfig(harvestCode);
-//             harvestName = "SNAKE_MEAT";
-//             harvestType = "PRODUCT_ANIMAL";
-//             harvestPrice = consumable.getPrice();
-//             harvestOrigin = consumable.getOrigin();
-//             harvestAddedWeight = consumable.getAddedWeight();
-//         }
-
-//         Consumable newHarvest = Consumable(harvestID, harvestCode, harvestName, harvestType, harvestPrice, harvestOrigin, configConsumable);
-//         return Livestock::harvest(newHarvest);
-//     }
-// }
