@@ -150,3 +150,22 @@ int Inventory::getItemCountByName(string name)
     }
     return count;
 }
+
+vector<string> Inventory::GetAllItemName()
+{
+    int row = inventory.getRow();
+    int col = inventory.getCol();
+    vector<string> listName;
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto data = this->inventory.get(i, j);
+            if (data != nullptr)
+            {
+                listName.push_back(data->getName());
+            }
+        }
+    }
+    return listName;
+}

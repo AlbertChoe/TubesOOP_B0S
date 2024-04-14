@@ -29,6 +29,7 @@ public:
     int getCountItem();
     int getCountBuilding();
     int getItemCountByName(string name);
+    vector<string> Inventory::GetAllItemName();
 };
 
 #endif
