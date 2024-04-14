@@ -30,3 +30,15 @@ bool Utils::isNameInPlayers(const vector<shared_ptr<Player>>& players, string na
     }
     return false;
 }
+
+string Utils::intToString(int number) {
+    if (number == 0) return "0"; 
+    std::string result = "";
+    while (number > 0) {
+        char digit = '0' + (number % 10);
+        result = digit + result;
+        number /= 10;
+    }
+
+    return result;
+}

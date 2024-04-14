@@ -115,7 +115,7 @@ void Breeder::harvestLivestock() {
         while (true) {
             cout << "Pilih Nomor hewan yang ingin dipanen (untuk keluar ketik 0): ";
             cin >> choice;
-            if (cin.fail() ||choice != 0 && choice<0 || choice > (int) harvestOptions.size()) {
+            if (cin.fail() ||(choice != 0 && choice<0) || choice > (int) harvestOptions.size()) {
                 cin.clear(); 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
                 cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
@@ -134,7 +134,7 @@ void Breeder::harvestLivestock() {
         while (true) {
             cout << "Berapa petak yang ingin dipanen (untuk keluar ketik 0): ";
             cin >> numToHarvest;
-            if (cin.fail()||choice != 0 && choice<0 ) {
+            if (cin.fail()||(choice != 0 && choice<0) ) {
                 cin.clear(); 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
                 cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;

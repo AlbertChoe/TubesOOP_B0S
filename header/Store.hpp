@@ -4,6 +4,7 @@
 #include "Player.hpp"
 #include "Item.hpp"
 #include "Config.hpp"
+#include "Utils.hpp"
 #include <limits>
 #include <map>
 #include <iostream>
@@ -29,6 +30,7 @@ public:
     shared_ptr<Item> getItem(string code);
     string getCodeByOrderNum(int num);
     void addItem(shared_ptr<Item> item);
+    vector<vector<string>> getSomeNameQuantity();
 };
 
 #endif
