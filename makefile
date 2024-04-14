@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -g
+CXXFLAGS = -std=c++17 -Wall -g
 
 BIN_DIR = bin
 EXEC = game
