@@ -20,10 +20,20 @@ void Store::initStore(CropConfig& cropConfig, LivestockConfig& livestockConfig) 
 }
 
 void Store::refreshStore() {
+    vector<string> remove;
     for (auto& pair : store) {
         auto item = pair.second.first;
         if (item->getItemType() == ItemType::Livestock || item->getItemType() == ItemType::Crop) {
             pair.second.second = UNLIMITED;
+        } else {
+            if (pair.second.second == 0) {
+                remove.push_back(pair.first);
+            }
+        }
+    }
+    if (!remove.empty()) {
+        for (auto& key : remove) {
+            store.erase(key);
         }
     }
 }
@@ -150,6 +160,7 @@ void Store::buyTransaction(shared_ptr<Player> player) {
                 continue;
             }
             inven.addItem(getItem(code), slot);
+            setQuantity(code, getQuantity(code) - quantity);
             success++;
         } catch (const exception& e) {
             cout << e.what() << endl;

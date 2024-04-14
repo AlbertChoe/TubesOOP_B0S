@@ -158,7 +158,7 @@ void Breeder::harvestLivestock()
 
         int count = 1;
         map<int, pair<string, string>> harvestOptions;
-        cout << "Pilih hewan siap panen yang kamu miliki: ";
+        cout << "Pilih hewan siap panen yang kamu miliki: " << endl;
         for (const auto &pair : readyToHarvest)
         {
             cout << count << ". " << pair.first << " (" << pair.second.first << " petak siap panen)" << endl;

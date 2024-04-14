@@ -456,7 +456,7 @@ void Game::loadGameState(string fileLocation) {
             player->setWeight(weight);
             Utils::addNewPlayer(players, currentPlayer, player);
         } else {
-            throw FailToLoadException("state.txt");
+            throw FailToLoadException(fileLocation);
         }
     }
     int countItem;
