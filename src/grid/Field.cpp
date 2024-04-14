@@ -164,7 +164,7 @@ void Field::remove(string location)
     return;
 }
 
-vector<vector<string>> Field::getallDetail()
+vector<vector<string>> Field::getAllDetail()
 {
     int row = field.getRow();
     int col = field.getCol();
@@ -193,4 +193,5 @@ vector<vector<string>> Field::getallDetail()
             listData.push_back(detail);
         }
     }
+    return listData;
 }

@@ -236,14 +236,11 @@ void Store::addItem(shared_ptr<Item> item) {
     }
 }
 
-vector<vector<string>> Store::getSomeNameQuantity() {
-    vector<vector<string>> result;
-    for (auto& pair: store) {
-        vector<string> temp;
-        if (pair.second.first->getItemType() != ItemType::Crop && pair.second.first->getItemType() != ItemType::Livestock) {
-            temp.push_back(pair.second.first->getName());
-            temp.push_back(Utils::intToString(pair.second.second));
-            result.push_back(temp);
+vector<pair<string, string>> Store::getNonCropAndLivestockItems() {
+    vector<pair<string, string>> result;
+    for (const auto& pair : store) {
+        if (pair.second.first && pair.second.first->getItemType() != ItemType::Crop && pair.second.first->getItemType() != ItemType::Livestock) {
+            result.emplace_back(pair.second.first->getName(), Utils::intToString(pair.second.second));
         }
     }
     return result;

@@ -491,20 +491,47 @@ void Game::saveGameState() {
     }
 
     saveFile << players.size() << endl;
-    for (int i = 0 ; i < players.size(); i++) {
+    for (int i = 0 ; i < (int) players.size(); i++) {
         saveFile << players[i]->getName();
         if (players[i]->getType() == PlayerType::Breeder) {
-            saveFile << "Peternak" << players[i]->getWeight() << players[i]->getGulden() << endl;
-            auto breeder = dynamic_cast<Breeder*>(players[i].get());
-            saveFile << breeder->getRefInventory().getCountItem() << endl;
+            saveFile << "Peternak";
         } else if (players[i]->getType() == PlayerType::Farmer) {
-            saveFile << "Petani" << players[i]->getWeight() << players[i]->getGulden() << endl;
-            auto breeder = dynamic_cast<Farmer*>(players[i].get());
+            saveFile << "Petani";
         } else {
-            saveFile << "Walikota" << players[i]->getWeight() << players[i]->getGulden() << endl;
-            auto mayor = players[i];
+            saveFile << "Walikota";
+        }
+        saveFile << players[i]->getWeight() << players[i]->getGulden() << endl;
+        auto inven = players[i]->getRefInventory();
+        auto invenItem = inven.getAllItemName();
+        saveFile << invenItem.size() << endl;
+        for (int j = 0; j < (int) invenItem.size(); j++) {
+            saveFile << invenItem[i] << endl;
+        } 
+
+        if (players[i]->getType() == PlayerType::Breeder) {
+            auto breeder = dynamic_cast<Breeder*>(players[i].get());
+            auto livestocks = breeder->getRefBarn().getAllDetail();
+            saveFile << livestocks.size() << endl;
+            for (int k = 0; k < (int) livestocks.size(); k++) {
+                saveFile << livestocks[k][0] << livestocks[k][1] << livestocks[k][2] << endl;
+            }
+        } else if (players[i]->getType() == PlayerType::Farmer) {
+            auto breeder = dynamic_cast<Farmer*>(players[i].get());
+            auto crops = breeder->getRefField().getAllDetail();
+            saveFile << crops.size() << endl;
+            for (int k = 0; k < (int) crops.size(); k++) {
+                saveFile << crops[k][0] << crops[k][1] << crops[k][2] << endl;
+            }
         }
     }
+
+    auto storeState = store.getNonCropAndLivestockItems();
+    saveFile << storeState.size() << endl;
+    for (int i = 0; i < (int) storeState.size(); i++) {
+        saveFile << storeState[i].first << storeState[i].second << endl;
+    }
+
+    saveFile.close();
 }
 
 void Game::printPlayers() {

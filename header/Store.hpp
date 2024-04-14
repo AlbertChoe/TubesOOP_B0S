@@ -30,7 +30,7 @@ public:
     shared_ptr<Item> getItem(string code);
     string getCodeByOrderNum(int num);
     void addItem(shared_ptr<Item> item);
-    vector<vector<string>> getSomeNameQuantity();
+    vector<pair<string, string>> getNonCropAndLivestockItems();
 };
 
 #endif

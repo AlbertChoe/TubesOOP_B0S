@@ -156,7 +156,7 @@ void Barn::remove(string location)
     return;
 }
 
-vector<vector<string>> Barn::getallDetail()
+vector<vector<string>> Barn::getAllDetail()
 {
     int row = barn.getRow();
     int col = barn.getCol();
@@ -185,4 +185,5 @@ vector<vector<string>> Barn::getallDetail()
             listData.push_back(detail);
         }
     }
+    return listData;
 }
