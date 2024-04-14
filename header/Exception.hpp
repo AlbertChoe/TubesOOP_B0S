@@ -85,6 +85,14 @@ class EmptySlotSellException : public exception
     }
 };
 
+class EmptyInventoryException : public exception
+{
+    const char *what() const throw()
+    {
+        return "Penyimpanan anda kosong\n";
+    }
+};
+
 class InvalidTypeException : public exception
 {
     const char *what() const throw()
@@ -194,8 +202,9 @@ class ConfigNotFound: public exception {
     }
 };
 
-class CancelFunction: public exception {
-    const char *what() const throw() {
+class CancelFunction : public std::exception {
+public:
+    const char* what() const throw() override {
         return "Mengcancel perintah yang baru dipanggil!";
     }
 };

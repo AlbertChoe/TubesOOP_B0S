@@ -9,7 +9,7 @@
 void Breeder::addLivestock() {
     try {
         if (inventory.isEmpty()){
-            throw EmptySlotInputException();
+            throw EmptyInventoryException();
         }
         string selectedLocation;
         inventory.display();
@@ -26,15 +26,22 @@ void Breeder::addLivestock() {
         barn.display();
         string barnLocation;
         while (true) {
-            cout << "Pilih petak tanah yang akan ditinggali (untuk keluar ketik 'KELUAR'): ";
-            cin >> barnLocation;
-            if ( barn.isEmpty(barnLocation) ) {
-                break;
-            }else if (barnLocation == "KELUAR"){
-                throw CancelFunction();
-            }else{
-                cout << "Petak tanah yang anda pilih sudah penuh"<<endl;
-            }
+            try{
+                cout << "Pilih petak tanah yang akan ditinggali (untuk keluar ketik 'KELUAR'): ";
+                cin >> barnLocation;
+                if (barnLocation == "KELUAR"){
+                    throw CancelFunction();
+                }else if (  barn.isEmpty(barnLocation) ) {
+                    break;
+                }else{
+                    cout << "Petak tanah yang anda pilih sudah penuh"<<endl;
+                }
+            } catch (const CancelFunction& e) {
+                cout << e.what() << endl;
+                return;  
+            }catch (const exception& e) {
+                cout << e.what() << endl;
+            }        
         }
 
 
@@ -43,7 +50,7 @@ void Breeder::addLivestock() {
         barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
         cout << "Dengan hati-hati, kamu meletakkan seekor " << livestock->getName() << " di kandang." << endl;
-        cout <<livestock->getName()<< "telah menjadi peliharaanmu sekarang!" << endl;
+        cout <<livestock->getName()<< " telah menjadi peliharaanmu sekarang!" << endl;
     } catch (const exception& e) {
         cout << e.what() << endl;
     }
@@ -60,25 +67,36 @@ void Breeder::feedLivestock() {
         cout << "Pilih petak kandang: ";
         cin >> location;
         auto livestock = dynamic_pointer_cast<Livestock>(barn.getElement(location));
-
+        if (livestock == nullptr){
+            throw EmptySlotInputException();
+        }
         if (!livestock) {
             throw InvalidTypeException();
         }
-        cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\nPilih pangan yang akan diberikan: ";
+        cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\n";
 
         displayInventory();
         string slot;
         while (true) {
-            cout << "Pilih pangan yang akan diberikan (untuk keluar ketik 'KELUAR'): ";
-            cin >> slot;
-            auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
-            if (food) {
-                break;
-            }else if (slot == "KELUAR"){
-                throw CancelFunction();
-            }else{
-                cout << "Barang yang anda pilih dari penyimpanan bukan makanan"<<endl;
-            }
+            try{
+                cout << "Pilih pangan yang akan diberikan (untuk keluar ketik 'KELUAR'): ";
+                cin >> slot;
+                if (slot == "KELUAR"){
+                    throw CancelFunction();
+                    break;
+                }
+                auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
+                if (food) {
+                    break;
+                }else{
+                    cout << "Barang yang anda pilih dari penyimpanan bukan makanan"<<endl;
+                }
+            } catch (const CancelFunction& e) {
+                cout << e.what() << endl;
+                return;  
+            }catch (const exception& e) {
+                cout << e.what() << endl;
+            } 
         }
             
         auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
@@ -132,32 +150,39 @@ void Breeder::harvestLivestock() {
         string selectedType = harvestOptions[choice];
         int numToHarvest;
         while (true) {
-            cout << "Berapa petak yang ingin dipanen (untuk keluar ketik 0): ";
-            cin >> numToHarvest;
-            if (cin.fail()||(choice != 0 && choice<0) ) {
-                cin.clear(); 
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-                cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
-            }else if (choice == 0){
-                throw CancelFunction(); 
-            }else if (numToHarvest > readyToHarvest[selectedType]){
-                cout << "Jumlah hewan yang ingin dipanen tidak cukup!"<<endl;
-            }else{
-                auto livestock = barn.getElement(selectedType);
-                int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
-                if (requiredSpace > inventory.countEmpty()) {
-                    cout << "Tidak cukup slot di penyimpanan!"<<endl;
+            try {
+                cout << "Berapa petak yang ingin dipanen (untuk keluar ketik 0): ";
+                cin >> numToHarvest;
+                if (cin.fail()||(numToHarvest != 0 && numToHarvest<0) ) {
+                    cin.clear(); 
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                    cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
+                }else if (numToHarvest == 0){
+                    throw CancelFunction(); 
+                }else if (numToHarvest > readyToHarvest[selectedType]){
+                    cout << "Jumlah hewan yang ingin dipanen tidak cukup!"<<endl;
                 }else{
-                    break;
+                    auto livestock = barn.getElement(selectedType);
+                    int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
+                    if (requiredSpace > inventory.countEmpty()) {
+                        cout << "Tidak cukup slot di penyimpanan!"<<endl;
+                    }else{
+                        break;
+                    }
                 }
-            }
+            } catch (const CancelFunction& e) {
+                cout << e.what() << endl;
+                return;  
+            }catch (const exception& e) {
+                cout << e.what() << endl;
+            } 
         }  
 
         auto livestock = barn.getElement(selectedType);
         map<string, vector<string>> harvestedLocations;
         while (numToHarvest > 0) {
             string location;
-            cout << "Pilih lokasi petak yang akan dipanen (misal: A1): ";
+            cout << "Pilih lokasi petak yang akan dipanen : ";
             cin >> location;
             auto livestock = barn.getElement(location);
             if (livestock && livestock->getCode() == selectedType && livestock->isReadyToHarvest()) {
