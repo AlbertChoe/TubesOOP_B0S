@@ -88,7 +88,6 @@ shared_ptr<Item> Inventory::getElement(string location)
         return this->inventory.get(location);
     }
     return nullptr;
-    
 }
 
 void Inventory::remove(string location)
@@ -115,7 +114,8 @@ int Inventory::getCountNonBuilding()
         for (int j = 0; j < col; j++)
         {
             auto item = this->inventory.get(i, j);
-            if (item != nullptr) {
+            if (item != nullptr)
+            {
                 ItemType itemtype = item->getItemType();
                 if (itemtype != ItemType::Building)
                 {
@@ -132,7 +132,8 @@ int Inventory::getCountBuilding()
     return getCountItem() - getCountNonBuilding();
 }
 
-int Inventory::getItemCountByName(string name){
+int Inventory::getItemCountByName(string name)
+{
     int count = 0;
     int row = this->inventory.getRow();
     int col = this->inventory.getCol();
@@ -141,12 +142,9 @@ int Inventory::getItemCountByName(string name){
         for (int j = 0; j < col; j++)
         {
             auto item = this->inventory.get(i, j);
-            if (item!=nullptr)
+            if (item->getName() == name)
             {
-                if (item->getName()==name)
-                {
-                    count++;
-                }
+                count++;
             }
         }
     }

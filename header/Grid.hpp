@@ -129,27 +129,60 @@ public:
         cout << title << endl;
         for (int i = 0; i < row; i++)
         {
-            for (int j = 0; j < col; j++)
+            if (i == 0)
             {
-                cout << "+-----+";
+                cout << "  ";
+                for (int j = 0; j < col; j++)
+                {
+                    cout << "   " << j << "  ";
+                }
+                cout << endl;
+                cout << "  ";
+                for (int j = 0; j < col; j++)
+                {
+                    cout << "+-----";
+                    if (j == col - 1)
+                    {
+                        cout << "+";
+                    }
+                }
+                cout << endl;
             }
 
-            cout << endl;
+            char idx = 'A' + i;
+            cout << idx << " ";
             for (int j = 0; j < col; j++)
             {
-                cout << "| ";
-                if (grid[i][j] != nullptr) {
+                if (j == 0)
+                {
+
+                    cout << "| ";
+                }
+                else
+                {
+                    cout << " ";
+                }
+                if (grid[i][j] != nullptr)
+                {
                     cout << *grid[i][j];
-                } else {
+                }
+                else
+                {
                     cout << "   ";
                 }
                 cout << " |";
             }
             cout << endl;
 
+            cout << "  ";
+
             for (int j = 0; j < col; j++)
             {
-                cout << "+-----+";
+                cout << "+-----";
+                if (j == col - 1)
+                {
+                    cout << "+";
+                }
             }
             cout << endl;
         }
