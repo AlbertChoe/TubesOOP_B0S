@@ -142,7 +142,7 @@ int Inventory::getItemCountByName(string name)
         for (int j = 0; j < col; j++)
         {
             auto item = this->inventory.get(i, j);
-            if (item->getName() == name)
+            if (item!=nullptr && item->getName() == name)
             {
                 count++;
             }
