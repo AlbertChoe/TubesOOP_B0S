@@ -40,7 +40,12 @@ ostream& operator<<(ostream& os, const MineObject& mo) {
             }
         }
     } else {
-        os << "OOO";
+        if (mo.type == "BOMB") {
+            os << "OO0";
+        } else {
+            os << "OOO";
+        }
+        // os << "OOO";
     }
     return os;
 }

@@ -27,7 +27,7 @@ void Mine::refreshMine() {
     for (int i = 0; i < MINE_SIZE; i++) {
         for (int j = 0; j < MINE_SIZE; j++) {
             auto object = mine.get(i, j);
-            if (rand() % 2 == 0) {
+            if (rand() % 10 < 7) {
                 object->setDiamond();
             } else {
                 object->setBomb();
@@ -52,8 +52,18 @@ void Mine::playMine(shared_ptr<Player>& player) {
     cout << "Hati - hati karna guldenmu bisa hilang juga!" << endl << endl;
 
     int capital;
-    cout << "Masukkan gulden yang kamu ingin gunakan untuk menambang (0 = Tidak jadi menambang): ";
-    cin >> capital;
+    while (true) {
+        cout << "Masukkan gulden yang kamu ingin gunakan untuk menambang (0 = Tidak jadi menambang): ";
+        if (cin >> capital) {
+            if (capital >= 0 && capital <= player->getGulden()) break;
+            else cout << "Masukkan jumlah yang valid (>= 0 dan <= " << player->getGulden() << ")!" << endl;
+        } else {
+            cout << "Masukkan nilai numerik yang valid!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+
     if (capital == 0) {
         return;
     }
@@ -71,7 +81,6 @@ void Mine::playMine(shared_ptr<Player>& player) {
             cout << "Masukkan petak yang ingin ditambang ('STOP' = Berhenti bermain dan ambil gulden yang terkumpul): ";
             cin >> location;
             if (location == "STOP") {
-                cout << endl;
                 break;
             }
             if (mine.isValid(location)) {
@@ -88,7 +97,7 @@ void Mine::playMine(shared_ptr<Player>& player) {
                     if (collected == 0) {
                         collected += capital * 0.5;
                     } else {
-                        collected += collected;
+                        collected += collected * 0.5;
                     }
                 }
             }
@@ -100,14 +109,21 @@ void Mine::playMine(shared_ptr<Player>& player) {
     cout << endl;
     openAllSlot();
     displayMine();
+    finalizeGame(collected, capital, tryCount, diamondCount, player);
+}
+
+void Mine::finalizeGame(int collected, int capital, int tryCount, int diamondCount, shared_ptr<Player>& player) {
     cout << "Menambang selesai: berikut seluruh petak tambang terbuka!" << endl;
     if (collected == 0) {
         cout << "Yah, kamu menambang batu yang sangat keras, menambang berhenti!" << endl
-        << "Tidak mendapat gulden apapun!" << endl;
+             << "Tidak mendapat gulden apapun!" << endl;
     } else if (tryCount == diamondCount) {
         cout << "Selamat kamu telah menambang semuanya!" << endl;
     }
-    int profit = ((collected - capital) / capital) * 100;
-    cout << "Total gulden yang didapat: " << collected << "  [P/L: " << profit << "%]" << endl;
+    int result = collected - capital;
+    float profit = ((float) result / capital) * 100;
+    cout << "Total gulden yang didapat: " << collected << "  [P/L: ";
+    cout << (result > 0 ? "+" : "") << result << " (";
+    cout << (profit > 0 ? "+" : "") << static_cast<int>(profit) << "%)]" << endl << endl;
     player->setGulden(player->getGulden() + collected);
 }

@@ -82,9 +82,18 @@ shared_ptr<Livestock> LivestockConfig::getConfig(string code) {
 }
 
 shared_ptr<Livestock> LivestockConfig::getNewPtrConfigByName(string name) {
-    for (auto& pair: config) {
+    for (const auto& pair : config) {
         if (pair.second->getName() == name) {
-            return make_shared<Livestock>(*(pair.second));
+            if (pair.second->getType() == "HERBIVORE") {
+                auto herb = dynamic_pointer_cast<Herbivore>(pair.second);
+                if (herb) return make_shared<Herbivore>(*herb);
+            } else if (pair.second->getType() == "CARNIVORE") {
+                auto carn = dynamic_pointer_cast<Carnivore>(pair.second);
+                if (carn) return make_shared<Carnivore>(*carn);
+            } else if (pair.second->getType() == "OMNIVORE") {
+                auto omn = dynamic_pointer_cast<Omnivore>(pair.second);
+                if (omn) return make_shared<Omnivore>(*omn);
+            }
         }
     }
     return nullptr;

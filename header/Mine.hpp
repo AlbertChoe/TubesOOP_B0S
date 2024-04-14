@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "Grid.hpp"
 #include <cstdlib>
+#include <limits>
 #include <iostream>
 using namespace std;
 
@@ -19,6 +20,7 @@ public:
     void refreshMine();
     void openAllSlot();
     int countDiamond();
+    void finalizeGame(int collected, int capital, int tryCount, int diamondCount, shared_ptr<Player>& player);
     void playMine(shared_ptr<Player>& player);
 };
 
