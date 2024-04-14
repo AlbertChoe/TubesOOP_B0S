@@ -69,11 +69,11 @@ void Mine::playMine(shared_ptr<Player>& player) {
             cout << "> Gulden yang telah terkumpul: " << collected << " [Modal: " << capital << "]" << endl;
             string location;
             cout << "Masukkan petak yang ingin ditambang ('STOP' = Berhenti bermain dan ambil gulden yang terkumpul): ";
+            cin >> location;
             if (location == "STOP") {
                 cout << endl;
                 break;
             }
-            cin >> location;
             if (mine.isValid(location)) {
                 auto object = mine.get(location);
                 if (object->isOpened()) {
@@ -88,7 +88,7 @@ void Mine::playMine(shared_ptr<Player>& player) {
                     if (collected == 0) {
                         collected += capital * 0.5;
                     } else {
-                        collected += collected * 0.5;
+                        collected += collected;
                     }
                 }
             }
@@ -107,6 +107,7 @@ void Mine::playMine(shared_ptr<Player>& player) {
     } else if (tryCount == diamondCount) {
         cout << "Selamat kamu telah menambang semuanya!" << endl;
     }
-    cout << "Total gulden yang didapat: " << collected << endl;
+    int profit = ((collected - capital) / capital) * 100;
+    cout << "Total gulden yang didapat: " << collected << "  [P/L: " << profit << "%]" << endl;
     player->setGulden(player->getGulden() + collected);
 }

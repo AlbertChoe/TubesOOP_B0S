@@ -140,3 +140,7 @@ shared_ptr<Building> BuildingConfig::getNewPtrConfigByName(string name) {
     }
     return nullptr;
 }
+
+map<string, Building> BuildingConfig::getConfigMap() {
+    return this->config;
+};

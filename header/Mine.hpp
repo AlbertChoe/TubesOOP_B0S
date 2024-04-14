@@ -8,7 +8,7 @@
 #include <iostream>
 using namespace std;
 
-#define MINE_SIZE 14
+#define MINE_SIZE 7
 
 class Mine {
 private:

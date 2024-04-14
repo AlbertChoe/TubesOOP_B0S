@@ -258,18 +258,20 @@ void Game::start() {
     string fileLocation;
     if (input == "y") {
         while (true) {
-            cout << "Masukkan lokasi berkas state : ";
+            cout << "Masukkan lokasi berkas state (0 = Tidak jadi) : ";
             cin >> fileLocation;
+            if (fileLocation == "0") {
+                break;
+            } 
             try {
                 loadGameState(fileLocation);
-                break;
+                return;
             } catch (const exception& e) {
                 cout << e.what() << endl;
             }
         }
-    } else {
-        newGame();
     }
+    newGame();
 }
 
 bool Game::isWinCondition() {
@@ -361,7 +363,7 @@ void Game::loadGameState(string fileLocation) {
     players.clear();
     ifstream saveFile(fileLocation);
     if (!saveFile) {
-        throw FailToLoadException("state.txt");
+        throw FailToLoadException(fileLocation);
     }
     int n;
     saveFile >> n;
@@ -549,7 +551,10 @@ void Game::saveGameState() {
 void Game::printPlayers() {
     cout << endl << "Total " << players.size() << " Pemain:" << endl;
     for (int i = 0; i < (int) players.size(); i++) {
-        cout << i + 1 << ". Username: " << players[i]->getName() << " | Role: ";
+        cout << i + 1 << ". Username: " << players[i]->getName() 
+        << " | Gulden: " << players[i]->getGulden() 
+        << " | Weight: " << players[i]->getWeight()
+        << " | Role: ";
         if (players[i]->getType() == PlayerType::Mayor) {
             cout << "Walikota";
         } else if (players[i]->getType() == PlayerType::Farmer) {

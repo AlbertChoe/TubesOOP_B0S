@@ -85,6 +85,7 @@ public:
     void addBuildingConfig(string code, Building config);
     Building getConfig(string code);
     shared_ptr<Building> getNewPtrConfigByName(string name);
+    map<string, Building> getConfigMap();
 };
 
 
