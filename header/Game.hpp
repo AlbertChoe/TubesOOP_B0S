@@ -9,6 +9,7 @@
 #include "Breeder.hpp"
 #include "Exception.hpp"
 #include "Utils.hpp"
+#include "Mine.hpp"
 #include <fstream>
 #include <sstream>
 #include <filesystem>
@@ -27,6 +28,7 @@ private:
     ConsumableConfig consumableConfig;
     BuildingConfig buildingConfig;
     Store store;
+    Mine mine;
     vector<shared_ptr<Player>> players;
     int currentPlayer;
 public:

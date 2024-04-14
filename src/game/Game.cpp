@@ -337,6 +337,8 @@ void Game::handleInput() {
                 mayor->addNewPlayer(players, currentPlayer, gameConfig);
             } else if (input == "CETAK_PEMAIN") {
                 printPlayers();
+            } else if (input == "TAMBANG") {
+                mine.playMine(current);
             } else {
                 throw WrongUserInputException();
             }
