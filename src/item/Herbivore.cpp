@@ -13,7 +13,7 @@ Herbivore::Herbivore(const Herbivore& herbivore): Livestock::Livestock(herbivore
 
 void Herbivore::eat(Consumable food){
     if(food.getType() == "PRODUCT_FRUIT_PLANT"){
-        Livestock::eat(food.getAddedWeight());
+        addCurrentWeight(food.getAddedWeight());
     }
     else if (food.getType() == "PRODUCT_MATERIAL_PLANT"){
         throw EatMaterialException();

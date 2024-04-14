@@ -2,6 +2,9 @@
 #define BREEDER_HPP
 
 #include "Barn.hpp"
+#include "Omnivore.hpp" 
+#include "Herbivore.hpp" 
+#include "Carnivore.hpp" 
 #include "Player.hpp"
 #include <iostream>
 #include <map>

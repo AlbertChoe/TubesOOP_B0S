@@ -33,7 +33,11 @@ public:
     void setHarvestResult(vector<Consumable>& harvestResult);
     void addHarvestResult(Consumable result);
     // Eat Mechanism
-    void eat(int weight);
+    void addCurrentWeight(int weight) {
+        this->setCurrentWeight(this->getCurrentWeight() + weight);
+    }
+    virtual void eat(Consumable food) = 0;
+    // virtual std::shared_ptr<Livestock> clone() const = 0;
     // Add new harvest results
     // vector<Consumable> harvest(Consumable newHarvestResult);
     // Display livestock code. Red if unfinished, Green if finished

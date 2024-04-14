@@ -19,10 +19,8 @@ void Breeder::addLivestock()
         cout << "Pilih hewan dari penyimpanan : ";
         cin >> selectedLocation;
         auto selectedAnimal = inventory.getItem(selectedLocation);
-
         auto livestock = dynamic_pointer_cast<Livestock>(selectedAnimal);
-        if (!livestock)
-        {
+        if (!livestock) {
             throw InvalidTypeException();
         }
 
@@ -57,13 +55,20 @@ void Breeder::addLivestock()
                 cout << e.what() << endl;
             }
         }
-
-        auto livestockClone = make_shared<Livestock>(*livestock);
-
-        barn.addLivestock(livestockClone, barnLocation);
+        if (auto herb = dynamic_pointer_cast<Herbivore>(selectedAnimal)) {
+            barn.addLivestock(herb, barnLocation);
+        } else if (auto carn = dynamic_pointer_cast<Carnivore>(selectedAnimal)) {
+            barn.addLivestock(carn, barnLocation);
+        } else if (auto omni = dynamic_pointer_cast<Omnivore>(selectedAnimal)) {
+            barn.addLivestock(omni, barnLocation);
+        } else {
+            throw InvalidTypeException();
+        }
+        // auto livestockClone = livestock->clone();
+        // barn.addLivestock(livestockClone, barnLocation);
         inventory.removeItem(selectedLocation);
-        cout << "Dengan hati-hati, kamu meletakkan seekor " << livestock->getName() << " di kandang." << endl;
-        cout << livestock->getName() << " telah menjadi peliharaanmu sekarang!" << endl;
+        cout << "Dengan hati-hati, kamu meletakkan seekor " << selectedAnimal->getName() << " di kandang." << endl;
+        cout << selectedAnimal->getName() << " telah menjadi peliharaanmu sekarang!" << endl;
     }
     catch (const exception &e)
     {
@@ -84,6 +89,12 @@ void Breeder::feedLivestock()
         string location;
         cout << "Pilih petak kandang: ";
         cin >> location;
+        if (barn.getElement(location)->getType() == "HERBIVORE") {
+            auto herb = dynamic_pointer_cast<Herbivore>(barn.getElement(location));
+            if (!herb) {
+                cout << "Casting ke Herbivore gagal, objek bukan Herbivore!\n";
+            }
+        }
         auto livestock = dynamic_pointer_cast<Livestock>(barn.getElement(location));
         if (livestock == nullptr)
         {
@@ -94,7 +105,6 @@ void Breeder::feedLivestock()
             throw InvalidTypeException();
         }
         cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\n";
-
         displayInventory();
         string slot;
         while (true)
@@ -111,7 +121,29 @@ void Breeder::feedLivestock()
                 auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
                 if (food)
                 {
-                    break;
+                    if (livestock->getType() == "HERBIVORE") {
+                        cout << "Masuk sini 1  "<<livestock->getType()<<"   \n ";
+                        auto herb = dynamic_pointer_cast<Herbivore>(livestock);
+                        if (!herb) {
+                            cout << "Casting ke Herbivore gagal, objek bukan Herbivore!\n";
+                            continue;
+                        }
+                        livestock->eat(*food);
+                        cout << "Masuk sini 2\n";
+                        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
+                        inventory.removeItem(slot);
+                        break;
+                    } else if (livestock->getType() == "CARNIVORE") {
+                        dynamic_pointer_cast<Carnivore>(livestock)->eat(*food);
+                        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
+                        inventory.removeItem(slot);
+                        break;
+                    } else if (livestock->getType() == "OMNIVORE") {
+                        dynamic_pointer_cast<Omnivore>(livestock)->eat(*food);
+                        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
+                        inventory.removeItem(slot);
+                        break;
+                    }
                 }
                 else
                 {
@@ -128,11 +160,6 @@ void Breeder::feedLivestock()
                 cout << e.what() << endl;
             }
         }
-
-        auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
-        livestock->eat(food->getAddedWeight());
-        cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
-        inventory.removeItem(slot);
     }
     catch (const exception &e)
     {
