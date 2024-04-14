@@ -81,7 +81,19 @@ public:
             {
                 throw InvalidRow();
             }
-            int col = stoi(location.substr(1)) - 1;
+            int col;
+            try
+            {
+                col = stoi(location.substr(1)) - 1;
+            }
+            catch (const std::invalid_argument &e)
+            {
+                throw InvalidIndex();
+            }
+            catch (const std::out_of_range &e)
+            {
+                throw InvalidIndex();
+            }
             if (col < 0)
             {
                 throw InvalidCol();
@@ -134,7 +146,7 @@ public:
                 cout << "  ";
                 for (int j = 0; j < col; j++)
                 {
-                    cout << "   " << j << "  ";
+                    cout << "   " << j + 1 << "  ";
                 }
                 cout << endl;
                 cout << "  ";
