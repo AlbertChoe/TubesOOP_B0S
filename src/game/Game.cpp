@@ -355,9 +355,9 @@ void Game::debugPrint() {
     cout << "Barn Size: " << gameConfig.getBarnRow() << " x " << gameConfig.getBarnCol() << endl;
 }
 
-void Game::loadGameState(string filelocation) {
+void Game::loadGameState(string fileLocation) {
     players.clear();
-    ifstream saveFile(filelocation);
+    ifstream saveFile(fileLocation);
     if (!saveFile) {
         throw FailToLoadException("state.txt");
     }
@@ -467,7 +467,44 @@ void Game::loadGameState(string filelocation) {
 }
 
 void Game::saveGameState() {
+    string fileLocation;
+    cout <<  "Masukkan lokasi berkas state : ";
+    cin >> fileLocation;
+    
+    fs::path path_obj(fileLocation);
+    fs::path dir_path = path_obj.parent_path();
 
+    if (!fs::exists(dir_path)) {
+        cout << "Lokasi berkas tidak valid!" << endl;
+        return;
+    }
+
+    if (!fs::is_directory(dir_path)) {
+        cout << "Lokasi berkas tidak valid!" << endl;
+        return;
+    }
+
+    ofstream saveFile(fileLocation);
+    if (!saveFile.is_open()) {
+        cout << "Failed to open file for writing.\n";
+        return;
+    }
+
+    saveFile << players.size() << endl;
+    for (int i = 0 ; i < players.size(); i++) {
+        saveFile << players[i]->getName();
+        if (players[i]->getType() == PlayerType::Breeder) {
+            saveFile << "Peternak" << players[i]->getWeight() << players[i]->getGulden() << endl;
+            auto breeder = dynamic_cast<Breeder*>(players[i].get());
+            saveFile << breeder->getRefInventory().getCountItem() << endl;
+        } else if (players[i]->getType() == PlayerType::Farmer) {
+            saveFile << "Petani" << players[i]->getWeight() << players[i]->getGulden() << endl;
+            auto breeder = dynamic_cast<Farmer*>(players[i].get());
+        } else {
+            saveFile << "Walikota" << players[i]->getWeight() << players[i]->getGulden() << endl;
+            auto mayor = players[i];
+        }
+    }
 }
 
 void Game::printPlayers() {
