@@ -29,7 +29,7 @@ public:
     int getCountItem();
     int getCountBuilding();
     int getItemCountByName(string name);
-    vector<string> GetAllItemName();
+    vector<string> getAllItemName();
 };
 
 #endif

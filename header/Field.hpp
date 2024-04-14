@@ -3,6 +3,7 @@
 
 #include "Grid.hpp"
 #include "Crop.hpp"
+#include "Utils.hpp"
 #include <iostream>
 using namespace std;
 
@@ -25,6 +26,7 @@ public:
     shared_ptr<Crop> getElement(string location);
     map<string, int> countReadyToHarvest();
     void remove(string location);
+    vector<vector<string>> Field::getallDetail();
 };
 
 #endif

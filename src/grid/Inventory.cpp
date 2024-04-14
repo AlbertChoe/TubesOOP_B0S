@@ -151,7 +151,7 @@ int Inventory::getItemCountByName(string name)
     return count;
 }
 
-vector<string> Inventory::GetAllItemName()
+vector<string> Inventory::getAllItemName()
 {
     int row = inventory.getRow();
     int col = inventory.getCol();

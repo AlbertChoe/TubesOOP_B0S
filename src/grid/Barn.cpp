@@ -62,7 +62,7 @@ void Barn::display()
     // print element location
     int row = barn.getRow();
     int col = barn.getCol();
-    
+
     for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
@@ -71,8 +71,8 @@ void Barn::display()
             if (data != nullptr)
             {
                 char r = i + 'A';
-                cout << r ;
-                cout << setfill('0') << setw(2) << j+1;
+                cout << r;
+                cout << setfill('0') << setw(2) << j + 1;
                 cout << " : " << data->getName() << endl;
             }
         }
@@ -154,4 +154,35 @@ void Barn::remove(string location)
         this->barn.remove(location);
     }
     return;
+}
+
+vector<vector<string>> Barn::getallDetail()
+{
+    int row = barn.getRow();
+    int col = barn.getCol();
+    vector<vector<string>> listData;
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            vector<string> detail;
+            auto data = this->barn.get(i, j);
+            if (data != nullptr)
+            {
+                char r = i + 'A';
+                string loc;
+                loc += r;
+                if (j + 1 < 10)
+                {
+                    loc += '0';
+                }
+                loc += Utils::intToString(i + 1);
+                detail.push_back(loc);
+                detail.push_back(data->getName());
+                string weight = Utils::intToString(data->getCurrentWeight());
+                detail.push_back(weight);
+            }
+            listData.push_back(detail);
+        }
+    }
 }

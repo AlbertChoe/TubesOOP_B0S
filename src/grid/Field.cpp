@@ -13,7 +13,8 @@ void Field::incrementAllCropDuration()
         for (int j = 0; j < col; j++)
         {
             auto data = this->field.get(i, j);
-            if (data != nullptr) {
+            if (data != nullptr)
+            {
                 data->incrementDuration();
             }
         }
@@ -80,7 +81,7 @@ void Field::display()
             {
                 char r = i + 'A';
                 cout << r;
-                cout << setfill('0') << setw(2) << j+1;
+                cout << setfill('0') << setw(2) << j + 1;
                 cout << " : " << data->getName() << endl;
             }
         }
@@ -161,4 +162,35 @@ void Field::remove(string location)
         this->field.remove(location);
     }
     return;
+}
+
+vector<vector<string>> Field::getallDetail()
+{
+    int row = field.getRow();
+    int col = field.getCol();
+    vector<vector<string>> listData;
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            vector<string> detail;
+            auto data = this->field.get(i, j);
+            if (data != nullptr)
+            {
+                char r = i + 'A';
+                string loc;
+                loc += r;
+                if (j + 1 < 10)
+                {
+                    loc += '0';
+                }
+                loc += Utils::intToString(i + 1);
+                detail.push_back(loc);
+                detail.push_back(data->getName());
+                string weight = Utils::intToString(data->getCurrentDuration());
+                detail.push_back(weight);
+            }
+            listData.push_back(detail);
+        }
+    }
 }
