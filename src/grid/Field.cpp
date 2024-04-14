@@ -189,8 +189,8 @@ vector<vector<string>> Field::getAllDetail()
                 detail.push_back(data->getName());
                 string weight = Utils::intToString(data->getCurrentDuration());
                 detail.push_back(weight);
+                listData.push_back(detail);
             }
-            listData.push_back(detail);
         }
     }
     return listData;
