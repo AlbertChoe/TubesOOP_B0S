@@ -114,6 +114,10 @@ void Store::buyTransaction(shared_ptr<Player> player) {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
+        if (num == 0) {
+            cout << "Tidak jadi membeli barang!" << endl;
+            return;
+        }
         if (player->getType() == PlayerType::Mayor && getItem(getCodeByOrderNum(num))->getItemType() == ItemType::Building) {
             cout << "Mayor tidak dapat membeli bangunan!" << endl;
             continue;
@@ -121,10 +125,6 @@ void Store::buyTransaction(shared_ptr<Player> player) {
         break;
     }
 
-    if (num == 0) {
-        cout << "Tidak jadi membeli barang!" << endl;
-        return;
-    }
 
     string code = getCodeByOrderNum(num);
 
@@ -160,15 +160,15 @@ void Store::buyTransaction(shared_ptr<Player> player) {
                 continue;
             }
             inven.addItem(getItem(code), slot);
-            setQuantity(code, getQuantity(code) - quantity);
             success++;
         } catch (const exception& e) {
             cout << e.what() << endl;
         }
 
     }
-    refreshStore();
     cout << getItem(code)->getName() << " berhasil disimpan dalam penyimpanan!" << endl;
+    setQuantity(code, getQuantity(code) - quantity);
+    refreshStore();
 }
 
 void Store::sellTransaction(shared_ptr<Player> player) {
