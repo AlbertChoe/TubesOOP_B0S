@@ -194,4 +194,10 @@ class ConfigNotFound: public exception {
     }
 };
 
+class CancelFunction: public exception {
+    const char *what() const throw() {
+        return "Mengcancel perintah yang baru dipanggil!";
+    }
+};
+
 #endif

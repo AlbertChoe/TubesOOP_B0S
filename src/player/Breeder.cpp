@@ -22,14 +22,21 @@ void Breeder::addLivestock() {
             throw InvalidTypeException();
         }
         
-        barn.display();
-        cout << "Pilih petak tanah yang akan ditinggali : ";
-        string barnLocation;
-        cin >> barnLocation;
 
-        if ( !barn.isEmpty(barnLocation) ) { 
-            throw FullSlotException();
+        barn.display();
+        string barnLocation;
+        while (true) {
+            cout << "Pilih petak tanah yang akan ditinggali (untuk keluar ketik 'KELUAR'): ";
+            cin >> barnLocation;
+            if ( barn.isEmpty(barnLocation) ) {
+                break;
+            }else if (barnLocation == "KELUAR"){
+                throw CancelFunction();
+            }else{
+                cout << "Petak tanah yang anda pilih sudah penuh"<<endl;
+            }
         }
+
 
         auto livestockClone = make_shared<Livestock>(*livestock);
 
@@ -58,17 +65,23 @@ void Breeder::feedLivestock() {
             throw InvalidTypeException();
         }
         cout << "Kamu memilih " << livestock->getName() << " untuk diberi makan.\nPilih pangan yang akan diberikan: ";
-        cout << "Pilih pangan yang akan diberikan: ";
 
         displayInventory();
         string slot;
-        cin >> slot;
-        auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
-
-        if (!food) {
-            throw InvalidTypeException();
+        while (true) {
+            cout << "Pilih pangan yang akan diberikan (untuk keluar ketik 'KELUAR'): ";
+            cin >> slot;
+            auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
+            if (food) {
+                break;
+            }else if (slot == "KELUAR"){
+                throw CancelFunction();
+            }else{
+                cout << "Barang yang anda pilih dari penyimpanan bukan makanan"<<endl;
+            }
         }
-
+            
+        auto food = dynamic_pointer_cast<Consumable>(inventory.getItem(slot));
         livestock->eat(food->getAddedWeight());
         cout << livestock->getName() << " berhasil diberi makan dan beratnya menjadi " << livestock->getCurrentWeight() << endl;
         inventory.removeItem(slot);
@@ -99,37 +112,48 @@ void Breeder::harvestLivestock() {
         }
 
         int choice;
-        cout << "Pilih Nomor hewan yang ingin dipanen: ";
-        cin >> choice;
-        if (cin.fail() || choice < 1 || choice > (int) harvestOptions.size()) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
-        }
-
-        if (harvestOptions.find(choice) == harvestOptions.end()) {
-            throw WrongInputException();
-        }
+        while (true) {
+            cout << "Pilih Nomor hewan yang ingin dipanen (untuk keluar ketik 0): ";
+            cin >> choice;
+            if (cin.fail() ||choice != 0 && choice<0 || choice > (int) harvestOptions.size()) {
+                cin.clear(); 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
+            }else if (choice == 0){
+                throw CancelFunction(); 
+            }
+            else if (harvestOptions.find(choice) == harvestOptions.end()){
+                cout << "Input tidak sesuai!";
+            }else{
+                break;
+            }
+        }      
 
         string selectedType = harvestOptions[choice];
         int numToHarvest;
-        cout << "Berapa petak yang ingin dipanen: ";
-        cin >> numToHarvest;
-        if (cin.fail() || choice < 1 ) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
-        }
-        if (numToHarvest > readyToHarvest[selectedType]) {
-            throw NotEnoughToHarvestException();
-        }
+        while (true) {
+            cout << "Berapa petak yang ingin dipanen (untuk keluar ketik 0): ";
+            cin >> numToHarvest;
+            if (cin.fail()||choice != 0 && choice<0 ) {
+                cin.clear(); 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
+            }else if (choice == 0){
+                throw CancelFunction(); 
+            }else if (numToHarvest > readyToHarvest[selectedType]){
+                cout << "Jumlah hewan yang ingin dipanen tidak cukup!"<<endl;
+            }else{
+                auto livestock = barn.getElement(selectedType);
+                int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
+                if (requiredSpace > inventory.countEmpty()) {
+                    cout << "Tidak cukup slot di penyimpanan!"<<endl;
+                }else{
+                    break;
+                }
+            }
+        }  
 
         auto livestock = barn.getElement(selectedType);
-        int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
-        if (requiredSpace > inventory.countEmpty()) {
-            throw NotEnoughInventoryException();
-        }
-
         map<string, vector<string>> harvestedLocations;
         while (numToHarvest > 0) {
             string location;

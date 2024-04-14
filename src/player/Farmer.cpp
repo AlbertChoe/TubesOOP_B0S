@@ -26,19 +26,25 @@ void Farmer::plantCrop() {
         cout <<"Kamu memilih "<< item->getName() <<"."<< endl;
 
         field.display();
-        cout << "Pilih petak tanah yang akan ditanami:" << endl;
         string location;
-        cout << "Petak tanah: ";
-        cin >> location;
-
-        if (!field.isEmpty(location)) {
-            throw FullSlotException();
+        while (true) {
+            cout << "Pilih petak tanah yang akan ditinggali (untuk keluar ketik 'KELUAR'): ";
+            cin >> location;
+            if ( field.isEmpty(location) ) {
+                auto cropItem = dynamic_pointer_cast<Crop>(item);
+                if (!cropItem) {
+                    cout<<"Tipe yang dipilih salah!";  
+                }else{
+                    break;
+                }
+            }else if (location == "KELUAR"){
+                throw CancelFunction();
+            }else{
+                cout << "Petak tanah yang anda pilih sudah penuh"<<endl;
+            }
         }
+
         auto cropItem = dynamic_pointer_cast<Crop>(item);
-        if (!cropItem) {
-            throw InvalidTypeException();  
-        }
-
         auto clonedCrop = make_shared<Crop>(*cropItem);
         field.addCrop(clonedCrop, location);
         inventory.removeItem(locationInventory);
@@ -72,34 +78,44 @@ void Farmer::harvestCrop() {
         }
 
         int choice;
-        cout << "Nomor tanaman yang ingin dipanen: ";
-        cin >> choice;
-        if (cin.fail() || choice < 1 || choice > (int) harvestOptions.size()) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
-        }
-
-        if (harvestOptions.find(choice) == harvestOptions.end()) {
-            throw WrongInputException();
-        }
+        while (true) {
+            cout << "Nomor tanaman yang ingin dipanen (untuk keluar ketik 0): ";
+            cin >> choice;
+            if (cin.fail() ||choice != 0 && choice<0||  choice > (int) harvestOptions.size()) {
+                cin.clear(); 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
+            }else if (choice == 0){
+                throw CancelFunction(); 
+            }
+            else if (harvestOptions.find(choice) == harvestOptions.end()){
+                cout << "Input tidak sesuai!";
+            }else{
+                break;
+            }
+        }  
 
         string selectedType = harvestOptions[choice];
         int numToHarvest;
-        cout << "Berapa petak yang ingin dipanen: ";
-        cin >> numToHarvest;
-        if (cin.fail() || choice < 1 ) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-            throw invalid_argument("Input tidak valid. Harap masukkan nomor yang benar.");
-        }
-
-        if (numToHarvest > readyToHarvest[selectedType]) {
-            throw NotEnoughToHarvestException();
-        }
-        if (numToHarvest > inventory.countEmpty()) {
-            throw NotEnoughInventoryException();
-        }
+        while (true) {
+            cout << "Berapa petak yang ingin dipanen (untuk keluar ketik 0): ";
+            cin >> numToHarvest;
+            if (cin.fail()||choice != 0 && choice<0 ) {
+                cin.clear(); 
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                cout<<"Input tidak valid. Harap masukkan nomor yang benar."<<endl;
+            }else if (choice == 0){
+                throw CancelFunction(); 
+            }else if (numToHarvest > readyToHarvest[selectedType]){
+                cout << "Jumlah hewan yang ingin dipanen tidak cukup!"<<endl;
+            }else{
+                if (numToHarvest > inventory.countEmpty()){
+                    cout << "Tidak cukup slot di penyimpanan!"<<endl;
+                }else{
+                    break;
+                }
+            }
+        } 
 
         map<string, vector<string>> harvestedLocations;
         while (numToHarvest > 0) {
