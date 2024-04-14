@@ -24,7 +24,7 @@ public:
     bool isEmpty(string location);
     bool isFull();
     shared_ptr<Livestock> getElement(string location);
-    map<string, int> countReadyToHarvest();
+    map<string, pair<int, string>> countReadyToHarvest();
     void remove(string location);
     vector<vector<string>> getAllDetail();
 };

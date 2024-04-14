@@ -184,7 +184,7 @@ vector<vector<string>> Field::getAllDetail()
                 {
                     loc += '0';
                 }
-                loc += Utils::intToString(i + 1);
+                loc += Utils::intToString(j + 1);
                 detail.push_back(loc);
                 detail.push_back(data->getName());
                 string weight = Utils::intToString(data->getCurrentDuration());
