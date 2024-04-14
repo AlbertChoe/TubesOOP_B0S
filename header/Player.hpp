@@ -28,6 +28,7 @@ public:
     Inventory& getRefInventory();
     void setName(string _name);
     void setGulden(int gulden);
+    void setWeight(int weight);
     void eat();
     void displayInventory();
     virtual PlayerType getType() = 0;

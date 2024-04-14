@@ -137,3 +137,8 @@ Inventory &Player::getRefInventory()
 {
     return this->inventory;
 }
+
+void Player::setWeight(int weight) 
+{
+    this->weight = weight;
+}

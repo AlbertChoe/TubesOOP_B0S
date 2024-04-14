@@ -397,6 +397,8 @@ void Game::loadGameState(string fileLocation) {
                 player->getRefField().addCrop(crop, location);
                 cout << "DEBUG>> Success cr:" << i + 1 << endl;
             }
+            player->setGulden(gulden);
+            player->setWeight(weight);
             Utils::addNewPlayer(players, currentPlayer, player);
         } else if (role == "Peternak") {
             auto player = make_shared<Breeder>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
@@ -427,6 +429,8 @@ void Game::loadGameState(string fileLocation) {
                 player->getRefBarn().addLivestock(livestock, location);
                 cout << "DEBUG>> Success ls:" << i + 1 << endl;
             }
+            player->setGulden(gulden);
+            player->setWeight(weight);
             Utils::addNewPlayer(players, currentPlayer, player);
         } else if (role == "Walikota") {
             auto player = make_shared<Mayor>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol());
@@ -446,6 +450,8 @@ void Game::loadGameState(string fileLocation) {
                 player->getRefInventory().addItem(item);
                 cout << "DEBUG>> success in:" << i + 1 << endl;
             }
+            player->setGulden(gulden);
+            player->setWeight(weight);
             Utils::addNewPlayer(players, currentPlayer, player);
         } else {
             throw FailToLoadException("state.txt");
@@ -468,7 +474,7 @@ void Game::loadGameState(string fileLocation) {
 
 void Game::saveGameState() {
     string fileLocation;
-    cout <<  "Masukkan lokasi berkas state : ";
+    cout << endl << "Masukkan lokasi berkas state : ";
     cin >> fileLocation;
     
     fs::path path_obj(fileLocation);
@@ -486,26 +492,26 @@ void Game::saveGameState() {
 
     ofstream saveFile(fileLocation);
     if (!saveFile.is_open()) {
-        cout << "Failed to open file for writing.\n";
+        cout << "Gagal menyimpan!" << endl;
         return;
     }
 
     saveFile << players.size() << endl;
     for (int i = 0 ; i < (int) players.size(); i++) {
-        saveFile << players[i]->getName();
+        saveFile << players[i]->getName() << " ";
         if (players[i]->getType() == PlayerType::Breeder) {
-            saveFile << "Peternak";
+            saveFile << "Peternak" << " ";
         } else if (players[i]->getType() == PlayerType::Farmer) {
-            saveFile << "Petani";
+            saveFile << "Petani" << " ";
         } else {
-            saveFile << "Walikota";
+            saveFile << "Walikota" << " ";
         }
-        saveFile << players[i]->getWeight() << players[i]->getGulden() << endl;
+        saveFile << players[i]->getWeight() << " " << players[i]->getGulden() << endl;
         auto inven = players[i]->getRefInventory();
         auto invenItem = inven.getAllItemName();
         saveFile << invenItem.size() << endl;
         for (int j = 0; j < (int) invenItem.size(); j++) {
-            saveFile << invenItem[i] << endl;
+            saveFile << invenItem[j] << endl;
         } 
 
         if (players[i]->getType() == PlayerType::Breeder) {
@@ -513,14 +519,14 @@ void Game::saveGameState() {
             auto livestocks = breeder->getRefBarn().getAllDetail();
             saveFile << livestocks.size() << endl;
             for (int k = 0; k < (int) livestocks.size(); k++) {
-                saveFile << livestocks[k][0] << livestocks[k][1] << livestocks[k][2] << endl;
+                saveFile << livestocks[k][0] << " " << livestocks[k][1] << " " << livestocks[k][2] << endl;
             }
         } else if (players[i]->getType() == PlayerType::Farmer) {
             auto breeder = dynamic_cast<Farmer*>(players[i].get());
             auto crops = breeder->getRefField().getAllDetail();
             saveFile << crops.size() << endl;
             for (int k = 0; k < (int) crops.size(); k++) {
-                saveFile << crops[k][0] << crops[k][1] << crops[k][2] << endl;
+                saveFile << crops[k][0] << " " << crops[k][1] << " " <<  crops[k][2] << endl;
             }
         }
     }
@@ -528,9 +534,13 @@ void Game::saveGameState() {
     auto storeState = store.getNonCropAndLivestockItems();
     saveFile << storeState.size() << endl;
     for (int i = 0; i < (int) storeState.size(); i++) {
-        saveFile << storeState[i].first << storeState[i].second << endl;
+        saveFile << storeState[i].first << " " << storeState[i].second;
+        if (i != (int) storeState.size() - 1) {
+            saveFile << endl;
+        }
     }
 
+    cout << "State berhasil disimpan dalam file " << fileLocation << "!" << endl << endl;
     saveFile.close();
 }
 
