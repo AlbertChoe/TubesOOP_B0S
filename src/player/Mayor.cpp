@@ -64,6 +64,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>> &players, int &currentPlayer
             Utils::addNewPlayer(players, currentPlayerIndex, newFarmer);
         }
         this->gulden -= 50;
+        cout<<endl<<"Pemain baru ditambahkan!"<<endl<<"Selamat datang “harvest moon” di kota ini!"<<endl;
     }
     catch (const exception &e)
     {
@@ -112,13 +113,34 @@ void Mayor::buildBuilding(BuildingConfig recipe)
     while (!valid)
     {
         string tipebangunan;
-        cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
-        cout << "   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)" << endl;
-        cout << "   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)" << endl;
-        cout << "   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)" << endl;
-        cout << "   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)" << endl;
-        cout << endl;
-        cout << "Bangunan yang ingin dibangun: ";
+
+        // cout << "Resep bangunan yang ada adalah sebagai berikut." << endl;
+        // cout << "   1. SMALL_HOUSE (50 gulden, teak wood 1, sandal wood 1)" << endl;
+        // cout << "   2. MEDIUM_HOUSE (70 gulden, aloe wood 1, ironwood wood 1)" << endl;
+        // cout << "   3. LARGE_HOUSE (90 gulden, teak wood 2, aloe wood 1, ironwood wood 1)" << endl;
+        // cout << "   4. HOTEL (150 gulden, teak wood 3, aloe wood 4, ironwood wood 4, sandal wood 2)" << endl;
+        // cout << endl;
+        
+        auto data = recipe.getConfigMap();
+        int idx=0;
+        for (auto &pair : data){
+            cout<<"   "<<idx+1<<". "<<pair.first<<" (";
+            Building databuilding = recipe.getConfig(pair.first);
+            cout<<databuilding.getPrice()<<" gulden";
+
+            map<string, int> material = databuilding.getMaterial();
+
+            for (auto &pairmaterial : material)
+            {
+                cout<<", "<<pairmaterial.first<<" "<<pairmaterial.second;
+            }
+
+            cout<<")"<<endl;
+            
+            idx++;
+        }
+
+        cout <<endl<< "Bangunan yang ingin dibangun: ";
         cin >> tipebangunan;
 
         try
@@ -148,6 +170,17 @@ void Mayor::buildBuilding(BuildingConfig recipe)
                 gulden -= foundbuilding.getPrice();
                 auto newBuilding = make_shared<Building>(foundbuilding);
                 inventory.addItem(newBuilding);
+                // for (auto &pair : material)
+                // {
+                //     for (int i = 0; i < pair.second; i++)
+                //     {
+                        
+                //     }
+                    
+                //     pair.second -= inventory.getItemCountByName(pair.first);
+                //     accepted = false;
+                // }
+                //TODO : hapus item bangunan
                 cout << tipebangunan << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
             }
             else
