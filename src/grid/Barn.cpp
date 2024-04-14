@@ -110,9 +110,9 @@ shared_ptr<Livestock> Barn::getElement(string location)
     return nullptr;
 }
 
-map<string, int> Barn::countReadyToHarvest()
+map<string, pair<int, string>> Barn::countReadyToHarvest()
 {
-    map<string, int> readyToHarvest;
+    map<string, pair<int, string>> readyToHarvest;
     for (int i = 0; i < barn.getRow(); i++)
     {
         for (int j = 0; j < barn.getCol(); j++)
@@ -120,7 +120,16 @@ map<string, int> Barn::countReadyToHarvest()
             auto livestock = barn.get(i, j);
             if (livestock != nullptr && livestock->isReadyToHarvest())
             {
-                readyToHarvest[livestock->getCode()]++;
+                char r = i + 'A';
+                string loc;
+                loc += r;
+                if (j + 1 < 10)
+                {
+                    loc += '0';
+                }
+                loc += Utils::intToString(j + 1);
+                readyToHarvest[livestock->getCode()].first++;
+                readyToHarvest[livestock->getCode()].second = loc;
             }
         }
     }
@@ -176,7 +185,7 @@ vector<vector<string>> Barn::getAllDetail()
                 {
                     loc += '0';
                 }
-                loc += Utils::intToString(i + 1);
+                loc += Utils::intToString(j + 1);
                 detail.push_back(loc);
                 detail.push_back(data->getName());
                 string weight = Utils::intToString(data->getCurrentWeight());
