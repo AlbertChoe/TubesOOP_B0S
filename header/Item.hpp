@@ -6,20 +6,23 @@
 #include <memory>
 using namespace std;
 
-enum class ItemType {
+enum class ItemType
+{
     Building,
     Consumable,
     Crop,
     Livestock
 };
 
-class Item {
+class Item
+{
 protected:
     int id;
     string code;
     string name;
     string type;
     int price;
+
 public:
     // Constructor
     Item();
@@ -28,7 +31,7 @@ public:
     // Destructor
     ~Item();
     // Copy Constructor
-    Item(const Item& other);
+    Item(const Item &other);
     // Check if item is empty
     bool isEmpty();
     // Getter
@@ -45,7 +48,8 @@ public:
     void setPrice(int price);
     virtual ItemType getItemType() = 0;
     // Display item code in black
-    friend ostream& operator<<(ostream& os, const Item& item);
+    friend ostream &operator<<(ostream &os, const Item &item);
+    friend bool operator==(const Item &a, const Item &b);
 };
 
 #endif
