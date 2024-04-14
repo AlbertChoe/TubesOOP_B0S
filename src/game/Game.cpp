@@ -2,7 +2,6 @@
 
 Game::Game() {
     currentPlayer = 0;
-    previousPlayer = -1;
 }
 
 Game::~Game() {}
@@ -186,6 +185,7 @@ void Game::loadConfig() {
         loadCropConfig();
         loadLivestockConfig();
         loadHarvestConfig();
+        store.initStore(cropConfig, livestockConfig);
     } catch (const exception& e) {
         cout << e.what() << endl;
     }
@@ -202,7 +202,7 @@ void Game::newGame() {
     cout << "Masukkan username untuk player Walikota baru: ";
     cin >> username;
     newMayor->setName(username);
-    Utils::addNewPlayer(players, newMayor);
+    Utils::addNewPlayer(players, currentPlayer, newMayor);
     
     while (true) {
         cout << "Masukkan username untuk player Peternak baru: ";
@@ -214,7 +214,7 @@ void Game::newGame() {
             break;
         };
     }
-    Utils::addNewPlayer(players, newBreeder);
+    Utils::addNewPlayer(players, currentPlayer, newBreeder);
     
     while (true) {
         cout << "Masukkan username untuk player Petani baru: ";
@@ -226,28 +226,20 @@ void Game::newGame() {
             break;
         };
     }
-    Utils::addNewPlayer(players, newFarmer);
-
-    store.initStore(cropConfig, livestockConfig);
+    Utils::addNewPlayer(players, currentPlayer, newFarmer);
 
     cout << "Seluruh player telah berhasil terdaftar, selamat bermain!" << endl;
 }
 
 void Game::nextPlayer() {
-    previousPlayer = currentPlayer;
     currentPlayer = (currentPlayer + 1) % players.size();
-    if (previousPlayer != -1) {
-        if (players[currentPlayer]->getName() == players[previousPlayer]->getName()) {
-            currentPlayer = (currentPlayer + 1) % players.size();
-        }
-    }
     for (auto& player : players) {
         if (player->getType() == PlayerType::Farmer) {
             auto farmer = dynamic_cast<Farmer*>(player.get());
             farmer->getRefField().incrementAllCropDuration();
         }
     }
-    cout << "Giliran " << players[currentPlayer]->getName() << "!"<<endl;
+    cout << endl << "Giliran " << players[currentPlayer]->getName() << "!" << endl << endl;
 }
 
 void Game::start() {
@@ -286,6 +278,7 @@ bool Game::isWinCondition() {
 
 void Game::run() {
     start();
+    currentPlayer = 0;
     cout << "Permainan dimulai!" << endl;
     cout << "Giliran player " << players[currentPlayer]->getName() << " jalan!" << endl;
     while (!isWinCondition()) {
@@ -341,7 +334,9 @@ void Game::handleInput() {
             } else if (input == "PUNGUT_PAJAK" && mayor) {
                 mayor->collectTax(players);
             } else if (input == "TAMBAH_PEMAIN" && mayor) {
-                mayor->addNewPlayer(players, gameConfig);
+                mayor->addNewPlayer(players, currentPlayer, gameConfig);
+            } else if (input == "CETAK_PEMAIN") {
+                printPlayers();
             } else {
                 throw WrongUserInputException();
             }
@@ -360,5 +355,136 @@ void Game::debugPrint() {
     cout << "Barn Size: " << gameConfig.getBarnRow() << " x " << gameConfig.getBarnCol() << endl;
 }
 
-void Game::loadGameState(string filelocation){}
-void Game::saveGameState(){}
+void Game::loadGameState(string filelocation) {
+    players.clear();
+    ifstream saveFile(filelocation);
+    if (!saveFile) {
+        throw FailToLoadException("state.txt");
+    }
+    int n;
+    saveFile >> n;
+    for (int pl = 0; pl < n; pl++) {
+        string username, role;
+        int weight, gulden, invenCount;
+        saveFile >> username >> role >> weight >> gulden >> invenCount;
+        cout << "DEBUG>> load: " <<  username << " " << role << endl;
+        if (role == "Petani") {
+            auto player = make_shared<Farmer>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
+            for (int i = 0; i < invenCount; i++) {
+                string itemName;
+                saveFile >> itemName;
+                shared_ptr<Item> item = buildingConfig.getNewPtrConfigByName(itemName);
+                if (item == nullptr) {
+                    item = consumableConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = livestockConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = cropConfig.getNewPtrConfigByName(itemName);
+                }
+                player->getRefInventory().addItem(item);
+                cout << "DEBUG>> success in:" << i + 1 << endl;
+            }
+            int cropCount;
+            saveFile >> cropCount;
+            for (int i = 0; i < cropCount; i++) {
+                string location, cropName;
+                int duration;
+                saveFile >> location >> cropName >> duration;
+                auto crop = cropConfig.getNewPtrConfigByName(cropName);
+                crop->setCurrentDuration(duration);
+                player->getRefField().addCrop(crop, location);
+                cout << "DEBUG>> Success cr:" << i + 1 << endl;
+            }
+            Utils::addNewPlayer(players, currentPlayer, player);
+        } else if (role == "Peternak") {
+            auto player = make_shared<Breeder>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
+            for (int i = 0; i < invenCount; i++) {
+                string itemName;
+                saveFile >> itemName;
+                shared_ptr<Item> item = buildingConfig.getNewPtrConfigByName(itemName);
+                if (item == nullptr) {
+                    item = consumableConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = livestockConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = cropConfig.getNewPtrConfigByName(itemName);
+                }
+                player->getRefInventory().addItem(item);
+                cout << "DEBUG>> success in:" << i + 1 << endl;
+            }
+            int livestockCount;
+            saveFile >> livestockCount;
+            for (int i = 0; i < livestockCount; i++) {
+                string location, livestockName;
+                int weight;
+                saveFile >> location >> livestockName >> weight;
+                auto livestock = livestockConfig.getNewPtrConfigByName(livestockName);
+                livestock->setCurrentWeight(weight);
+                player->getRefBarn().addLivestock(livestock, location);
+                cout << "DEBUG>> Success ls:" << i + 1 << endl;
+            }
+            Utils::addNewPlayer(players, currentPlayer, player);
+        } else if (role == "Walikota") {
+            auto player = make_shared<Mayor>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol());
+            for (int i = 0; i < invenCount; i++) {
+                string itemName;
+                saveFile >> itemName;
+                shared_ptr<Item> item = buildingConfig.getNewPtrConfigByName(itemName);
+                if (item == nullptr) {
+                    item = consumableConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = livestockConfig.getNewPtrConfigByName(itemName);
+                }
+                if (item == nullptr) {
+                    item = cropConfig.getNewPtrConfigByName(itemName);
+                }
+                player->getRefInventory().addItem(item);
+                cout << "DEBUG>> success in:" << i + 1 << endl;
+            }
+            Utils::addNewPlayer(players, currentPlayer, player);
+        } else {
+            throw FailToLoadException("state.txt");
+        }
+    }
+    int countItem;
+    saveFile >> countItem;
+    for (int i = 0; i < countItem; i++) {
+        string itemName;
+        int quantity;
+        saveFile >> itemName >> quantity;
+        shared_ptr<Item> item = buildingConfig.getNewPtrConfigByName(itemName);
+        if (item == nullptr) {
+            item = consumableConfig.getNewPtrConfigByName(itemName);
+        }
+        store.addItem(item);
+        store.setQuantity(item->getCode(), quantity);
+    }
+}
+
+void Game::saveGameState() {
+
+}
+
+void Game::printPlayers() {
+    cout << endl << "Total " << players.size() << " Pemain:" << endl;
+    for (int i = 0; i < (int) players.size(); i++) {
+        cout << i + 1 << ". Username: " << players[i]->getName() << " | Role: ";
+        if (players[i]->getType() == PlayerType::Mayor) {
+            cout << "Walikota";
+        } else if (players[i]->getType() == PlayerType::Farmer) {
+            cout << "Petani";
+        } else {
+            cout << "Peternak";
+        }
+        if (i == currentPlayer) {
+            cout << "  [Current Player]";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}

@@ -19,6 +19,7 @@ public:
     void displayBarn();
     int getTaxable();
     PlayerType getType();
+    Barn& getRefBarn();
 };
 
 #endif

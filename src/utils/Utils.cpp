@@ -1,11 +1,16 @@
 #include "../../header/Utils.hpp"
 
-void Utils::addNewPlayer(vector<shared_ptr<Player>>& players, shared_ptr<Player> newPlayer) {
+void Utils::addNewPlayer(vector<shared_ptr<Player>>& players, int& currentPlayerIndex, shared_ptr<Player> newPlayer) {
     auto it = players.begin();
-    while (it != players.end() && (*it)->getName() < newPlayer->getName()) {
+    int idx = 0;
+    while (it != players.end() && stringToLower((*it)->getName()) < stringToLower(newPlayer->getName())) {
         it++;
+        idx++;
     }
     players.insert(it, newPlayer);
+    if (idx <= currentPlayerIndex) {
+        currentPlayerIndex++;
+    }
 }
 
 string Utils::stringToLower(string str) {

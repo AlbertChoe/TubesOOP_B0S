@@ -1,6 +1,6 @@
 #include "../../header/Mayor.hpp"
 
-void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, GameConfig gameConfig){
+void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, int& currentPlayerIndex, GameConfig gameConfig){
     try
     {
         if (this->gulden<50)
@@ -18,7 +18,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, GameConfig gameCon
             cout<<"Masukkan jenis pemain: ";
             cin >> jenis;
 
-            if (jenis=="peternak"||jenis=="harvest moon")
+            if (jenis=="peternak"||jenis=="petani")
             {
                 valid=true;
             }
@@ -37,7 +37,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, GameConfig gameCon
                     break;
                 };
             }
-            Utils::addNewPlayer(players, newBreeder);
+            Utils::addNewPlayer(players, currentPlayerIndex, newBreeder);
         } else if (jenis=="petani")
         {
             auto newFarmer = make_shared<Farmer>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
@@ -51,7 +51,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>>& players, GameConfig gameCon
                     break;
                 };
             }
-        Utils::addNewPlayer(players, newFarmer);
+        Utils::addNewPlayer(players, currentPlayerIndex, newFarmer);
         }
         this->gulden-=50;
     }

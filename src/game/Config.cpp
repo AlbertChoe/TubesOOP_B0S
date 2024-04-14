@@ -48,6 +48,15 @@ Crop CropConfig::getConfig(string code) {
     }
 }
 
+shared_ptr<Crop> CropConfig::getNewPtrConfigByName(string name) {
+    for (auto& pair: config) {
+        if (pair.second.getName() == name) {
+            return make_shared<Crop>(pair.second);
+        }
+    }
+    return nullptr;
+}
+
 
 // LivestockConfig
 LivestockConfig::LivestockConfig() {}
@@ -72,6 +81,15 @@ shared_ptr<Livestock> LivestockConfig::getConfig(string code) {
     }
 }
 
+shared_ptr<Livestock> LivestockConfig::getNewPtrConfigByName(string name) {
+    for (auto& pair: config) {
+        if (pair.second->getName() == name) {
+            return make_shared<Livestock>(*(pair.second));
+        }
+    }
+    return nullptr;
+}
+
 
 // ConsumableConfig
 ConsumableConfig::ConsumableConfig() {}
@@ -90,6 +108,15 @@ Consumable ConsumableConfig::getConfig(string code) {
     }
 }
 
+shared_ptr<Consumable> ConsumableConfig::getNewPtrConfigByName(string name) {
+    for (auto& pair: config) {
+        if (pair.second.getName() == name) {
+            return make_shared<Consumable>(pair.second);
+        }
+    }
+    return nullptr;
+}
+
 
 // BuildingConfig
 BuildingConfig::BuildingConfig() {}
@@ -103,4 +130,13 @@ Building BuildingConfig::getConfig(string name) {
     } catch (const exception&) {
         throw ConfigNotFound();
     }
+}
+
+shared_ptr<Building> BuildingConfig::getNewPtrConfigByName(string name) {
+    for (auto& pair: config) {
+        if (pair.second.getName() == name) {
+            return make_shared<Building>(pair.second);
+        }
+    }
+    return nullptr;
 }

@@ -49,6 +49,13 @@ int Store::getQuantity(string code) {
     return 0;
 }
 
+void Store::setQuantity(string code, int quantity) {
+    auto it = store.find(code);
+    if (it != store.end()) {
+        it->second.second = quantity;
+    }
+}
+
 int Store::getPrice(string code) {
     auto it = store.find(code);
     if (it != store.end()) {

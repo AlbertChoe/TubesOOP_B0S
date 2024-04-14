@@ -26,7 +26,6 @@ private:
     Store store;
     vector<shared_ptr<Player>> players;
     int currentPlayer;
-    int previousPlayer;
 public:
     Game();
     ~Game();
@@ -46,6 +45,7 @@ public:
     void start();
     void run();
     void debugPrint();
+    void printPlayers();
 };
 
 #endif

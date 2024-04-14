@@ -23,6 +23,7 @@ public:
     void sellTransaction(shared_ptr<Player> player);
     void display();
     int getQuantity(string code);
+    void setQuantity(string code, int quantity);
     int getNumItem();
     int getPrice(string code);
     shared_ptr<Item> getItem(string code);

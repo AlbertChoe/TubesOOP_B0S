@@ -206,3 +206,7 @@ int Breeder::getTaxable() {
 PlayerType Breeder::getType() {
     return PlayerType::Breeder;
 }
+
+Barn& Breeder::getRefBarn() {
+    return this->barn;
+}

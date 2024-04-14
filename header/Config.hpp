@@ -47,6 +47,7 @@ public:
     void addCropConfig(string code, Crop config);
     map<string, Crop>& getRefConfigMap();
     Crop getConfig(string code);
+    shared_ptr<Crop> getNewPtrConfigByName(string name);
 };
 
 class LivestockConfig {
@@ -60,6 +61,7 @@ public:
     void addHerbivoreConfig(string code, shared_ptr<Herbivore> config);
     map<string, shared_ptr<Livestock>>& getRefConfigMap();
     shared_ptr<Livestock> getConfig(string code);
+    shared_ptr<Livestock> getNewPtrConfigByName(string name);
 };
 
 class ConsumableConfig {
@@ -71,6 +73,7 @@ public:
     void addConsumableConfig(string code, Consumable config);
     map<string, Consumable>& getRefConfigMap();
     Consumable getConfig(string code);
+    shared_ptr<Consumable> getNewPtrConfigByName(string name);
 };
 
 class BuildingConfig {
@@ -81,6 +84,7 @@ public:
     ~BuildingConfig();
     void addBuildingConfig(string code, Building config);
     Building getConfig(string code);
+    shared_ptr<Building> getNewPtrConfigByName(string name);
 };
 
 
