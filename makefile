@@ -6,6 +6,8 @@ EXEC = game
 
 # Manually listing each source file
 SRC = src/pcolor/pcolor.cpp \
+      src/bonus/MineObject.cpp \
+      src/bonus/Mine.cpp \
       src/item/Item.cpp \
       src/item/Crop.cpp \
       src/item/Livestock.cpp \
