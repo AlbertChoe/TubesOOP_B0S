@@ -8,7 +8,7 @@ void Player::eat()
     while (!valid)
     {
         string input;
-        cout << "Slot: ";
+        cout << "Slot (untuk keluar ketik 0): ";
         cin >> input;
 
         if (input == "0")
@@ -26,25 +26,23 @@ void Player::eat()
             {
                 throw EmptySlotInputException();
             }
-            else if (search->getType() != "PRODUCT_ANIMAL" || search->getType() != "PRODUCT_FOOD_PLANT")
+            
+            if (search->getType() != "PRODUCT_ANIMAL" && search->getType() != "PRODUCT_FRUIT_PLANT")
             {
                 throw InvalidSlotInputException();
             }
 
-            cout << "kntl2" << endl;
             shared_ptr<Consumable> consumable = dynamic_pointer_cast<Consumable>(search);
             if (consumable)
             {
                 int addedWeight = consumable->getAddedWeight();
                 this->weight += addedWeight;
                 cout << "Dengan lahapnya, kamu memakan hidangan itu" << endl;
-                cout << "Alhasil, berat badan kamu naik menjadi " << this->weight << endl;
+                cout << "Alhasil, berat badan kamu naik menjadi " << this->weight << endl<<endl;
+
+                this->inventory.removeItem(input);
 
                 valid = true;
-            }
-            else
-            {
-                throw InvalidSlotInputException();
             }
         }
         catch (const exception &e)
