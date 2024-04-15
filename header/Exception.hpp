@@ -216,4 +216,11 @@ public:
     }
 };
 
+class InventoryFullException : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Tempat penyimpanan penuh!!!";
+    }
+};
+
 #endif
