@@ -294,7 +294,7 @@ void Game::run() {
         handleInput();
     }
     cout << "Game telah dimenangkan oleh player " << players[currentPlayer]->getName() << "!" << endl;
-    cout << "Karena telah memiliki " << players[currentPlayer]->getGulden() << " gulden dan berat " << players[currentPlayer]->getWeight() << " kg!";
+    cout << "Karena telah memiliki " << players[currentPlayer]->getGulden() << " gulden dan berat " << players[currentPlayer]->getWeight() << " kg!"<<endl;
 }
 
 void Game::handleInput() {
