@@ -244,7 +244,7 @@ void Breeder::harvestLivestock()
                     int requiredSpace = livestock->isOmnivore() ? 2 * numToHarvest : numToHarvest;
                     if (requiredSpace > inventory.countEmpty())
                     {
-                        cout << "Tidak cukup slot di penyimpanan!" << endl;
+                        throw InventoryFullException();
                         return;
                     }
                     else
@@ -254,6 +254,11 @@ void Breeder::harvestLivestock()
                 }
             }
             catch (const CancelFunction &e)
+            {
+                cout << e.what() << endl;
+                return;
+            }
+            catch (const InventoryFullException &e)
             {
                 cout << e.what() << endl;
                 return;

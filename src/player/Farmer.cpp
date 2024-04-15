@@ -118,12 +118,15 @@ void Farmer::harvestCrop() {
                     cout << "Jumlah tanaman yang ingin dipanen tidak cukup!"<<endl;
                 }else{
                     if (numToHarvest > inventory.countEmpty()){
-                        cout << "Tidak cukup slot di penyimpanan!"<<endl;
+                        throw InventoryFullException();
                     }else{
                         break;
                     }
                 }
             } catch (const CancelFunction& e) {
+                cout << e.what() << endl;
+                return;  
+            } catch (const InventoryFullException& e) {
                 cout << e.what() << endl;
                 return;  
             }catch (const exception& e) {

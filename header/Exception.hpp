@@ -209,4 +209,18 @@ public:
     }
 };
 
+class FarmerBreederInvalidInput : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Hanya bisa memasukkan antara jenis peternak atau petani";
+    }
+};
+
+class InventoryFullException : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Tempat penyimpanan penuh!!!";
+    }
+};
+
 #endif

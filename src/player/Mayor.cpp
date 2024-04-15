@@ -16,22 +16,41 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>> &players, int &currentPlayer
 
         while (!valid)
         {
-            cout << "Masukkan jenis pemain: ";
+            cout << "Masukkan jenis pemain (Ketik 0 untuk membatalkan): ";
             cin >> jenis;
 
-            if (jenis == "peternak" || jenis == "petani")
+            try
             {
-                valid = true;
+                if (jenis=="0")
+                {
+                    return;
+                }
+
+                if (jenis == "peternak" || jenis == "petani")
+                {
+                    valid = true;
+                } else {
+                    throw FarmerBreederInvalidInput();
+                }
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
             }
         }
 
         if (jenis == "peternak")
         {
-            auto newBreeder = make_shared<Breeder>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
+            auto newBreeder = make_shared<Breeder>("",0,50, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getBarnRow(), gameConfig.getBarnCol());
             while (true)
             {
-                cout << "Masukkan nama pemain: ";
+                cout << "Masukkan username untuk player Peternak baru (Ketik 0 untuk keluar): ";
                 cin >> nama;
+                if (nama=="0")
+                {
+                    return;
+                }
+
                 if (Utils::isNameInPlayers(players, nama))
                 {
                     cout << "Nama sudah diambil, pilih nama lain!" << endl;
@@ -46,11 +65,16 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>> &players, int &currentPlayer
         }
         else if (jenis == "petani")
         {
-            auto newFarmer = make_shared<Farmer>("", gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
+            auto newFarmer = make_shared<Farmer>("",0,50, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
             while (true)
             {
-                cout << "Masukkan username untuk player Petani baru: ";
+                cout << "Masukkan username untuk player Petani baru (Ketik 0 untuk keluar): ";
                 cin >> nama;
+                if (nama=="0")
+                {
+                    return;
+                }
+
                 if (Utils::isNameInPlayers(players, nama))
                 {
                     cout << "Nama sudah diambil, pilih nama lain!" << endl;
@@ -64,7 +88,7 @@ void Mayor::addNewPlayer(vector<shared_ptr<Player>> &players, int &currentPlayer
             Utils::addNewPlayer(players, currentPlayerIndex, newFarmer);
         }
         this->gulden -= 50;
-        cout<<endl<<"Pemain baru ditambahkan!"<<endl<<"Selamat datang “harvest moon” di kota ini!"<<endl;
+        cout<<endl<<"Pemain baru ditambahkan!"<<endl<<"Selamat datang “"<<nama<<"” di kota ini!"<<endl;
     }
     catch (const exception &e)
     {
@@ -84,6 +108,7 @@ void Mayor::collectTax(vector<shared_ptr<Player>> &players)
     for (auto &player : players)
     {
         int tax = player->getTaxable();
+        player->setGulden(player->getGulden()-tax);
         if (player->getType() == PlayerType::Farmer)
         {
             cout << "   " << i << ". " << player->getName() << " - "
@@ -99,6 +124,8 @@ void Mayor::collectTax(vector<shared_ptr<Player>> &players)
         tot += tax;
         i++;
     }
+
+    this->setGulden(this->getGulden()+tot);
 
     cout << endl
          << "Negara mendapatkan pemasukan sebesar " << tot << " gulden." << endl;
@@ -147,12 +174,6 @@ void Mayor::buildBuilding(BuildingConfig recipe)
         {
             Building foundbuilding = recipe.getConfig(tipebangunan);
             valid = true;
-            int kuranggulden = 0;
-
-            if (this->getGulden() < foundbuilding.getPrice())
-            {
-                kuranggulden = foundbuilding.getPrice() - this->getGulden();
-            }
 
             map<string, int> material = recipe.getConfig(tipebangunan).getMaterial();
             bool accepted = true;
@@ -165,9 +186,8 @@ void Mayor::buildBuilding(BuildingConfig recipe)
                 }
             }
 
-            if (accepted && kuranggulden == 0)
+            if (accepted)
             {
-                gulden -= foundbuilding.getPrice();
                 auto newBuilding = make_shared<Building>(foundbuilding);
                 map<string, int> materialdelete = recipe.getConfig(tipebangunan).getMaterial();
                 for (auto &pair : materialdelete)
@@ -181,11 +201,6 @@ void Mayor::buildBuilding(BuildingConfig recipe)
             {
                 bool printfirst = false;
                 cout << "Kamu tidak punya sumber daya yang cukup! Masih memerlukan ";
-                if (kuranggulden > 0)
-                {
-                    printfirst = true;
-                    cout << kuranggulden << " gulden";
-                }
 
                 for (auto &pair : material)
                 {
