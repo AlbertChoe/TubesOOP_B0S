@@ -380,7 +380,7 @@ void Game::loadGameState(string fileLocation) {
         string username, role;
         int weight, gulden, invenCount;
         saveFile >> username >> role >> weight >> gulden >> invenCount;
-        cout << "DEBUG>> load: " <<  username << " " << role << endl;
+        // cout << "DEBUG>> load: " <<  username << " " << role << endl;
         if (role == "Petani") {
             auto player = make_shared<Farmer>(username, gameConfig.getInventoryRow(), gameConfig.getInventoryCol(), gameConfig.getFieldRow(), gameConfig.getFieldCol());
             for (int i = 0; i < invenCount; i++) {
@@ -398,7 +398,7 @@ void Game::loadGameState(string fileLocation) {
                 }
                 Inventory& inven = player->getRefInventory();
                 inven=inven+item;
-                cout << "DEBUG>> success in:" << i + 1 << endl;
+                // cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             int cropCount;
             saveFile >> cropCount;
@@ -409,7 +409,7 @@ void Game::loadGameState(string fileLocation) {
                 auto crop = cropConfig.getNewPtrConfigByName(cropName);
                 crop->setCurrentDuration(duration);
                 player->getRefField().addCrop(crop, location);
-                cout << "DEBUG>> Success cr:" << i + 1 << endl;
+                // cout << "DEBUG>> Success cr:" << i + 1 << endl;
             }
             player->setGulden(gulden);
             player->setWeight(weight);
@@ -431,7 +431,7 @@ void Game::loadGameState(string fileLocation) {
                 }
                 Inventory& inven = player->getRefInventory();
                 inven=inven+item;
-                cout << "DEBUG>> success in:" << i + 1 << endl;
+                // cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             int livestockCount;
             saveFile >> livestockCount;
@@ -442,7 +442,7 @@ void Game::loadGameState(string fileLocation) {
                 auto livestock = livestockConfig.getNewPtrConfigByName(livestockName);
                 livestock->setCurrentWeight(weight);
                 player->getRefBarn().addLivestock(livestock, location);
-                cout << "DEBUG>> Success ls:" << i + 1 << endl;
+                // cout << "DEBUG>> Success ls:" << i + 1 << endl;
             }
             player->setGulden(gulden);
             player->setWeight(weight);
@@ -464,7 +464,7 @@ void Game::loadGameState(string fileLocation) {
                 }
                 Inventory& inven = player->getRefInventory();
                 inven=inven+item;
-                cout << "DEBUG>> success in:" << i + 1 << endl;
+                // cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             player->setGulden(gulden);
             player->setWeight(weight);
