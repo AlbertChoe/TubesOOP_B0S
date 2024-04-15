@@ -188,3 +188,9 @@ vector<string> Inventory::getAllItemName()
     }
     return listName;
 }
+
+Inventory Inventory::operator+(shared_ptr<Item> item){
+    this->addItem(item);
+
+    return *this;
+}

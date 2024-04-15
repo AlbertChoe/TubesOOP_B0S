@@ -394,7 +394,8 @@ void Game::loadGameState(string fileLocation) {
                 if (item == nullptr) {
                     item = cropConfig.getNewPtrConfigByName(itemName);
                 }
-                player->getRefInventory().addItem(item);
+                Inventory& inven = player->getRefInventory();
+                inven=inven+item;
                 cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             int cropCount;
@@ -426,7 +427,8 @@ void Game::loadGameState(string fileLocation) {
                 if (item == nullptr) {
                     item = cropConfig.getNewPtrConfigByName(itemName);
                 }
-                player->getRefInventory().addItem(item);
+                Inventory& inven = player->getRefInventory();
+                inven=inven+item;
                 cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             int livestockCount;
@@ -458,7 +460,8 @@ void Game::loadGameState(string fileLocation) {
                 if (item == nullptr) {
                     item = cropConfig.getNewPtrConfigByName(itemName);
                 }
-                player->getRefInventory().addItem(item);
+                Inventory& inven = player->getRefInventory();
+                inven=inven+item;
                 cout << "DEBUG>> success in:" << i + 1 << endl;
             }
             player->setGulden(gulden);

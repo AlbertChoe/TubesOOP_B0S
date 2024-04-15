@@ -31,6 +31,7 @@ public:
     int getItemCountByName(string name);
     vector<string> getAllItemName();
     void removeItemByCountName(string item, int count);
+    Inventory operator+(shared_ptr<Item> item);
 };
 
 #endif
