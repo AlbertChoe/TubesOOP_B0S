@@ -35,6 +35,25 @@ void Inventory::removeItem(string location)
     }
     return;
 }
+void Inventory::removeItemByCountName(string name, int count)
+{
+
+    int deleted = 0;
+    int row = this->inventory.getRow();
+    int col = this->inventory.getCol();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            auto item = this->inventory.get(i, j);
+            if (item != nullptr && item->getName() == name && deleted < count)
+            {
+                deleted++;
+                this->inventory.remove(i, j);
+            }
+        }
+    }
+}
 
 void Inventory::display()
 {
@@ -142,7 +161,7 @@ int Inventory::getItemCountByName(string name)
         for (int j = 0; j < col; j++)
         {
             auto item = this->inventory.get(i, j);
-            if (item!=nullptr && item->getName() == name)
+            if (item != nullptr && item->getName() == name)
             {
                 count++;
             }

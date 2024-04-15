@@ -30,6 +30,7 @@ public:
     int getCountBuilding();
     int getItemCountByName(string name);
     vector<string> getAllItemName();
+    void removeItemByCountName(string item, int count);
 };
 
 #endif
