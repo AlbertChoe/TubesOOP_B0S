@@ -214,3 +214,14 @@ PlayerType Farmer::getType() {
 Field& Farmer::getRefField() {
     return this->field;
 }
+
+shared_ptr<Player> Farmer::normalizeClone(int _gulden, int _weight) {
+    auto clone = make_shared<Farmer>(*this);
+    if (clone->weight >= _weight) {
+        clone->weight = _weight;
+    }
+    if (clone->gulden >= _gulden) {
+        clone->gulden = _gulden;
+    }
+    return clone;
+}

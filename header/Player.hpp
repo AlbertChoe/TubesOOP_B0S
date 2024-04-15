@@ -31,6 +31,8 @@ public:
     void setWeight(int weight);
     void eat();
     void displayInventory();
+    virtual shared_ptr<Player> normalizeClone(int _gulden, int _weight) = 0;
+    friend bool operator==(const Player& lhs, const Player& rhs);
     virtual PlayerType getType() = 0;
     virtual int getTaxable() = 0;
 };

@@ -22,6 +22,7 @@ namespace fs = filesystem;
 
 class Game {
 private:
+    shared_ptr<Player> winConditionPlayer;
     GameConfig gameConfig;
     CropConfig cropConfig;
     LivestockConfig livestockConfig;
@@ -35,6 +36,7 @@ public:
     Game();
     ~Game();
     void nextPlayer();
+    void setupWinCondition();
     bool isWinCondition();
     void loadGameConfig();
     void loadCropConfig();

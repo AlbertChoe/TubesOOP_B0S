@@ -140,3 +140,7 @@ void Player::setWeight(int weight)
 {
     this->weight = weight;
 }
+
+bool operator==(const Player& lhs, const Player& rhs) {
+    return lhs.gulden == rhs.gulden && lhs.weight == rhs.weight;
+}

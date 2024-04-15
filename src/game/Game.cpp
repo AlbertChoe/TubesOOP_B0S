@@ -244,6 +244,7 @@ void Game::nextPlayer() {
 
 void Game::start() {
     loadConfig();
+    setupWinCondition();
     string input;
     while (true) {
         cout << "Apakah Anda ingin memuat state? (y/n) ";
@@ -274,8 +275,14 @@ void Game::start() {
     newGame();
 }
 
+void Game::setupWinCondition() {
+    winConditionPlayer = make_shared<Mayor>("", 0, 0);
+    winConditionPlayer->setWeight(gameConfig.getWeightToWin());
+    winConditionPlayer->setGulden(gameConfig.getGuldenToWin());
+}
+
 bool Game::isWinCondition() {
-    return players[currentPlayer]->getGulden() >= gameConfig.getGuldenToWin() && players[currentPlayer]->getWeight() >= gameConfig.getWeightToWin();
+    return *(players[currentPlayer]->normalizeClone(gameConfig.getGuldenToWin(), gameConfig.getWeightToWin())) == *winConditionPlayer;
 }
 
 void Game::run() {

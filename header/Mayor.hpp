@@ -19,6 +19,7 @@ public:
     void buildBuilding(BuildingConfig recipe);
     int getTaxable();
     PlayerType getType();
+    shared_ptr<Player> normalizeClone(int _gulden, int _weight);
 };
 
 #endif

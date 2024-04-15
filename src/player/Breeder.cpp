@@ -365,3 +365,14 @@ Barn &Breeder::getRefBarn()
 {
     return this->barn;
 }
+
+shared_ptr<Player> Breeder::normalizeClone(int _gulden, int _weight) {
+    auto clone = make_shared<Breeder>(*this);
+    if (clone->weight >= _weight) {
+        clone->weight = _weight;
+    }
+    if (clone->gulden >= _gulden) {
+        clone->gulden = _gulden;
+    }
+    return clone;
+}

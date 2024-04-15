@@ -18,6 +18,7 @@ public:
     int getTaxable();
     PlayerType getType();
     Field& getRefField();
+    shared_ptr<Player> normalizeClone(int _gulden, int _weight);
 };
 
 #endif

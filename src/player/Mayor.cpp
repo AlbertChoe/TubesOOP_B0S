@@ -221,3 +221,14 @@ PlayerType Mayor::getType()
 {
     return PlayerType::Mayor;
 }
+
+shared_ptr<Player> Mayor::normalizeClone(int _gulden, int _weight) {
+    auto clone = make_shared<Mayor>(*this);
+    if (clone->weight >= _weight) {
+        clone->weight = _weight;
+    }
+    if (clone->gulden >= _gulden) {
+        clone->gulden = _gulden;
+    }
+    return clone;
+}
