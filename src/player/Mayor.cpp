@@ -153,13 +153,20 @@ void Mayor::buildBuilding(BuildingConfig recipe)
         for (auto &pair : data){
             cout<<"   "<<idx+1<<". "<<pair.first<<" (";
             Building databuilding = recipe.getConfig(pair.first);
-            cout<<databuilding.getPrice()<<" gulden";
 
             map<string, int> material = databuilding.getMaterial();
 
+
+            int firstprint=true;
             for (auto &pairmaterial : material)
             {
-                cout<<", "<<pairmaterial.first<<" "<<pairmaterial.second;
+                if (!firstprint)
+                {
+                    cout<<", "<<pairmaterial.first<<" "<<pairmaterial.second;
+                } else {
+                    firstprint=false;
+                    cout<<pairmaterial.first<<" "<<pairmaterial.second;
+                }
             }
 
             cout<<")"<<endl;
