@@ -41,21 +41,6 @@ public:
         // throw some error??
     }
 
-    Grid &operator+(const T &item)
-    {
-        for (int i = 0; i < grid.size(); ++i)
-        {
-            for (int j = 0; j < grid[i].size(); ++j)
-            {
-                if (grid[i][j] == empty)
-                {
-                    grid[i][j] = item;
-                    return *this;
-                }
-            }
-        }
-    }
-
     void add(T item, string location)
     {
         int row, col;
