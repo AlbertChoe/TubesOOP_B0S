@@ -14,6 +14,10 @@ void Breeder::addLivestock()
         {
             throw EmptyInventoryException();
         }
+        if (barn.isFull())
+        {
+            throw BarnFullException();
+        }
         string selectedLocation;
         inventory.display();
         cout << "Pilih hewan dari penyimpanan : ";

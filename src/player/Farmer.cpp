@@ -11,6 +11,9 @@ void Farmer::plantCrop() {
         if (inventory.isEmpty()){
             throw EmptyInventoryException();
         }
+        if (field.isFull()){
+            throw FieldFullException();
+        }
 
         inventory.display();
         cout << "Pilih Tanaman di penyimpanan:" << endl;

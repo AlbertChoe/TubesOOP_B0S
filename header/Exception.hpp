@@ -223,4 +223,18 @@ public:
     }
 };
 
+class BarnFullException : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Peternakan penuh!!!";
+    }
+};
+
+class FieldFullException : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Ladang penuh!!!";
+    }
+};
+
 #endif
