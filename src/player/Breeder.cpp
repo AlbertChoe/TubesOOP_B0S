@@ -283,7 +283,7 @@ void Breeder::harvestLivestock()
                 for (const Consumable &item : harvestResult)
                 {
                     auto itemPtr = std::make_shared<Consumable>(item);
-                    inventory.addItem(itemPtr);
+                    inventory=inventory+itemPtr;
                 }
                 barn.remove(location);
                 harvestedLocations[selectedType].push_back(location);

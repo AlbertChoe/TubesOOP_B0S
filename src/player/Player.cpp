@@ -131,9 +131,13 @@ void Player::setGulden(int gulden)
     this->gulden = gulden;
 }
 
-Inventory &Player::getRefInventory()
+Inventory& Player::getRefInventory()
 {
     return this->inventory;
+}
+void Player::setRefInventory(Inventory inven)
+{
+    this->inventory=inven;
 }
 
 void Player::setWeight(int weight) 

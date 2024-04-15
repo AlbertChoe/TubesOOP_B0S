@@ -194,7 +194,7 @@ void Mayor::buildBuilding(BuildingConfig recipe)
                 {
                     inventory.removeItemByCountName(pair.first,pair.second);
                 }
-                inventory.addItem(newBuilding);
+                inventory=inventory+newBuilding;
                 cout << tipebangunan << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
             }
             else

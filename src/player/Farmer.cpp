@@ -145,7 +145,7 @@ void Farmer::harvestCrop() {
                     vector<Consumable> harvestResult = crop->getHarvestResult();
                     for (const auto& item : harvestResult) {
                         auto itemPtr = make_shared<Consumable>(item);
-                        inventory.addItem(itemPtr);
+                        inventory=inventory+itemPtr;
                     }
                     field.remove(location);
                     harvestedLocations[selectedType].push_back(location);

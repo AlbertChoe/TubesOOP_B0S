@@ -26,6 +26,7 @@ public:
     int getWeight();
     int getGulden();
     Inventory& getRefInventory();
+    void setRefInventory(Inventory);
     void setName(string _name);
     void setGulden(int gulden);
     void setWeight(int weight);
