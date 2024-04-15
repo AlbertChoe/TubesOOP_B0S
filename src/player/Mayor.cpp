@@ -158,9 +158,9 @@ void Mayor::buildBuilding(BuildingConfig recipe)
             bool accepted = true;
             for (auto &pair : material)
             {
+                pair.second -= inventory.getItemCountByName(pair.first);
                 if (inventory.getItemCountByName(pair.first) < pair.second)
                 {
-                    pair.second -= inventory.getItemCountByName(pair.first);
                     accepted = false;
                 }
             }
@@ -169,18 +169,12 @@ void Mayor::buildBuilding(BuildingConfig recipe)
             {
                 gulden -= foundbuilding.getPrice();
                 auto newBuilding = make_shared<Building>(foundbuilding);
+                map<string, int> materialdelete = recipe.getConfig(tipebangunan).getMaterial();
+                for (auto &pair : materialdelete)
+                {
+                    inventory.removeItemByCountName(pair.first,pair.second);
+                }
                 inventory.addItem(newBuilding);
-                // for (auto &pair : material)
-                // {
-                //     for (int i = 0; i < pair.second; i++)
-                //     {
-                        
-                //     }
-                    
-                //     pair.second -= inventory.getItemCountByName(pair.first);
-                //     accepted = false;
-                // }
-                //TODO : hapus item bangunan
                 cout << tipebangunan << " berhasil dibangun dan telah menjadi hak milik walikota!" << endl;
             }
             else
