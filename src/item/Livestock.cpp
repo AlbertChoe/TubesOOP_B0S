@@ -52,13 +52,6 @@ void Livestock::addHarvestResult(Consumable result) {
 //     this->setCurrentWeight(this->getCurrentWeight() + weight);
 // }
 
-// vector<Consumable> Livestock::harvest(Consumable newHarvestResult){
-//     vector<Consumable> temp = this->getHarvestResult();
-//     temp.push_back(newHarvestResult);
-//     setHarvestResult(temp);
-//     return harvestResult;
-// }
-
 ostream& operator<<(ostream& os, const Livestock& livestock) {
     if (livestock.currentWeight < livestock.harvestWeight) {
         string str = livestock.code;
