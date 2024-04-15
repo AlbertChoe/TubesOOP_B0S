@@ -53,6 +53,7 @@ public:
     void run();
     void debugPrint();
     void printPlayers();
+    void printHelp();
 };
 
 #endif

@@ -348,6 +348,8 @@ void Game::handleInput() {
                 printPlayers();
             } else if (input == "TAMBANG") {
                 mine.playMine(current);
+            } else if (input == "HELP") {
+                printHelp();
             } else {
                 throw WrongUserInputException();
             }
@@ -578,4 +580,25 @@ void Game::printPlayers() {
         cout << endl;
     }
     cout << endl;
+}
+
+void Game::printHelp() {
+    cout << "Perintah yang Tersedia:" << endl;
+    cout << "  NEXT - Lanjutkan ke giliran pemain berikutnya." << endl;
+    cout << "  CETAK_PENYIMPANAN - Tampilkan penyimpanan pemain saat ini." << endl;
+    cout << "  MAKAN - Pemain saat ini makan untuk menambah berat." << endl;
+    cout << "  BELI - Melakukan transaksi pembelian di toko." << endl;
+    cout << "  JUAL - Melakukan transaksi penjualan di toko." << endl;
+    cout << "  SIMPAN - Simpan keadaan permainan saat ini." << endl;
+    cout << "  CETAK_LADANG - Tampilkan ladang (hanya tersedia untuk Petani)." << endl;
+    cout << "  TANAM - Tanam tanaman di ladang (hanya tersedia untuk Petani)." << endl;
+    cout << "  TERNAK - Tambahkan ternak ke kandang (hanya tersedia untuk Peternak)." << endl;
+    cout << "  CETAK_PETERNAKAN - Tampilkan kandang (hanya tersedia untuk Peternak)." << endl;
+    cout << "  KASIH_MAKAN - Beri makan ternak (hanya tersedia untuk Peternak)." << endl;
+    cout << "  PANEN - Panen tanaman atau ternak (tersedia untuk Petani dan Peternak)." << endl;
+    cout << "  BANGUN - Bangun sebuah bangunan (hanya tersedia untuk Walikota)." << endl;
+    cout << "  PUNGUT_PAJAK - Pungut pajak (hanya tersedia untuk Walikota)." << endl;
+    cout << "  TAMBAH_PEMAIN - Tambahkan pemain baru ke dalam permainan (hanya tersedia untuk Walikota)." << endl;
+    cout << "  CETAK_PEMAIN - Cetak informasi tentang semua pemain." << endl;
+    cout << "  TAMBANG - Main mini-game tambang." << endl;
 }
