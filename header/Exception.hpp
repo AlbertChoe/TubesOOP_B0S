@@ -209,4 +209,11 @@ public:
     }
 };
 
+class FarmerBreederInvalidInput : public std::exception {
+public:
+    const char* what() const throw() override {
+        return "Hanya bisa memasukkan antara jenis peternak atau petani";
+    }
+};
+
 #endif
