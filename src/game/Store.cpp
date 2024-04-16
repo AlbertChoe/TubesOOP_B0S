@@ -119,7 +119,7 @@ void Store::buyTransaction(shared_ptr<Player> player) {
             return;
         }
         if (player->getType() == PlayerType::Mayor && getItem(getCodeByOrderNum(num))->getItemType() == ItemType::Building) {
-            cout << "Mayor tidak dapat membeli bangunan!" << endl;
+            cout << "Walikota tidak dapat membeli bangunan!" << endl;
             continue;
         }
         break;
@@ -220,7 +220,7 @@ void Store::sellTransaction(shared_ptr<Player> player) {
             }
             if (inven.getItem(slot)->getItemType() == ItemType::Building &&
                 (playerType == PlayerType::Farmer || playerType == PlayerType::Breeder)) {
-                cout << "Tidak dapat menjual bangunan!" << endl;
+                cout << "Peternak atau petani tidak dapat menjual bangunan!" << endl;
                 continue;
             }
             addItem(inven.getItem(slot));
